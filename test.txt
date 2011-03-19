@@ -1,7 +1,3 @@
-<<<<<<< HEAD
 czejœæ ?
-=======
-no to zmieniamy
 
-kolejne zmiany i co?
->>>>>>> origin/master
+
