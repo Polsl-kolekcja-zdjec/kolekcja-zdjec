@@ -1,4 +1,4 @@
-Polsl -kolekcja-zdjec
+Polsl-kolekcja-zdjec
 =====================
 
 Projekt prowadzony na zajęcia z projektów BD2 oraz PP.
