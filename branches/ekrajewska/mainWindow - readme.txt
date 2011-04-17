@@ -1,0 +1,1 @@
+Ogólnie by³abym za tym ¿eby dla górnych ikon by³y podpowiedzi. A opcje dla pojedynczego zdjecia typu zapisz, otaguj itd zrobilabym w right clicku.
