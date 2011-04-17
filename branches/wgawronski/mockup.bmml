@@ -1,0 +1,63 @@
+<mockup version="1.0" skin="sketch" measuredW="1208" measuredH="511" mockupW="1208" mockupH="511">
+  <controls>
+    <control controlID="13" controlTypeID="com.balsamiq.mockups::TitleWindow" x="0" y="0" w="1208" h="511" measuredW="450" measuredH="400" zOrder="0" locked="false" isInGroup="-1">
+      <controlProperties>
+        <bottomheight>28</bottomheight>
+        <close>true</close>
+        <dragger>true</dragger>
+        <maximizeRestore>true</maximizeRestore>
+        <minimize>true</minimize>
+        <text>Our%20Photo%20Manager</text>
+      </controlProperties>
+    </control>
+    <control controlID="14" controlTypeID="com.balsamiq.mockups::Tree" x="0" y="47" w="487" h="292" measuredW="300" measuredH="363" zOrder="1" locked="false" isInGroup="-1">
+      <controlProperties>
+        <backgroundAlpha>1</backgroundAlpha>
+        <selectedIndex>8</selectedIndex>
+        <text>F%20Local%0A%09F%20Moje%20zdj%u0119cia%20%28F%3A%5CMoje%20Zdj%u0119cia%29%0A%09%09F%20Wakacje%0A%09%09%09f%20Oman%202011%0A%09%09%09f%20Abudabi%202011%0A%09%09f%20Sport%0AF%20Storage%0A%09%20f%20Wyjazd%20w%20g%F3ry%20%28DVD-ROM%20-%20WYJAZD_W_GORY_2011%29%0A%09%20%09-%20IMG_20012123.jpg%0A%09%20%09-%20IMG_20012124.jpg%0A%20%09%09-%20IMG_20012125.jpg%0A%09%20%09-%20IMG_20012126.jpg%0A%09%20%09-%20IMG_20012127.jpg</text>
+      </controlProperties>
+    </control>
+    <control controlID="15" controlTypeID="com.balsamiq.mockups::HSplitter" x="475" y="55" w="-1" h="429" measuredW="12" measuredH="100" zOrder="9" locked="false" isInGroup="-1"/>
+    <control controlID="16" controlTypeID="com.balsamiq.mockups::ButtonBar" x="0" y="24" w="1195" h="31" measuredW="322" measuredH="31" zOrder="2" locked="false" isInGroup="-1">
+      <controlProperties>
+        <selectedIndex>-1</selectedIndex>
+        <text>File%2C%20Edit%2C%20Reports%2C%20Settings%2C%20Help</text>
+      </controlProperties>
+    </control>
+    <control controlID="25" controlTypeID="com.balsamiq.mockups::CoverFlow" x="502" y="131" w="691" h="295" measuredW="493" measuredH="198" zOrder="4" locked="false" isInGroup="-1"/>
+    <control controlID="26" controlTypeID="com.balsamiq.mockups::MediaControls" x="792" y="439" w="-1" h="-1" measuredW="110" measuredH="36" zOrder="5" locked="false" isInGroup="-1"/>
+    <control controlID="27" controlTypeID="com.balsamiq.mockups::SearchBox" x="958" y="62" w="237" h="-1" measuredW="65" measuredH="25" zOrder="6" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>search</text>
+      </controlProperties>
+    </control>
+    <control controlID="28" controlTypeID="com.balsamiq.mockups::TabBar" x="487" y="87" w="715" h="397" measuredW="329" measuredH="100" zOrder="3" locked="false" isInGroup="-1">
+      <controlProperties>
+        <selectedIndex>2</selectedIndex>
+        <text>Cards%2C%20List%2C%20Slideshow%2C%20Operations</text>
+      </controlProperties>
+    </control>
+    <control controlID="30" controlTypeID="com.balsamiq.mockups::TagCloud" x="68" y="347" w="350" h="128" measuredW="350" measuredH="250" zOrder="7" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>software%20statistics%20teaching%20technology%20tips%20tool%20tools%20toread%20travel%20tutorial%20tutorials%20tv%20twitter%20typography%20ubuntu%20usability%20video%20videos%20visualization%20web%20web2.0%20webdesign%20webdev%20wiki%20windows%20wordpress%20work%20writing%20youtube</text>
+      </controlProperties>
+    </control>
+    <control controlID="31" controlTypeID="com.balsamiq.mockups::VSplitter" x="0" y="327" w="475" h="-1" measuredW="100" measuredH="12" zOrder="8" locked="false" isInGroup="-1"/>
+    <control controlID="32" controlTypeID="com.balsamiq.mockups::Tooltip" x="729" y="109" w="-1" h="-1" measuredW="385" measuredH="33.9" zOrder="10" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Tutaj%20znajduje%20si%u0119%20panel%20u%u0142atwiaj%u0105cy%20operacje%20grupowe.</text>
+      </controlProperties>
+    </control>
+    <control controlID="33" controlTypeID="com.balsamiq.mockups::Tooltip" x="557" y="55" w="-1" h="-1" measuredW="529" measuredH="33.9" zOrder="11" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Tutaj%20jest%20lista%20zdj%u0119%u0107%20w%20postaci%20samych%20minaturek%20bez%20szczeg%F3%u0142owych%20danych.</text>
+        <tooltipDirection>SW</tooltipDirection>
+      </controlProperties>
+    </control>
+    <control controlID="34" controlTypeID="com.balsamiq.mockups::Tooltip" x="514" y="109" w="207" h="121" measuredW="329" measuredH="63" zOrder="12" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Tutaj%20jest%20lista%20zdj%u0119%u0107%2C%20przy%20czym%20ka%u017Cde%20%0Azdj%u0119cie%20posiada%20szczeg%F3%u0142owe%20informacje%2C%20daty%2C%0Aprzydzielone%20tagi%20etc.</text>
+      </controlProperties>
+    </control>
+  </controls>
+</mockup>
