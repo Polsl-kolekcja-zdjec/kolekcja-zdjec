@@ -15,6 +15,21 @@
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <WarningLevel>4</WarningLevel>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
     <PlatformTarget>x86</PlatformTarget>
@@ -34,6 +49,13 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>
+    </StartupObject>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>1303416482_iphoto.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -144,7 +166,7 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
-    <ApplicationDefinition Include="View\App.xaml">
+    <ApplicationDefinition Include="App.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
@@ -153,15 +175,15 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>WpfKolekcjaZdjecEntitiesDataModel.edmx</DependentUpon>
     </Compile>
-    <Page Include="View\MainWindow.xaml">
+    <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Compile Include="View\App.xaml.cs">
+    <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="View\MainWindow.xaml.cs">
+    <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
@@ -198,8 +220,61 @@
   <ItemGroup>
     <Folder Include="Business\" />
     <Folder Include="DataAccess\" />
+    <Folder Include="View\" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Images\1303401073_Folder.png" />
+    <Resource Include="Images\1303401073_Folder1.png" />
+    <Resource Include="Images\1303401159_Mail.png" />
+    <Resource Include="Images\1303401170_16.png" />
+    <Resource Include="Images\1303403691_search.png" />
+    <Resource Include="Images\1303403733_shut-down.png" />
+    <Resource Include="Images\1303403750_delete-item.png" />
+    <Resource Include="Images\1303403756_add-item.png" />
+    <Resource Include="Images\1303403765_push-pin.png" />
+    <Resource Include="Images\1303403799_save.png" />
+    <Resource Include="Images\1303403804_configuration.png" />
+    <Resource Include="Images\1303403816_heart.png" />
+    <Resource Include="Images\1303403848_lock.png" />
+    <Resource Include="Images\storage.png" />
+    <Resource Include="Images\1303403891_flag.png" />
+    <Resource Include="Images\1303403903_unlock.png" />
+    <Resource Include="Images\1303403971_pen.png" />
+    <Resource Include="Images\1303404002_arrow_right.png" />
+    <Resource Include="Images\1303404016_arrow_left.png" />
+    <Resource Include="Images\1303404041_folder.png" />
+    <Resource Include="Images\1303404062_play.png" />
+    <Resource Include="Images\1303404222_edit.png" />
+    <Resource Include="Images\1303404226_push_pin.png" />
+    <Resource Include="Images\1303404277_edit_pencil.png" />
+    <Resource Include="Images\1303404310_list.png" />
+    <Resource Include="Images\1303404315_image_landscape.png" />
+    <Resource Include="Images\1303404343_list_lines.png" />
+    <Resource Include="Images\1303404412_grid.png" />
+    <Resource Include="Images\1303404429_pen_signature.png" />
+    <Resource Include="Images\1303404479_folder.png" />
+    <Resource Include="Images\1303404484_usb_dongle.png" />
+    <Resource Include="Images\1303404709_109.png" />
+    <Resource Include="Images\1303404752_94.png" />
+    <Resource Include="Images\burn.ico" />
+    <Resource Include="Images\burn.png" />
+    <Resource Include="Images\exif.png" />
+    <Resource Include="Images\fav.ico" />
+    <Resource Include="Images\folder.png" />
+    <Resource Include="Images\help.ico" />
+    <Resource Include="Images\personal.png" />
+    <Resource Include="Images\play.png" />
+    <Resource Include="Images\raport.png" />
+    <Resource Include="Images\rename.png" />
+    <Resource Include="Images\tag.png" />
+    <Resource Include="fav.ico" />
+    <Resource Include="Images\1303416641_addressbook.png" />
+    <Resource Include="Images\1303416641_addressbook1.png" />
+    <Resource Include="Images\1303416580_star.png" />
+    <Resource Include="Images\1303416482_iphoto.ico" />
+    <Resource Include="1303416482_iphoto.ico" />
+    <Resource Include="Images\malyfolder.png" />
+    <Resource Include="Images\1303418880_tree.png" />
     <Content Include="Lib\design\Telerik.Windows.Controls.Charting.Design.dll" />
     <Content Include="Lib\design\Telerik.Windows.Controls.Charting.Expression.Design.dll" />
     <Content Include="Lib\design\Telerik.Windows.Controls.Charting.VisualStudio.Design.4.0.dll" />
@@ -334,6 +409,28 @@
     <Content Include="Lib\Telerik.Windows.Themes.Transparent.dll" />
     <Content Include="Lib\Telerik.Windows.Themes.Vista.dll" />
     <Content Include="Lib\Telerik.Windows.Themes.Windows7.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.0,Profile=Client">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4 Client Profile %28x86 and x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
+      <Visible>False</Visible>
+      <ProductName>Windows Installer 3.1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
