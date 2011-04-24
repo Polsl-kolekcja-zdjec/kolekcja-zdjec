@@ -1,0 +1,18 @@
+﻿<Window x:Class="WpfKolekcjaZdjec.Login"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Zaloguj się.." Height="200" Width="300" xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation" Icon="/WpfKolekcjaZdjec;component/1303416482_iphoto.ico" ResizeMode="NoResize" MaxWidth="300" MaxHeight="200">
+    <Grid>
+        <Grid.Background>
+            <ImageBrush ImageSource="/WpfKolekcjaZdjec;component/Images/dreams1.jpeg" />
+        </Grid.Background>
+        <Rectangle Height="200" HorizontalAlignment="Left" Name="rectangle1" Stroke="Black" VerticalAlignment="Top" Width="300" Fill="White" OpacityMask="#71000000" Margin="-5,-4,0,0" />
+        <Label Content="Hasło" Height="28" HorizontalAlignment="Left" Margin="25,65,0,0" Name="label2" VerticalAlignment="Top" Foreground="#E6110B0B" FontWeight="Bold" />
+        <telerik:RadSplitContainer Height="100" HorizontalAlignment="Left" Margin="372,-3,0,0" Name="radSplitContainer1" VerticalAlignment="Top" Width="200" />
+        <telerik:RadButton Content="Ok" Height="23" HorizontalAlignment="Left" Margin="86,113,0,0" Name="Ok" VerticalAlignment="Top" Width="75" Click="Ok_Click" />
+        <telerik:RadButton Content="Cancel" Height="23" HorizontalAlignment="Left" Margin="167,113,0,0" Name="Cancel" VerticalAlignment="Top" Width="78" Click="Cancel_Click" />
+        <Label Content="Login" Height="28" HorizontalAlignment="Left" Margin="27,31,0,0" Name="label1" VerticalAlignment="Top" Foreground="#E6000000" OpacityMask="Black" FontWeight="Bold" />
+        <TextBox Background="#9B2883C3" Height="23" HorizontalAlignment="Left" Margin="68,35,0,0" Name="textBox2" VerticalAlignment="Top" Width="177" MaxLength="20" />
+        <PasswordBox Height="23" HorizontalAlignment="Left" Margin="68,67,0,0" Name="passwordBox1" VerticalAlignment="Top" Width="177" Background="#9B2883C3" />
+    </Grid>
+</Window>

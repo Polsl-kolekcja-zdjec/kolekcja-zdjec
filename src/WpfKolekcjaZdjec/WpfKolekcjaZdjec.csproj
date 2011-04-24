@@ -61,8 +61,10 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -175,6 +177,10 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>WpfKolekcjaZdjecEntitiesDataModel.edmx</DependentUpon>
     </Compile>
+    <Page Include="Login.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -182,6 +188,9 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Login.xaml.cs">
+      <DependentUpon>Login.xaml</DependentUpon>
     </Compile>
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
@@ -223,6 +232,7 @@
     <Folder Include="View\" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\dreams.jpeg" />
     <Resource Include="Images\1303401073_Folder.png" />
     <Resource Include="Images\1303401073_Folder1.png" />
     <Resource Include="Images\1303401159_Mail.png" />
@@ -275,6 +285,8 @@
     <Resource Include="1303416482_iphoto.ico" />
     <Resource Include="Images\malyfolder.png" />
     <Resource Include="Images\1303418880_tree.png" />
+    <Resource Include="Images\dreams.jpeg" />
+    <Resource Include="Images\dreams1.jpeg" />
     <Content Include="Lib\design\Telerik.Windows.Controls.Charting.Design.dll" />
     <Content Include="Lib\design\Telerik.Windows.Controls.Charting.Expression.Design.dll" />
     <Content Include="Lib\design\Telerik.Windows.Controls.Charting.VisualStudio.Design.4.0.dll" />

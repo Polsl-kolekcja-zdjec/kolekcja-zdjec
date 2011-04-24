@@ -1,9 +1,39 @@
 ﻿<Window x:Class="WpfKolekcjaZdjec.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Kolekcja zdjęć" Height="600" Width="1024" xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation" Loaded="Window_Loaded" Icon="/WpfKolekcjaZdjec;component/Images/1303416482_iphoto.ico">
+        Title="Kolekcja zdjęć" Height="600" Width="1024" xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation" Loaded="Window_Loaded" Icon="/WpfKolekcjaZdjec;component/Images/1303416482_iphoto.ico" Initialized="Windows_Init">
     <Grid>
-        <Grid Height="54" Margin="0,21,0,0" Name="grid1" VerticalAlignment="Top">
+        <Grid Name="miniaturki">
+            <telerik:RadTileView ColumnsCount="6" RowsCount="4" IsAutoScrollingEnabled="True" Margin="164,77,178,69">              
+                <telerik:RadTileViewItem Header="Item3">
+                    <TextBlock Text="Item3 Content" />
+                </telerik:RadTileViewItem>
+                <telerik:RadTileViewItem Header="Item4">
+                    <Image HorizontalAlignment="Left" Name="image78" Stretch="Fill" VerticalAlignment="Top" Source="/WpfKolekcjaZdjec;component/Images/dreams.jpeg" />
+                </telerik:RadTileViewItem>
+                <telerik:RadTileViewItem Header="Item4">
+                    <TextBlock Text="Item4 Content" />
+                </telerik:RadTileViewItem>
+                <telerik:RadTileViewItem Header="Item4">
+                    <TextBlock Text="Item4 Content" />
+                </telerik:RadTileViewItem>
+                <telerik:RadTileViewItem Header="Item1"></telerik:RadTileViewItem>
+                <telerik:RadTileViewItem Header="Item2">
+                    <TextBlock Text="Item2 Content" />
+                </telerik:RadTileViewItem>
+                <telerik:RadTileViewItem Header="Item3">
+                    <TextBlock Text="Item3 Content" />
+                </telerik:RadTileViewItem>
+                <telerik:RadTileViewItem Header="Item4">
+                    <TextBlock Text="Item4 Content" />
+                </telerik:RadTileViewItem>
+                <telerik:RadTileViewItem Header="Item4">
+                    <TextBlock Text="Item4 Content" />
+                </telerik:RadTileViewItem>
+                <telerik:RadTileViewItem Header="Item1"></telerik:RadTileViewItem>
+            </telerik:RadTileView>
+        </Grid>
+       <Grid Height="54" Margin="0,21,0,0" Name="grid1" VerticalAlignment="Top">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="436*" />
                 <ColumnDefinition Width="566*" />
@@ -12,29 +42,31 @@
             <Image Height="32" HorizontalAlignment="Left" Margin="44,15,0,0" Name="image1" Stretch="Fill" VerticalAlignment="Top" Width="32" Source="/WpfKolekcjaZdjec;component/Images/1303404752_94.png" ImageFailed="image1_ImageFailed_1" />
             <Image Height="32" HorizontalAlignment="Left" Margin="82,15,0,0" Name="image3" Source="/WpfKolekcjaZdjec;component/Images/1303403848_lock.png" Stretch="Fill" VerticalAlignment="Top" Width="32" />
             <Label Content="EXIF Data:" Height="32" HorizontalAlignment="Left" Margin="242,2,0,0" Name="label1" VerticalAlignment="Top" Width="101" FontSize="10" />
-            <Image Height="28" HorizontalAlignment="Left" Margin="230,19,0,0" Name="image4" Stretch="Fill" VerticalAlignment="Top" Width="33" ImageFailed="image4_ImageFailed" Source="/WpfKolekcjaZdjec;component/Images/1303403971_pen.png" />
-            <Image Height="28" HorizontalAlignment="Left" Margin="269,19,0,0" Name="image5" Stretch="Fill" VerticalAlignment="Top" Width="33" Source="/WpfKolekcjaZdjec;component/Images/1303404343_list_lines.png" />
+            <Image Height="28" MouseLeftButtonDown="image4_MouseLeftButtonDown" HorizontalAlignment="Left" Margin="230,19,0,0" Name="image4" Stretch="Fill" VerticalAlignment="Top" Width="33" ImageFailed="image4_ImageFailed" Source="/WpfKolekcjaZdjec;component/Images/1303403971_pen.png" />
+            <Image Height="28" MouseLeftButtonDown="image5_MouseLeftButtonDown" HorizontalAlignment="Left" Margin="269,19,0,0" Name="image5" Stretch="Fill" VerticalAlignment="Top" Width="33" Source="/WpfKolekcjaZdjec;component/Images/1303404343_list_lines.png" />
             <telerik:RadComboBox Name="TechnologySelection" Margin="393,14,7,14" ClearSelectionButtonVisibility="Visible" ClearSelectionButtonContent="Show all" DisplayMemberPath="NameInModelXML" ItemsSource="Model XML" SelectedItem="Model XML" Grid.Column="1" />
-            <Image Height="28" HorizontalAlignment="Left" Margin="411,15,0,0" Name="image12" Source="/WpfKolekcjaZdjec;component/Images/1303404016_arrow_left.png" Stretch="Fill" VerticalAlignment="Top" Width="33" Grid.ColumnSpan="2" />
-            <Image Height="28" Name="image13" Source="/WpfKolekcjaZdjec;component/Images/1303404002_arrow_right.png" Stretch="Fill" Width="33" Margin="65,15,468,11" Grid.Column="1" />
-            <Image Height="32" HorizontalAlignment="Left" Margin="350,14,0,0" Name="image14" Source="/WpfKolekcjaZdjec;component/Images/1303404315_image_landscape.png" Stretch="Fill" VerticalAlignment="Top" Width="32" Grid.Column="1" />
-            <Image Height="32" HorizontalAlignment="Left" Margin="313,14,0,0" Name="image15" Source="/WpfKolekcjaZdjec;component/Images/1303404412_grid.png" Stretch="Fill" VerticalAlignment="Top" Width="32" Grid.Column="1" />
-            <Image Height="32" HorizontalAlignment="Left" Margin="276,14,0,0" Name="image16" Source="/WpfKolekcjaZdjec;component/Images/1303404310_list.png" Stretch="Fill" VerticalAlignment="Top" Width="32" Grid.Column="1" />
-            <telerik:RadToggleButton Margin="10,11,515,6" Grid.Column="1">
-                <Image Height="31" Width="36" Source="/WpfKolekcjaZdjec;component/Images/1303404062_play.png" />
-            </telerik:RadToggleButton>
+            <Image Height="32" MouseLeftButtonDown="islajdshow_MouseLeftButtonDown" HorizontalAlignment="Left" Margin="350,14,0,0" Name="islajdshow" Source="/WpfKolekcjaZdjec;component/Images/1303404315_image_landscape.png" Stretch="Fill" VerticalAlignment="Top" Width="32" Grid.Column="1" />
+            <Image Height="32" MouseLeftButtonDown="thumbails_MouseLeftButtonDown" HorizontalAlignment="Left" Margin="313,14,0,0" Name="thumbails" Source="/WpfKolekcjaZdjec;component/Images/1303404412_grid.png" Stretch="Fill" VerticalAlignment="Top" Width="32" Grid.Column="1" />
+            <Image Height="32" MouseLeftButtonDown="details_MouseLeftButtonDown" Margin="276,14,0,0" Name="details" Source="/WpfKolekcjaZdjec;component/Images/1303404310_list.png" Stretch="Fill" VerticalAlignment="Top" Grid.Column="1" HorizontalAlignment="Left" Width="32" />
+            <telerik:RadToggleButton Grid.Column="1" Margin="15,11,515,0" Height="37" VerticalAlignment="Top" Width="37" HorizontalAlignment="Center"></telerik:RadToggleButton>
+            <Image Height="31" Width="36" HorizontalAlignment="Center" Source="/WpfKolekcjaZdjec;component/Images/1303404062_play.png" Grid.Column="1" Margin="15,12,515,12" VerticalAlignment="Center" />
+            <Grid Grid.Column="1" Height="486" HorizontalAlignment="Left" Margin="390,54,0,0" Name="grid3" VerticalAlignment="Top" Width="178" />
         </Grid>
-        <ScrollViewer Height="421" HorizontalAlignment="Left" Margin="162,74,0,0" Name="scrollViewer1" VerticalAlignment="Top" Width="656"></ScrollViewer>
-        <Menu IsMainMenu="True" Height="22" HorizontalAlignment="Left" Name="menu1" VerticalAlignment="Top" Width="1035" >
-                <MenuItem Header="_File" />
+        <Menu IsMainMenu="True" Height="22" HorizontalAlignment="Left" Name="menu1" VerticalAlignment="Top" Width="1300" >
+                <MenuItem Header="_File">
+                    <MenuItem Header="_Zamknij" MouseDoubleClick="Zamknij_MouseDoubleClick"/>
+                </MenuItem>                  
                 <MenuItem Header="_Edit" />
                 <MenuItem Header="_View" />
                 <MenuItem Header="_Image" />
                 <MenuItem Header="_Report" />
                 <MenuItem Header="_Tools" />
-                <MenuItem Header="_Help" />
-            </Menu>
-        <telerik:RadMaskedTextBox Height="22" HorizontalAlignment="Left" MaskType="None" Margin="831,249,0,0" Name="radMaskedTextBox1" VerticalAlignment="Top" Width="129" ValueChanged="radMaskedTextBox1_ValueChanged" Mask="" />
+            <MenuItem Header="_Help">
+                <MenuItem Header="_Autorzy" />
+            </MenuItem>
+        </Menu>
+        <StackPanel HorizontalAlignment="Right" Orientation="Horizontal"></StackPanel>
+        <telerik:RadMaskedTextBox Height="22" HorizontalAlignment="Right" MaskType="None" Margin="0,250,44,0" Name="radMaskedTextBox1" VerticalAlignment="Top" Width="129" ValueChanged="radMaskedTextBox1_ValueChanged" Mask="" />
         <telerik:RadOutlookBar Name="radOutlookBar1" Width="158" Margin="3,76,0,66" HorizontalAlignment="Left" MinContentHeight="50" OverflowMode="Wrap" MinimizedWidth="35">
             <telerik:RadOutlookBarItem Header="Folders" FontWeight="Bold" Icon="/WpfKolekcjaZdjec;component/Images/1303418880_tree.png" SmallIcon="/WpfKolekcjaZdjec;component/Images/1303418880_tree.png">
                 <telerik:RadTreeView Name="RadTreeView" 
@@ -60,28 +92,57 @@
                 </StackPanel>
             </telerik:RadOutlookBarItem>
             <telerik:RadOutlookBarItem Header="Favourites" FontWeight="Bold" Icon="/WpfKolekcjaZdjec;component/Images/1303416580_star.png" SmallIcon="/WpfKolekcjaZdjec;component/Images/1303416580_star.png">
-                <telerik:RadRating Height="54" HorizontalAlignment="Left" Margin="6,134,0,0" Name="radRating1" VerticalAlignment="Top" Width="148" />
+                <telerik:RadRating Height="54" HorizontalAlignment="Left" Margin="6,126,0,0" Name="radRating1" VerticalAlignment="Stretch" Width="148" />
             </telerik:RadOutlookBarItem>
                 <telerik:RadOutlookBarItem Header="Storage" FontWeight="Bold" Icon="/WpfKolekcjaZdjec;component/Images/storage.png" SmallIcon="/WpfKolekcjaZdjec;component/Images/storage.png">
                          
                 </telerik:RadOutlookBarItem>
-            <telerik:RadOutlookBarItem Header="Tagged" FontWeight="Bold" Icon="/WpfKolekcjaZdjec;component/Images/tag.png" SmallIcon="/WpfKolekcjaZdjec;component/Images/tag.png" />
+            <telerik:RadOutlookBarItem Header="Tagged" FontWeight="Bold" Icon="/WpfKolekcjaZdjec;component/Images/tag.png" SmallIcon="/WpfKolekcjaZdjec;component/Images/tag.png" ></telerik:RadOutlookBarItem>
         </telerik:RadOutlookBar>
-        <telerik:RadButton Content="Create a structure" Height="32" HorizontalAlignment="Left" Margin="829,408,0,0" Name="radButton1" VerticalAlignment="Top" Width="166" />
-        <telerik:RadButton Content="Manage the structure" Height="32" HorizontalAlignment="Left" Margin="829,446,0,0" Name="radButton3" VerticalAlignment="Top" Width="166" />
-        <telerik:RadRadioButton Content="Import photos" Height="23" HorizontalAlignment="Left" Margin="842,126,0,0" Name="radRadioButton1" VerticalAlignment="Top" Width="134" />
-        <telerik:RadRadioButton Content="Export photos" Height="23" HorizontalAlignment="Left" Margin="842,155,0,0" Name="radRadioButton2" VerticalAlignment="Top" Width="134" />
-        <Image Height="32" HorizontalAlignment="Left" Margin="129,0,0,27" Name="image8" Source="/WpfKolekcjaZdjec;component/Images/burn.png" Stretch="Fill" VerticalAlignment="Bottom" Width="32" ImageFailed="image8_ImageFailed" />
-            <Image Height="32" HorizontalAlignment="Left" Margin="214,0,0,26" Name="image9" Source="/WpfKolekcjaZdjec;component/Images/1303404226_push_pin.png" Stretch="Fill" VerticalAlignment="Bottom" Width="32" />
-            <Image Height="32" HorizontalAlignment="Left" Margin="299,0,0,26" Name="image10" Source="/WpfKolekcjaZdjec;component/Images/rename.png" Stretch="Fill" VerticalAlignment="Bottom" Width="32" />
-            <Image Height="32" HorizontalAlignment="Left" Margin="385,0,0,26" Name="image11" Source="/WpfKolekcjaZdjec;component/Images/personal.png" Stretch="Fill" VerticalAlignment="Bottom" Width="32" />
+        <telerik:RadButton Content="Create a structure" Height="32" HorizontalAlignment="Right" Margin="0,408,7,0" Name="radButton1" VerticalAlignment="Top" Width="166" />
+        <telerik:RadButton Content="Manage the structure" Height="32" HorizontalAlignment="Right" Margin="0,446,7,0" Name="radButton3" VerticalAlignment="Top" Width="166" />
+        <telerik:RadRadioButton Content="Import photos" Height="23" HorizontalAlignment="Right" Margin="0,128,26,0" Name="radRadioButton1" VerticalAlignment="Top" Width="134" Click="export_Click"/>
+        <telerik:RadRadioButton Content="Export photos" Height="23" HorizontalAlignment="Right" Margin="0,157,26,0" Name="radRadioButton2" VerticalAlignment="Top" Width="134" Click="export_Click"/>
+        <Image Height="32" HorizontalAlignment="Left" Margin="129,0,0,27" Name="burn" Source="/WpfKolekcjaZdjec;component/Images/burn.png" Stretch="Fill" VerticalAlignment="Bottom" Width="32" ImageFailed="burn_ImageFailed" MouseLeftButtonDown="burn_MouseLeftButtonDown"/>
+            <Image Height="32" HorizontalAlignment="Left" Margin="214,0,0,26" Name="tag" Source="/WpfKolekcjaZdjec;component/Images/1303404226_push_pin.png" Stretch="Fill" VerticalAlignment="Bottom" Width="32" />
+            <Image Height="32" HorizontalAlignment="Left" Margin="299,0,0,26" Name="rename" Source="/WpfKolekcjaZdjec;component/Images/rename.png" Stretch="Fill" VerticalAlignment="Bottom" Width="32" />
+            <Image Height="32" HorizontalAlignment="Left" Margin="385,0,0,26" Name="personal" Source="/WpfKolekcjaZdjec;component/Images/personal.png" Stretch="Fill" VerticalAlignment="Bottom" Width="32" MouseLeftButtonDown="personal_MouseLeftButtonDown" />
         <Label Content="tag" Height="28" HorizontalAlignment="Stretch" Margin="214,0,2,0" Name="label4" VerticalAlignment="Bottom" />
         <Label Content="rename" Height="28" HorizontalAlignment="Left" Margin="288,0,0,0" Name="label5" VerticalAlignment="Bottom" />
         <Label Content="view your data" Height="28" HorizontalAlignment="Left" Margin="361,0,0,0" Name="label6" VerticalAlignment="Bottom" DataContext="{Binding}" />
         <Label Content="generate report" Height="28" HorizontalAlignment="Left" Margin="12,0,0,0" Name="label2" VerticalAlignment="Bottom" />
         <Label Content="burn disc" Height="28" HorizontalAlignment="Left" Margin="117,0,0,0" Name="label3" VerticalAlignment="Bottom" />
-        <Image Height="32" HorizontalAlignment="Left" Margin="962,245,0,0" Name="image6" Source="/WpfKolekcjaZdjec;component/Images/1303403691_search.png" Stretch="Fill" VerticalAlignment="Top" Width="32" />
-        <Image Height="32" HorizontalAlignment="Left" Margin="44,0,0,26" Name="image7" Source="/WpfKolekcjaZdjec;component/Images/raport.png" Stretch="Fill" VerticalAlignment="Bottom" Width="32" />
-        <Image Height="32" HorizontalAlignment="Left" Margin="963,503,0,0" Name="image17" Source="/WpfKolekcjaZdjec;component/Images/1303403804_configuration.png" Stretch="Fill" VerticalAlignment="Top" Width="32" />
+        <Image Height="32" HorizontalAlignment="Right" Margin="0,245,7,0" Name="search" Source="/WpfKolekcjaZdjec;component/Images/1303403691_search.png" Stretch="Fill" VerticalAlignment="Top" Width="32" />
+        <Image Height="32" HorizontalAlignment="Left" Margin="44,0,0,26" Name="report" Source="/WpfKolekcjaZdjec;component/Images/raport.png" Stretch="Fill" VerticalAlignment="Bottom" Width="32" MouseLeftButtonDown="report_MouseLeftButtonDown" />
+        <Image Height="32" HorizontalAlignment="Right" Margin="963,503,0,0" Name="config" Source="/WpfKolekcjaZdjec;component/Images/1303403804_configuration.png" Stretch="Fill" VerticalAlignment="Bottom" Width="32" />
+
+        <Grid Name="slajdshow" Margin="0,0,12,66">
+            <telerik:RadCarouselPanel x:Name="Panel" ItemsPerPage="5" PathPadding="210"
+                IsScalingEnabled="True" IsOpacityEnabled="True">
+                <telerik:RadCarouselPanel.ScaleStops>
+                    <telerik:PathStopCollection>
+                        <telerik:PathStop PathFraction="0.0" Value="0.1" />
+                        <telerik:PathStop x:Name="scaleCenterPoint" PathFraction="0.5" Value="3" />
+                        <telerik:PathStop PathFraction="1.0" Value="0.1" />
+                    </telerik:PathStopCollection>
+                </telerik:RadCarouselPanel.ScaleStops>
+                <telerik:RadCarouselPanel.OpacityStops>
+                    <telerik:PathStopCollection>
+                        <telerik:PathStop PathFraction="0.0" Value="0.3" />
+                        <telerik:PathStop x:Name="opacityLeftPoint" PathFraction="0.47" Value="0.7" />
+                        <telerik:PathStop x:Name="opacityCenterPoint" PathFraction="0.5" Value="2.0" />
+                        <telerik:PathStop x:Name="opacityRightPoint" PathFraction="0.53" Value="0.7" />
+                        <telerik:PathStop PathFraction="1.0" Value="0.3" />
+                    </telerik:PathStopCollection>
+                </telerik:RadCarouselPanel.OpacityStops>
+                <Image Source="/WpfKolekcjaZdjec;component/Images/dreams.jpeg" VerticalAlignment="Top" Width="180" Height="160" Margin="0" />
+                <Image Source="/WpfKolekcjaZdjec;component/Images/dreams.jpeg" VerticalAlignment="Top" Width="180" Height="160" Margin="0" />
+                <Image Source="/WpfKolekcjaZdjec;component/Images/dreams.jpeg" VerticalAlignment="Top" Width="180" Height="160" HorizontalAlignment="Center" Margin="0" />
+                <Image Source="/WpfKolekcjaZdjec;component/Images/dreams.jpeg" VerticalAlignment="Top" Width="180" Height="160" Margin="0" />
+                <Image Source="/WpfKolekcjaZdjec;component/Images/dreams.jpeg" VerticalAlignment="Top" Width="180" Height="160" Margin="0" />
+                <Grid Height="409" Name="grid2" Width="666" Margin="158,80,0,0" />
+            </telerik:RadCarouselPanel>
+        </Grid>
+                <telerik:RadSlider Name="Slider" Visibility="Hidden" ValueChanged="Slider_ValueChanged"/>
     </Grid>
 </Window>
