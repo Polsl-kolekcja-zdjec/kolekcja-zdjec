@@ -214,6 +214,7 @@
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <None Include="App.config" />
     <None Include="Properties\Settings.settings">
@@ -232,7 +233,7 @@
     <Folder Include="View\" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\dreams.jpeg" />
+    <Resource Include="Resources\dreams.jpeg" />
     <Resource Include="Images\1303401073_Folder.png" />
     <Resource Include="Images\1303401073_Folder1.png" />
     <Resource Include="Images\1303401159_Mail.png" />

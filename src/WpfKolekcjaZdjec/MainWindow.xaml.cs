@@ -24,57 +24,21 @@ namespace WpfKolekcjaZdjec
         {
             InitializeComponent();
             miniaturki.Visibility = System.Windows.Visibility.Hidden;
+            description.Visibility = System.Windows.Visibility.Hidden;
         }
 
-        private void mediaElement1_MediaOpened(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void image1_ImageFailed(object sender, ExceptionRoutedEventArgs e)
-        {
-
-        }
-
-        private void image2_ImageFailed(object sender, ExceptionRoutedEventArgs e)
-        {
-
-        }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             
         }
 
-        private void image4_ImageFailed(object sender, ExceptionRoutedEventArgs e)
+        private void searchTextBox_ValueChanged(object sender, Telerik.Windows.RadRoutedEventArgs e)
         {
 
         }
 
-        private void radMaskedTextBox1_ValueChanged(object sender, Telerik.Windows.RadRoutedEventArgs e)
-        {
-
-        }
-
-        private void image1_ImageFailed_1(object sender, ExceptionRoutedEventArgs e)
-        {
-
-        }
-
-        private void radButton1_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void burn_ImageFailed(object sender, ExceptionRoutedEventArgs e)
-        {
-
-        }
-
-        private void RadButton_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
+    
 
         private void import_Click(object sender, RoutedEventArgs e)
         {
@@ -100,12 +64,12 @@ namespace WpfKolekcjaZdjec
             RadWindow.Alert("do uzupełnienia");
         }
 
-        private void image4_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        private void showExif_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             RadWindow.Alert("do uzupełnienia");
         }
 
-        private void image5_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        private void editExif_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             RadWindow.Alert("do uzupełnienia");
         }
@@ -119,12 +83,14 @@ namespace WpfKolekcjaZdjec
         {
             miniaturki.Visibility = System.Windows.Visibility.Hidden;
             slajdshow.Visibility = System.Windows.Visibility.Visible;
+            description.Visibility = System.Windows.Visibility.Hidden;
         }
 
         private void thumbails_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             miniaturki.Visibility = System.Windows.Visibility.Visible;
             slajdshow.Visibility = System.Windows.Visibility.Hidden;
+            description.Visibility = System.Windows.Visibility.Hidden;
         }
 
 
@@ -163,11 +129,22 @@ namespace WpfKolekcjaZdjec
         {
             miniaturki.Visibility = System.Windows.Visibility.Hidden;
             slajdshow.Visibility = System.Windows.Visibility.Hidden;
+            description.Visibility = System.Windows.Visibility.Visible;
         }
 
         private void Zamknij_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             this.Close();
+        }
+
+        private void createStructure_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            RadWindow.Alert("do uzupełnienia");
+        }
+
+        private void manageStructure_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            RadWindow.Alert("do uzupełnienia");
         }
         
 

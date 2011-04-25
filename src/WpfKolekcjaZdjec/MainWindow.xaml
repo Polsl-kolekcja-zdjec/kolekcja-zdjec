@@ -31,6 +31,19 @@
                     <TextBlock Text="Item4 Content" />
                 </telerik:RadTileViewItem>
                 <telerik:RadTileViewItem Header="Item1"></telerik:RadTileViewItem>
+                <telerik:RadTileViewItem Header="Item2">
+                    <TextBlock Text="Item2 Content" />
+                </telerik:RadTileViewItem>
+                <telerik:RadTileViewItem Header="Item3">
+                    <TextBlock Text="Item3 Content" />
+                </telerik:RadTileViewItem>
+                <telerik:RadTileViewItem Header="Item4">
+                    <TextBlock Text="Item4 Content" />
+                </telerik:RadTileViewItem>
+                <telerik:RadTileViewItem Header="Item4">
+                    <TextBlock Text="Item4 Content" />
+                </telerik:RadTileViewItem>
+                <telerik:RadTileViewItem Header="Item1"></telerik:RadTileViewItem>
             </telerik:RadTileView>
         </Grid>
        <Grid Height="54" Margin="0,21,0,0" Name="grid1" VerticalAlignment="Top">
@@ -38,12 +51,36 @@
                 <ColumnDefinition Width="436*" />
                 <ColumnDefinition Width="566*" />
             </Grid.ColumnDefinitions>
-            <Image Height="32" HorizontalAlignment="Left" Name="image2" Stretch="Fill" VerticalAlignment="Top" Width="32" ImageFailed="image2_ImageFailed" Source="/WpfKolekcjaZdjec;component/Images/1303401073_Folder.png" Margin="6,15,0,0" />
-            <Image Height="32" HorizontalAlignment="Left" Margin="44,15,0,0" Name="image1" Stretch="Fill" VerticalAlignment="Top" Width="32" Source="/WpfKolekcjaZdjec;component/Images/1303404752_94.png" ImageFailed="image1_ImageFailed_1" />
-            <Image Height="32" HorizontalAlignment="Left" Margin="82,15,0,0" Name="image3" Source="/WpfKolekcjaZdjec;component/Images/1303403848_lock.png" Stretch="Fill" VerticalAlignment="Top" Width="32" />
+            <Image Height="32" HorizontalAlignment="Left" Name="newPhoto" Stretch="Fill" VerticalAlignment="Top" Width="32" Source="/WpfKolekcjaZdjec;component/Images/1303403756_add-item.png" Margin="6,15,0,0">
+                <Image.ToolTip>
+                    <ToolTip>
+                        <StackPanel>
+                            <TextBlock>Add new photo</TextBlock>
+                        </StackPanel>
+                    </ToolTip>
+                </Image.ToolTip>               
+            </Image>
+            <Image Height="32" HorizontalAlignment="Left" Margin="44,15,0,0" Name="favPhoto" Stretch="Fill" VerticalAlignment="Top" Width="32" Source="/WpfKolekcjaZdjec;component/Images/1303416580_star.png">
+                <Image.ToolTip>
+                    <ToolTip>
+                        <StackPanel>
+                            <TextBlock>Mark as favorites</TextBlock>
+                        </StackPanel>
+                    </ToolTip>
+                </Image.ToolTip>
+            </Image>
+            <Image Height="32" HorizontalAlignment="Left" Margin="82,15,0,0" Name="tagPhoto" Source="/WpfKolekcjaZdjec;component/Images/1303404226_push_pin.png" Stretch="Fill" VerticalAlignment="Top" Width="32">
+            <Image.ToolTip>
+                <ToolTip>
+                    <StackPanel>
+                            <TextBlock>Add a tag to a photo</TextBlock>
+                    </StackPanel>
+                </ToolTip>
+            </Image.ToolTip>
+            </Image>
             <Label Content="EXIF Data:" Height="32" HorizontalAlignment="Left" Margin="242,2,0,0" Name="label1" VerticalAlignment="Top" Width="101" FontSize="10" />
-            <Image Height="28" MouseLeftButtonDown="image4_MouseLeftButtonDown" HorizontalAlignment="Left" Margin="230,19,0,0" Name="image4" Stretch="Fill" VerticalAlignment="Top" Width="33" ImageFailed="image4_ImageFailed" Source="/WpfKolekcjaZdjec;component/Images/1303403971_pen.png" />
-            <Image Height="28" MouseLeftButtonDown="image5_MouseLeftButtonDown" HorizontalAlignment="Left" Margin="269,19,0,0" Name="image5" Stretch="Fill" VerticalAlignment="Top" Width="33" Source="/WpfKolekcjaZdjec;component/Images/1303404343_list_lines.png" />
+            <Image Height="28" MouseLeftButtonDown="editExif_MouseLeftButtonDown" HorizontalAlignment="Left" Margin="230,19,0,0" Name="editExif" Stretch="Fill" VerticalAlignment="Top" Width="33" Source="/WpfKolekcjaZdjec;component/Images/1303403971_pen.png" />
+            <Image Height="28" MouseLeftButtonDown="showExif_MouseLeftButtonDown" HorizontalAlignment="Left" Margin="269,19,0,0" Name="showExif" Stretch="Fill" VerticalAlignment="Top" Width="33" Source="/WpfKolekcjaZdjec;component/Images/1303404343_list_lines.png" />
             <telerik:RadComboBox Name="TechnologySelection" Margin="393,14,7,14" ClearSelectionButtonVisibility="Visible" ClearSelectionButtonContent="Show all" DisplayMemberPath="NameInModelXML" ItemsSource="Model XML" SelectedItem="Model XML" Grid.Column="1" />
             <Image Height="32" MouseLeftButtonDown="islajdshow_MouseLeftButtonDown" HorizontalAlignment="Left" Margin="350,14,0,0" Name="islajdshow" Source="/WpfKolekcjaZdjec;component/Images/1303404315_image_landscape.png" Stretch="Fill" VerticalAlignment="Top" Width="32" Grid.Column="1" />
             <Image Height="32" MouseLeftButtonDown="thumbails_MouseLeftButtonDown" HorizontalAlignment="Left" Margin="313,14,0,0" Name="thumbails" Source="/WpfKolekcjaZdjec;component/Images/1303404412_grid.png" Stretch="Fill" VerticalAlignment="Top" Width="32" Grid.Column="1" />
@@ -66,10 +103,10 @@
             </MenuItem>
         </Menu>
         <StackPanel HorizontalAlignment="Right" Orientation="Horizontal"></StackPanel>
-        <telerik:RadMaskedTextBox Height="22" HorizontalAlignment="Right" MaskType="None" Margin="0,250,44,0" Name="radMaskedTextBox1" VerticalAlignment="Top" Width="129" ValueChanged="radMaskedTextBox1_ValueChanged" Mask="" />
+        <telerik:RadMaskedTextBox Height="22" HorizontalAlignment="Right" MaskType="None" Margin="0,250,44,0" Name="radMaskedTextBox1" VerticalAlignment="Top" Width="129" ValueChanged="searchTextBox_ValueChanged" Mask="" />
         <telerik:RadOutlookBar Name="radOutlookBar1" Width="158" Margin="3,76,0,66" HorizontalAlignment="Left" MinContentHeight="50" OverflowMode="Wrap" MinimizedWidth="35">
             <telerik:RadOutlookBarItem Header="Folders" FontWeight="Bold" Icon="/WpfKolekcjaZdjec;component/Images/1303418880_tree.png" SmallIcon="/WpfKolekcjaZdjec;component/Images/1303418880_tree.png">
-                <telerik:RadTreeView Name="RadTreeView" 
+                <telerik:RadTreeView Name="FoldersTree" 
 					VerticalAlignment="Top" IsSingleExpandPath="True" IsLineEnabled="True"
 					SelectionMode="Multiple" IsEditable="True" IsDragDropEnabled="True" Margin="3" Height="187">
 
@@ -92,22 +129,60 @@
                 </StackPanel>
             </telerik:RadOutlookBarItem>
             <telerik:RadOutlookBarItem Header="Favourites" FontWeight="Bold" Icon="/WpfKolekcjaZdjec;component/Images/1303416580_star.png" SmallIcon="/WpfKolekcjaZdjec;component/Images/1303416580_star.png">
-                <telerik:RadRating Height="54" HorizontalAlignment="Left" Margin="6,126,0,0" Name="radRating1" VerticalAlignment="Stretch" Width="148" />
+                <StackPanel VerticalAlignment="Top" HorizontalAlignment="Left" Margin="15 5">
+                    <TextBlock Text="All favourites photos:" Margin="0 2 0 2" Foreground="#FFBFBFBF" FontWeight="Normal" />
+                    <ListBox BorderBrush="White" AllowDrop="True" Foreground="#FF212363">
+                        <ListBoxItem>
+                            <TextBlock Text="photo1" Margin="0 5 0 5" />
+                        </ListBoxItem>
+                        <ListBoxItem>
+                            <TextBlock Text="photo2" Margin="0 5 0 5" />
+                        </ListBoxItem>
+                        <ListBoxItem>
+                            <TextBlock Text="photo3" Margin="0 5 0 5" />
+                        </ListBoxItem>
+                    </ListBox>
+                </StackPanel>
             </telerik:RadOutlookBarItem>
                 <telerik:RadOutlookBarItem Header="Storage" FontWeight="Bold" Icon="/WpfKolekcjaZdjec;component/Images/storage.png" SmallIcon="/WpfKolekcjaZdjec;component/Images/storage.png">
-                         
-                </telerik:RadOutlookBarItem>
-            <telerik:RadOutlookBarItem Header="Tagged" FontWeight="Bold" Icon="/WpfKolekcjaZdjec;component/Images/tag.png" SmallIcon="/WpfKolekcjaZdjec;component/Images/tag.png" ></telerik:RadOutlookBarItem>
+                <telerik:RadTreeView Name="StorageTree" 
+					VerticalAlignment="Top" IsSingleExpandPath="True" IsLineEnabled="True"
+					SelectionMode="Multiple" IsEditable="True" IsDragDropEnabled="True" Margin="3" Height="187">
+                    <telerik:RadTreeViewItem Header="Your device:" IsExpanded="True">
+                        <telerik:RadTreeViewItem Header="E:\" />                 
+                        <telerik:RadTreeViewItem Header="F:\" />
+                        <telerik:RadTreeViewItem Header="G:\" />
+                    </telerik:RadTreeViewItem>
+                </telerik:RadTreeView>
+            </telerik:RadOutlookBarItem>
+            <telerik:RadOutlookBarItem Header="Tagged" FontWeight="Bold" Icon="/WpfKolekcjaZdjec;component/Images/tag.png" SmallIcon="/WpfKolekcjaZdjec;component/Images/tag.png" >
+
+                <StackPanel VerticalAlignment="Top" HorizontalAlignment="Left" Margin="15 5">
+                    <TextBlock Text="All tagged photos:" Margin="0 2 0 2" Foreground="#FFBFBFBF" FontWeight="Normal" />
+                    <ListBox Foreground="#FF212363" BorderBrush="White">
+                        <ListBoxItem>
+                            <TextBlock Text="photo1" Margin="0 5 0 5" />
+                        </ListBoxItem>
+                        <ListBoxItem>
+                            <TextBlock Text="photo2" Margin="0 5 0 5" />
+                        </ListBoxItem>
+                        <ListBoxItem>
+                            <TextBlock Text="photo3" Margin="0 5 0 5" />
+                        </ListBoxItem>
+                    </ListBox>
+                    
+                </StackPanel>
+            </telerik:RadOutlookBarItem>
         </telerik:RadOutlookBar>
-        <telerik:RadButton Content="Create a structure" Height="32" HorizontalAlignment="Right" Margin="0,408,7,0" Name="radButton1" VerticalAlignment="Top" Width="166" />
-        <telerik:RadButton Content="Manage the structure" Height="32" HorizontalAlignment="Right" Margin="0,446,7,0" Name="radButton3" VerticalAlignment="Top" Width="166" />
-        <telerik:RadRadioButton Content="Import photos" Height="23" HorizontalAlignment="Right" Margin="0,128,26,0" Name="radRadioButton1" VerticalAlignment="Top" Width="134" Click="export_Click"/>
-        <telerik:RadRadioButton Content="Export photos" Height="23" HorizontalAlignment="Right" Margin="0,157,26,0" Name="radRadioButton2" VerticalAlignment="Top" Width="134" Click="export_Click"/>
-        <Image Height="32" HorizontalAlignment="Left" Margin="129,0,0,27" Name="burn" Source="/WpfKolekcjaZdjec;component/Images/burn.png" Stretch="Fill" VerticalAlignment="Bottom" Width="32" ImageFailed="burn_ImageFailed" MouseLeftButtonDown="burn_MouseLeftButtonDown"/>
-            <Image Height="32" HorizontalAlignment="Left" Margin="214,0,0,26" Name="tag" Source="/WpfKolekcjaZdjec;component/Images/1303404226_push_pin.png" Stretch="Fill" VerticalAlignment="Bottom" Width="32" />
+        <telerik:RadButton Content="Create a structure" Height="32" HorizontalAlignment="Right" Margin="0,408,7,0" Name="createStructure" MouseDoubleClick="createStructure_MouseDoubleClick" VerticalAlignment="Top" Width="166" />
+        <telerik:RadButton Content="Manage the structure" Height="32" HorizontalAlignment="Right" Margin="0,446,7,0" Name="manageStructure" MouseDoubleClick="manageStructure_MouseDoubleClick" VerticalAlignment="Top" Width="166" />
+        <telerik:RadRadioButton Content="Import photos" Height="23" HorizontalAlignment="Right" Margin="0,128,26,0" Name="import" VerticalAlignment="Top" Width="134" Click="import_Click"/>
+        <telerik:RadRadioButton Content="Export photos" Height="23" HorizontalAlignment="Right" Margin="0,157,26,0" Name="export" VerticalAlignment="Top" Width="134" Click="export_Click"/>
+        <Image Height="32" HorizontalAlignment="Left" Margin="129,0,0,27" Name="burn" Source="/WpfKolekcjaZdjec;component/Images/burn.png" Stretch="Fill" VerticalAlignment="Bottom" Width="32" MouseLeftButtonDown="burn_MouseLeftButtonDown"/>
+            <Image Height="32" HorizontalAlignment="Left" Margin="214,0,0,26" Name="security" Source="/WpfKolekcjaZdjec;component/Images/1303403848_lock.png" Stretch="Fill" VerticalAlignment="Bottom" Width="32" />
             <Image Height="32" HorizontalAlignment="Left" Margin="299,0,0,26" Name="rename" Source="/WpfKolekcjaZdjec;component/Images/rename.png" Stretch="Fill" VerticalAlignment="Bottom" Width="32" />
             <Image Height="32" HorizontalAlignment="Left" Margin="385,0,0,26" Name="personal" Source="/WpfKolekcjaZdjec;component/Images/personal.png" Stretch="Fill" VerticalAlignment="Bottom" Width="32" MouseLeftButtonDown="personal_MouseLeftButtonDown" />
-        <Label Content="tag" Height="28" HorizontalAlignment="Stretch" Margin="214,0,2,0" Name="label4" VerticalAlignment="Bottom" />
+        <Label Content="security" Height="28" HorizontalAlignment="Left" Margin="203,0,0,0" Name="label4" VerticalAlignment="Bottom" Width="61" />
         <Label Content="rename" Height="28" HorizontalAlignment="Left" Margin="288,0,0,0" Name="label5" VerticalAlignment="Bottom" />
         <Label Content="view your data" Height="28" HorizontalAlignment="Left" Margin="361,0,0,0" Name="label6" VerticalAlignment="Bottom" DataContext="{Binding}" />
         <Label Content="generate report" Height="28" HorizontalAlignment="Left" Margin="12,0,0,0" Name="label2" VerticalAlignment="Bottom" />
@@ -115,7 +190,7 @@
         <Image Height="32" HorizontalAlignment="Right" Margin="0,245,7,0" Name="search" Source="/WpfKolekcjaZdjec;component/Images/1303403691_search.png" Stretch="Fill" VerticalAlignment="Top" Width="32" />
         <Image Height="32" HorizontalAlignment="Left" Margin="44,0,0,26" Name="report" Source="/WpfKolekcjaZdjec;component/Images/raport.png" Stretch="Fill" VerticalAlignment="Bottom" Width="32" MouseLeftButtonDown="report_MouseLeftButtonDown" />
         <Image Height="32" HorizontalAlignment="Right" Margin="963,503,0,0" Name="config" Source="/WpfKolekcjaZdjec;component/Images/1303403804_configuration.png" Stretch="Fill" VerticalAlignment="Bottom" Width="32" />
-
+      
         <Grid Name="slajdshow" Margin="0,0,12,66">
             <telerik:RadCarouselPanel x:Name="Panel" ItemsPerPage="5" PathPadding="210"
                 IsScalingEnabled="True" IsOpacityEnabled="True">
@@ -144,5 +219,164 @@
             </telerik:RadCarouselPanel>
         </Grid>
                 <telerik:RadSlider Name="Slider" Visibility="Hidden" ValueChanged="Slider_ValueChanged"/>
+
+        <Grid Name="description" Margin="168,77,177,-25">
+            <SelectiveScrollingGrid Margin="0,0,0,91">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+             </Grid.RowDefinitions>
+           
+                
+            <Border BorderBrush="#FFDADADA" BorderThickness="0,0,1,1" Height="120" Margin="5">
+                <Border BorderBrush="#B2ADBDD1" BorderThickness="1">
+                    <StackPanel Orientation="Horizontal">
+                        <Border BorderBrush="#FFE0E0E0" Margin="5 0 0 0" Width="100" Height="108">
+                            <Image Source="/WpfKolekcjaZdjec;component/Images/dreams1.jpeg" Height="90" Width="125" />
+                        </Border>
+                        <StackPanel Margin="20 35 10 0">
+                            <TextBlock Margin="0 0 0 2" Foreground="#FF0099CB" FontSize="14" Text="name" />
+                            <TextBlock Margin="0 0 0 2" FontSize="10" Text="description" />
+                            <TextBlock FontSize="10" Text="data" />
+                        </StackPanel>
+                    </StackPanel>
+                </Border>
+            </Border>
+                  
+                        <Border Grid.Column="1" BorderBrush="#FFDADADA" BorderThickness="0,0,1,1" Height="120" Margin="5">
+                <Border BorderBrush="#B2ADBDD1" BorderThickness="1">
+                    <StackPanel Orientation="Horizontal">
+                        <Border BorderBrush="#FFE0E0E0" Margin="5 0 0 0" Width="100" Height="108">
+                            <Image Source="/WpfKolekcjaZdjec;component/Images/dreams1.jpeg" Height="90" Width="125" />
+                        </Border>
+                        <StackPanel Margin="20 35 20 0">
+                            <TextBlock Margin="0 0 0 2" Foreground="#FF0099CB" FontSize="14" Text="name" />
+                            <TextBlock Margin="0 0 0 2" FontSize="10" Text="description" />
+                            <TextBlock FontSize="10" Text="data" />
+                        </StackPanel>
+                    </StackPanel>
+                </Border>
+            </Border>
+            <Border Grid.Column="2" BorderBrush="#FFDADADA" BorderThickness="0,0,1,1" Height="120" Margin="5">
+                <Border BorderBrush="#B2ADBDD1" BorderThickness="1">
+                    <StackPanel Orientation="Horizontal">
+                        <Border BorderBrush="#FFE0E0E0" Margin="5 0 0 0" Width="100" Height="108">
+                            <Image Source="/WpfKolekcjaZdjec;component/Images/dreams1.jpeg" Height="90" Width="125" />
+                        </Border>
+                        <StackPanel Margin="20 35 10 0">
+                            <TextBlock Margin="0 0 0 2" Foreground="#FF0099CB" FontSize="14" Text="name" />
+                            <TextBlock Margin="0 0 0 2" FontSize="10" Text="description" />
+                            <TextBlock FontSize="10" Text="data" />
+                        </StackPanel>
+                    </StackPanel>
+                </Border>
+            </Border>
+            <Border Grid.Row="1" BorderBrush="#FFDADADA" BorderThickness="0,0,1,1" Height="120" Margin="5">
+                <Border BorderBrush="#B2ADBDD1" BorderThickness="1">
+                    <StackPanel Orientation="Horizontal">
+                        <Border BorderBrush="#FFE0E0E0" Margin="5 0 0 0" Width="100" Height="108">
+                            <Image Source="/WpfKolekcjaZdjec;component/Images/dreams1.jpeg" Height="90" Width="125" />
+                        </Border>
+                        <StackPanel Margin="20 35 10 0">
+                            <TextBlock Margin="0 0 0 2" Foreground="#FF0099CB" FontSize="14" Text="name" />
+                            <TextBlock Margin="0 0 0 2" FontSize="10" Text="description" />
+                            <TextBlock FontSize="10" Text="data" />
+                        </StackPanel>
+                    </StackPanel>
+                </Border>
+            </Border>
+            <Border Grid.Row="1" Grid.Column="1" BorderBrush="#FFDADADA" BorderThickness="0,0,1,1" Height="120" Margin="5">
+                <Border BorderBrush="#B2ADBDD1" BorderThickness="1">
+                    <StackPanel Orientation="Horizontal">
+                        <Border BorderBrush="#FFE0E0E0" Margin="5 0 0 0" Width="100" Height="108">
+                            <Image Source="/WpfKolekcjaZdjec;component/Images/dreams1.jpeg" Height="90" Width="125" />
+                        </Border>
+                        <StackPanel Margin="20 35 10 0">
+                            <TextBlock Margin="0 0 0 2" Foreground="#FF0099CB" FontSize="14" Text="name" />
+                            <TextBlock Margin="0 0 0 2" FontSize="10" Text="description" />
+                            <TextBlock FontSize="10" Text="data" />
+                        </StackPanel>
+                    </StackPanel>
+                </Border>
+            </Border>
+            <Border Grid.Row="1" Grid.Column="2" BorderBrush="#FFDADADA" BorderThickness="0,0,1,1" Height="120" Margin="5">
+                <Border BorderBrush="#B2ADBDD1" BorderThickness="1">
+                    <StackPanel Orientation="Horizontal">
+                        <Border BorderBrush="#FFE0E0E0" Margin="5 0 0 0" Width="100" Height="108">
+                            <Image Source="/WpfKolekcjaZdjec;component/Images/dreams1.jpeg" Height="90" Width="125" />
+                        </Border>
+                        <StackPanel Margin="20 35 10 0">
+                            <TextBlock Margin="0 0 0 2" Foreground="#FF0099CB" FontSize="14" Text="name" />
+                            <TextBlock Margin="0 0 0 2" FontSize="10" Text="description" />
+                            <TextBlock FontSize="10" Text="data" />
+                        </StackPanel>
+                    </StackPanel>
+                </Border>
+            </Border>
+            <Border Grid.Row="2" BorderBrush="#FFDADADA" BorderThickness="0,0,1,1" Height="120" Margin="5">
+                <Border BorderBrush="#B2ADBDD1" BorderThickness="1">
+                    <StackPanel Orientation="Horizontal">
+                        <Border BorderBrush="#FFE0E0E0" Margin="5 0 0 0" Width="100" Height="108">
+                            <Image Source="/WpfKolekcjaZdjec;component/Images/dreams1.jpeg" Height="90" Width="125" />
+                        </Border>
+                        <StackPanel Margin="20 35 10 0">
+                            <TextBlock Margin="0 0 0 2" Foreground="#FF0099CB" FontSize="14" Text="name" />
+                            <TextBlock Margin="0 0 0 2" FontSize="10" Text="description" />
+                            <TextBlock FontSize="10" Text="data" />
+                        </StackPanel>
+                    </StackPanel>
+                </Border>
+            </Border>
+            <Border Grid.Row="2" Grid.Column="1" BorderBrush="#FFDADADA" BorderThickness="0,0,1,1" Height="120" Margin="5">
+                <Border BorderBrush="#B2ADBDD1" BorderThickness="1">
+                    <StackPanel Orientation="Horizontal">
+                        <Border BorderBrush="#FFE0E0E0" Margin="5 0 0 0" Width="100" Height="108">
+                            <Image Source="/WpfKolekcjaZdjec;component/Images/dreams1.jpeg" Height="90" Width="125" />
+                        </Border>
+                        <StackPanel Margin="20 35 10 0">
+                            <TextBlock Margin="0 0 0 2" Foreground="#FF0099CB" FontSize="14" Text="name" />
+                            <TextBlock Margin="0 0 0 2" FontSize="10" Text="description" />
+                            <TextBlock FontSize="10" Text="data" />
+                        </StackPanel>
+                    </StackPanel>
+                </Border>
+            </Border>
+            <Border Grid.Row="2" Grid.Column="2" BorderBrush="#FFDADADA" BorderThickness="0,0,1,1" Height="120" Margin="5">
+                <Border BorderBrush="#B2ADBDD1" BorderThickness="1">
+                    <StackPanel Orientation="Horizontal">
+                        <Border BorderBrush="#FFE0E0E0" Margin="5 0 0 0" Width="100" Height="108">
+                            <Image Source="/WpfKolekcjaZdjec;component/Images/dreams1.jpeg" Height="90" Width="125" />
+                        </Border>
+                        <StackPanel Margin="20 35 10 0">
+                            <TextBlock Margin="0 0 0 2" Foreground="#FF0099CB" FontSize="14" Text="name" />
+                            <TextBlock Margin="0 0 0 2" FontSize="10" Text="description" />
+                            <TextBlock FontSize="10" Text="data" />
+                        </StackPanel>
+                    </StackPanel>
+                </Border>
+            </Border>
+            <Border Grid.Row="3" BorderBrush="#FFDADADA" BorderThickness="0,0,1,1" Height="120" Margin="5">
+                <Border BorderBrush="#B2ADBDD1" BorderThickness="1">
+                    <StackPanel Width="653" Height="405" Orientation="Horizontal">
+                        <Border BorderBrush="#FFE0E0E0" Margin="5 0 0 0" Width="100" Height="108">
+                            <Image Source="/WpfKolekcjaZdjec;component/Images/dreams1.jpeg" Height="90" Width="125" />
+                        </Border>
+                        <StackPanel Margin="20 35 10 0">
+                            <TextBlock Margin="0 0 0 2" Foreground="#FF0099CB" FontSize="14" Text="name" />
+                      <TextBlock Margin="0 0 0 2" FontSize="10" Text="description" />
+                            <TextBlock FontSize="10" Text="data" />
+                        </StackPanel>
+                    </StackPanel>
+                </Border>
+            </Border>
+            </SelectiveScrollingGrid>
+        </Grid>
     </Grid>
 </Window>
