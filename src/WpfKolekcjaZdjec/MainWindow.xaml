@@ -85,8 +85,7 @@
             <Image Height="32" MouseLeftButtonDown="islajdshow_MouseLeftButtonDown" HorizontalAlignment="Left" Margin="350,14,0,0" Name="islajdshow" Source="/WpfKolekcjaZdjec;component/Images/1303404315_image_landscape.png" Stretch="Fill" VerticalAlignment="Top" Width="32" Grid.Column="1" />
             <Image Height="32" MouseLeftButtonDown="thumbails_MouseLeftButtonDown" HorizontalAlignment="Left" Margin="313,14,0,0" Name="thumbails" Source="/WpfKolekcjaZdjec;component/Images/1303404412_grid.png" Stretch="Fill" VerticalAlignment="Top" Width="32" Grid.Column="1" />
             <Image Height="32" MouseLeftButtonDown="details_MouseLeftButtonDown" Margin="276,14,0,0" Name="details" Source="/WpfKolekcjaZdjec;component/Images/1303404310_list.png" Stretch="Fill" VerticalAlignment="Top" Grid.Column="1" HorizontalAlignment="Left" Width="32" />
-            <telerik:RadToggleButton Grid.Column="1" Margin="15,11,515,0" Height="37" VerticalAlignment="Top" Width="37" HorizontalAlignment="Center"></telerik:RadToggleButton>
-            <Image Height="31" Width="36" HorizontalAlignment="Center" Source="/WpfKolekcjaZdjec;component/Images/1303404062_play.png" Grid.Column="1" Margin="15,12,515,12" VerticalAlignment="Center" />
+
             <Grid Grid.Column="1" Height="486" HorizontalAlignment="Left" Margin="390,54,0,0" Name="grid3" VerticalAlignment="Top" Width="178" />
         </Grid>
         <Menu IsMainMenu="True" Height="22" HorizontalAlignment="Left" Name="menu1" VerticalAlignment="Top" Width="1300" >
@@ -187,13 +186,12 @@
         <Label Content="view your data" Height="28" HorizontalAlignment="Left" Margin="361,0,0,0" Name="label6" VerticalAlignment="Bottom" DataContext="{Binding}" />
         <Label Content="generate report" Height="28" HorizontalAlignment="Left" Margin="12,0,0,0" Name="label2" VerticalAlignment="Bottom" />
         <Label Content="burn disc" Height="28" HorizontalAlignment="Left" Margin="117,0,0,0" Name="label3" VerticalAlignment="Bottom" />
-        <Image Height="32" HorizontalAlignment="Right" Margin="0,245,7,0" Name="search" Source="/WpfKolekcjaZdjec;component/Images/1303403691_search.png" Stretch="Fill" VerticalAlignment="Top" Width="32" />
         <Image Height="32" HorizontalAlignment="Left" Margin="44,0,0,26" Name="report" Source="/WpfKolekcjaZdjec;component/Images/raport.png" Stretch="Fill" VerticalAlignment="Bottom" Width="32" MouseLeftButtonDown="report_MouseLeftButtonDown" />
         <Image Height="32" HorizontalAlignment="Right" Margin="963,503,0,0" Name="config" Source="/WpfKolekcjaZdjec;component/Images/1303403804_configuration.png" Stretch="Fill" VerticalAlignment="Bottom" Width="32" />
       
         <Grid Name="slajdshow" Margin="0,0,12,66">
             <telerik:RadCarouselPanel x:Name="Panel" ItemsPerPage="5" PathPadding="210"
-                IsScalingEnabled="True" IsOpacityEnabled="True">
+                IsScalingEnabled="True" IsOpacityEnabled="True" Margin="0,0,-12,0">
                 <telerik:RadCarouselPanel.ScaleStops>
                     <telerik:PathStopCollection>
                         <telerik:PathStop PathFraction="0.0" Value="0.1" />
@@ -378,5 +376,6 @@
             </Border>
             </SelectiveScrollingGrid>
         </Grid>
+        <Image Height="32" HorizontalAlignment="Right" Margin="0,245,7,0" Name="search" Source="/WpfKolekcjaZdjec;component/Images/1303403691_search.png" Stretch="Fill" VerticalAlignment="Top" Width="32" />
     </Grid>
 </Window>
