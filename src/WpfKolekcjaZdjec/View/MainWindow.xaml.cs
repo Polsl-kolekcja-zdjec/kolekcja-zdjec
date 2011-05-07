@@ -16,84 +16,87 @@ using Telerik.Windows.Controls;
 namespace WpfKolekcjaZdjec
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for MainWindow.xaml.
     /// </summary>
     public partial class MainWindow : Window
     {
+        /// <summary>
+        /// Constructor for MainWindow.
+        /// </summary>
         public MainWindow()
         {
             InitializeComponent();
-            miniaturki.Visibility = System.Windows.Visibility.Hidden;
-            description.Visibility = System.Windows.Visibility.Hidden;
+            GrdThumbnails.Visibility = System.Windows.Visibility.Hidden;
+            GrdDescription.Visibility = System.Windows.Visibility.Hidden;
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
         }
 
-        private void searchTextBox_ValueChanged(object sender, Telerik.Windows.RadRoutedEventArgs e)
+        private void SearchTextBox_ValueChanged(object sender, Telerik.Windows.RadRoutedEventArgs e)
         {
             ShowNotImplentedDialog();
         }
 
-        private void import_Click(object sender, RoutedEventArgs e)
+        private void Import_Click(object sender, RoutedEventArgs e)
         {
             ShowNotImplentedDialog();
         }
 
-        private void export_Click(object sender, RoutedEventArgs e)
+        private void Export_Click(object sender, RoutedEventArgs e)
         {
             ShowNotImplentedDialog();
         }
 
-        private void personal_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        private void Personal_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             ShowNotImplentedDialog();
         }
 
-        private void burn_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        private void Burn_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             ShowNotImplentedDialog();
         }
 
-        private void showExif_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        private void ShowExif_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             ShowNotImplentedDialog();
         }
 
-        private void editExif_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        private void EditExif_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             ShowNotImplentedDialog();
         }
 
-        private void report_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        private void Report_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             ShowNotImplentedDialog();
         }
 
-        private void islajdshow_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        private void Slideshow_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            miniaturki.Visibility = System.Windows.Visibility.Hidden;
-            slajdshow.Visibility = System.Windows.Visibility.Visible;
-            description.Visibility = System.Windows.Visibility.Hidden;
+            GrdThumbnails.Visibility = System.Windows.Visibility.Hidden;
+            GrdSlideshow.Visibility = System.Windows.Visibility.Visible;
+            GrdDescription.Visibility = System.Windows.Visibility.Hidden;
         }
 
-        private void thumbails_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        private void Thumbails_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            miniaturki.Visibility = System.Windows.Visibility.Visible;
-            slajdshow.Visibility = System.Windows.Visibility.Hidden;
-            description.Visibility = System.Windows.Visibility.Hidden;
+            GrdThumbnails.Visibility = System.Windows.Visibility.Visible;
+            GrdSlideshow.Visibility = System.Windows.Visibility.Hidden;
+            GrdDescription.Visibility = System.Windows.Visibility.Hidden;
         }
 
-        void Slider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        private void Slider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             if (e.NewValue > 0.03 && e.NewValue < 0.97)
             {
-                this.Panel.TopItemPathFraction = e.NewValue;
-                this.scaleCenterPoint.PathFraction = e.NewValue;
-                this.opacityCenterPoint.PathFraction = e.NewValue;
-                this.opacityLeftPoint.PathFraction = e.NewValue - 0.03;
-                this.opacityRightPoint.PathFraction = e.NewValue + 0.03;
+                this.CrpPanel.TopItemPathFraction = e.NewValue;
+                this.pthScaleCenterPoint.PathFraction = e.NewValue;
+                this.pthOpacityCenterPoint.PathFraction = e.NewValue;
+                this.pthOpacityLeftPoint.PathFraction = e.NewValue - 0.03;
+                this.pthOpacityRightPoint.PathFraction = e.NewValue + 0.03;
             }
             else if (e.NewValue <= 0.5)
             {
@@ -109,11 +112,11 @@ namespace WpfKolekcjaZdjec
         {
         }
 
-        private void details_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        private void Details_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            miniaturki.Visibility = System.Windows.Visibility.Hidden;
-            slajdshow.Visibility = System.Windows.Visibility.Hidden;
-            description.Visibility = System.Windows.Visibility.Visible;
+            GrdThumbnails.Visibility = System.Windows.Visibility.Hidden;
+            GrdSlideshow.Visibility = System.Windows.Visibility.Hidden;
+            GrdDescription.Visibility = System.Windows.Visibility.Visible;
         }
 
         /// <summary>
@@ -124,20 +127,19 @@ namespace WpfKolekcjaZdjec
             RadWindow.Alert("Not implemented yet.");
         }
 
-        private void Zamknij_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        private void Close_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             this.Close();
         }
 
-        private void createStructure_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        private void CreateStructure_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             ShowNotImplentedDialog();
         }
 
-        private void manageStructure_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        private void ManageStructure_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             ShowNotImplentedDialog();
         }
-        
     }
 }
