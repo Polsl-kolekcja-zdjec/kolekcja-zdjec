@@ -60,9 +60,9 @@ namespace WpfKolekcjaZdjec.Properties {
             }
         }
         
-        internal static System.Drawing.Bitmap dreams {
+        internal static System.Drawing.Bitmap Dreams {
             get {
-                object obj = ResourceManager.GetObject("dreams", resourceCulture);
+                object obj = ResourceManager.GetObject("Dreams", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

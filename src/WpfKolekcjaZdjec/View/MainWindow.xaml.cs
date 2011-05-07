@@ -27,56 +27,48 @@ namespace WpfKolekcjaZdjec
             description.Visibility = System.Windows.Visibility.Hidden;
         }
 
-
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            
         }
 
         private void searchTextBox_ValueChanged(object sender, Telerik.Windows.RadRoutedEventArgs e)
         {
-
+            ShowNotImplentedDialog();
         }
-
-    
 
         private void import_Click(object sender, RoutedEventArgs e)
         {
-
-            RadWindow.Alert("do uzupełnienia");
+            ShowNotImplentedDialog();
         }
 
         private void export_Click(object sender, RoutedEventArgs e)
         {
-
-            RadWindow.Alert("do uzupełnienia");
+            ShowNotImplentedDialog();
         }
-
-
 
         private void personal_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            RadWindow.Alert("do uzupełnienia");
+            ShowNotImplentedDialog();
         }
 
         private void burn_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            RadWindow.Alert("do uzupełnienia");
+            ShowNotImplentedDialog();
         }
 
         private void showExif_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            RadWindow.Alert("do uzupełnienia");
+            ShowNotImplentedDialog();
         }
 
         private void editExif_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            RadWindow.Alert("do uzupełnienia");
+            ShowNotImplentedDialog();
         }
 
         private void report_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            RadWindow.Alert("do uzupełnienia");
+            ShowNotImplentedDialog();
         }
 
         private void islajdshow_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -92,7 +84,6 @@ namespace WpfKolekcjaZdjec
             slajdshow.Visibility = System.Windows.Visibility.Hidden;
             description.Visibility = System.Windows.Visibility.Hidden;
         }
-
 
         void Slider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
@@ -116,13 +107,6 @@ namespace WpfKolekcjaZdjec
 
         private void Windows_Init(object sender, EventArgs e)
         {
-            this.Visibility = System.Windows.Visibility.Hidden;
-            Login l = new Login();
-            bool wartoscDialogResult = (bool)l.ShowDialog();
-            if (wartoscDialogResult)
-                this.Visibility = System.Windows.Visibility.Visible;
-            else
-                this.Close();
         }
 
         private void details_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -132,6 +116,14 @@ namespace WpfKolekcjaZdjec
             description.Visibility = System.Windows.Visibility.Visible;
         }
 
+        /// <summary>
+        /// Shows the not implented dialog.
+        /// </summary>
+        private void ShowNotImplentedDialog()
+        {
+            RadWindow.Alert("Not implemented yet.");
+        }
+
         private void Zamknij_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             this.Close();
@@ -139,15 +131,13 @@ namespace WpfKolekcjaZdjec
 
         private void createStructure_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            RadWindow.Alert("do uzupełnienia");
+            ShowNotImplentedDialog();
         }
 
         private void manageStructure_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            RadWindow.Alert("do uzupełnienia");
+            ShowNotImplentedDialog();
         }
         
-
-     
     }
 }

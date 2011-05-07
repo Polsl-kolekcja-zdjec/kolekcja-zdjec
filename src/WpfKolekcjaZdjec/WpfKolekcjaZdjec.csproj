@@ -49,13 +49,14 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
   <PropertyGroup>
     <StartupObject>
     </StartupObject>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>1303416482_iphoto.ico</ApplicationIcon>
+    <ApplicationIcon>MainIcon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -168,7 +169,7 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
-    <ApplicationDefinition Include="App.xaml">
+    <ApplicationDefinition Include="View\App.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
@@ -177,22 +178,15 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>WpfKolekcjaZdjecEntitiesDataModel.edmx</DependentUpon>
     </Compile>
-    <Page Include="Login.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="MainWindow.xaml">
+    <Page Include="View\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Compile Include="App.xaml.cs">
+    <Compile Include="View\App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Login.xaml.cs">
-      <DependentUpon>Login.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="MainWindow.xaml.cs">
+    <Compile Include="View\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
@@ -230,65 +224,52 @@
   <ItemGroup>
     <Folder Include="Business\" />
     <Folder Include="DataAccess\" />
-    <Folder Include="View\" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="MainIcon.ico" />
     <Resource Include="Resources\dreams.jpeg" />
-    <Resource Include="Images\1303401073_Folder.png" />
-    <Resource Include="Images\1303401073_Folder1.png" />
-    <Resource Include="Images\1303401159_Mail.png" />
-    <Resource Include="Images\1303401170_16.png" />
-    <Resource Include="Images\1303403691_search.png" />
-    <Resource Include="Images\1303403733_shut-down.png" />
-    <Resource Include="Images\1303403750_delete-item.png" />
-    <Resource Include="Images\1303403756_add-item.png" />
-    <Resource Include="Images\1303403765_push-pin.png" />
-    <Resource Include="Images\1303403799_save.png" />
-    <Resource Include="Images\1303403804_configuration.png" />
-    <Resource Include="Images\1303403816_heart.png" />
-    <Resource Include="Images\1303403848_lock.png" />
-    <Resource Include="Images\storage.png" />
-    <Resource Include="Images\1303403891_flag.png" />
-    <Resource Include="Images\1303403903_unlock.png" />
-    <Resource Include="Images\1303403971_pen.png" />
-    <Resource Include="Images\1303404002_arrow_right.png" />
-    <Resource Include="Images\1303404016_arrow_left.png" />
-    <Resource Include="Images\1303404041_folder.png" />
-    <Resource Include="Images\1303404062_play.png" />
-    <Resource Include="Images\1303404222_edit.png" />
-    <Resource Include="Images\1303404226_push_pin.png" />
-    <Resource Include="Images\1303404277_edit_pencil.png" />
-    <Resource Include="Images\1303404310_list.png" />
-    <Resource Include="Images\1303404315_image_landscape.png" />
-    <Resource Include="Images\1303404343_list_lines.png" />
-    <Resource Include="Images\1303404412_grid.png" />
-    <Resource Include="Images\1303404429_pen_signature.png" />
-    <Resource Include="Images\1303404479_folder.png" />
-    <Resource Include="Images\1303404484_usb_dongle.png" />
-    <Resource Include="Images\1303404709_109.png" />
-    <Resource Include="Images\1303404752_94.png" />
-    <Resource Include="Images\burn.ico" />
-    <Resource Include="Images\burn.png" />
-    <Resource Include="Images\exif.png" />
-    <Resource Include="Images\fav.ico" />
-    <Resource Include="Images\folder.png" />
-    <Resource Include="Images\help.ico" />
-    <Resource Include="Images\personal.png" />
-    <Resource Include="Images\play.png" />
-    <Resource Include="Images\raport.png" />
-    <Resource Include="Images\rename.png" />
-    <Resource Include="Images\tag.png" />
-    <Resource Include="fav.ico" />
-    <Resource Include="Images\1303416641_addressbook.png" />
-    <Resource Include="Images\1303416641_addressbook1.png" />
-    <Resource Include="Images\1303416580_star.png" />
-    <Resource Include="Images\1303416482_iphoto.ico" />
-    <Resource Include="1303416482_iphoto.ico" />
-    <Resource Include="Images\malyfolder.png" />
-    <Resource Include="Images\1303418880_tree.png" />
-    <Resource Include="Images\dreams.jpeg" />
-    <Resource Include="Images\dreams1.jpeg" />
     <Content Include="Entities\WpfKolekcjaZdjecEntitiesDataModel.edmx.sql" />
+    <Resource Include="Images\AddItem.png" />
+    <Resource Include="Images\Address.png" />
+    <Resource Include="Images\ArrowLeft.png" />
+    <Resource Include="Images\ArrowRight.png" />
+    <Resource Include="Images\Burn.png" />
+    <Resource Include="Images\Configuration.png" />
+    <Resource Include="Images\DeleteItem.png" />
+    <Resource Include="Images\Dreams.jpeg" />
+    <Resource Include="Images\DreamsSmall.jpeg" />
+    <Resource Include="Images\Edit.png" />
+    <Resource Include="Images\EXIF.png" />
+    <Resource Include="Images\Favourite.png" />
+    <Resource Include="Images\Flag.png" />
+    <Resource Include="Images\FolderFlat.png" />
+    <Resource Include="Images\FolderOpened.png" />
+    <Resource Include="Images\FolderSmallClosed.png" />
+    <Resource Include="Images\FolderSmallOpened.png" />
+    <Resource Include="Images\Grid.png" />
+    <Resource Include="Images\Heart.png" />
+    <Resource Include="Images\Help.png" />
+    <Resource Include="Images\Landscape.png" />
+    <Resource Include="Images\List.png" />
+    <Resource Include="Images\ListLines.png" />
+    <Resource Include="Images\Lock.png" />
+    <Resource Include="Images\Mac.png" />
+    <Resource Include="Images\Mail.png" />
+    <Resource Include="Images\MainIcon.ico" />
+    <Resource Include="Images\Pen.png" />
+    <Resource Include="Images\Person.png" />
+    <Resource Include="Images\Play.png" />
+    <Resource Include="Images\PushPin.png" />
+    <Resource Include="Images\Rename.png" />
+    <Resource Include="Images\Report.png" />
+    <Resource Include="Images\Revert.png" />
+    <Resource Include="Images\Save.png" />
+    <Resource Include="Images\Search.png" />
+    <Resource Include="Images\Shutdown.png" />
+    <Resource Include="Images\Tree.png" />
+    <Resource Include="Images\Unlock.png" />
+    <Resource Include="Images\USB.png" />
+    <Resource Include="Images\UsbDongle.png" />
     <Content Include="Lib\design\Telerik.Windows.Controls.Charting.Design.dll" />
     <Content Include="Lib\design\Telerik.Windows.Controls.Charting.Expression.Design.dll" />
     <Content Include="Lib\design\Telerik.Windows.Controls.Charting.VisualStudio.Design.4.0.dll" />
