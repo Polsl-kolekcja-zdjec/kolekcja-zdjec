@@ -61,12 +61,15 @@ namespace WpfKolekcjaZdjec
 
         private void ShowExif_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            ShowNotImplentedDialog();
+            View.ImagePropertiesReadOnly exifDataReadOnly = new View.ImagePropertiesReadOnly();
+            exifDataReadOnly.PhotoName.Value = "przykład przypisania w C#";
+            exifDataReadOnly.Show();
         }
 
         private void EditExif_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            ShowNotImplentedDialog();
+            View.ImageProperties exifData = new View.ImageProperties();
+            exifData.Show();
         }
 
         private void Report_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -78,21 +81,21 @@ namespace WpfKolekcjaZdjec
         {
             GrdThumbnails.Visibility = System.Windows.Visibility.Hidden;
             GrdSlideshow.Visibility = System.Windows.Visibility.Visible;
-            GrdDescription.Visibility = System.Windows.Visibility.Hidden;
+           GrdDescription.Visibility = System.Windows.Visibility.Hidden;
         }
 
         private void Thumbails_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             GrdThumbnails.Visibility = System.Windows.Visibility.Visible;
             GrdSlideshow.Visibility = System.Windows.Visibility.Hidden;
-            GrdDescription.Visibility = System.Windows.Visibility.Hidden;
+          GrdDescription.Visibility = System.Windows.Visibility.Hidden;
         }
 
-        private void Slider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        private void Slider_Change(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             if (e.NewValue > 0.03 && e.NewValue < 0.97)
             {
-                this.CrpPanel.TopItemPathFraction = e.NewValue;
+                this.CarouselPanel.TopItemPathFraction = e.NewValue;
                 this.pthScaleCenterPoint.PathFraction = e.NewValue;
                 this.pthOpacityCenterPoint.PathFraction = e.NewValue;
                 this.pthOpacityLeftPoint.PathFraction = e.NewValue - 0.03;
@@ -100,11 +103,11 @@ namespace WpfKolekcjaZdjec
             }
             else if (e.NewValue <= 0.5)
             {
-                this.Slider_ValueChanged(this, new RoutedPropertyChangedEventArgs<double>(0, 0.04));
+                this.Slider_Change(this, new RoutedPropertyChangedEventArgs<double>(0, 0.04));
             }
             else if (e.NewValue >= 0.97)
             {
-                this.Slider_ValueChanged(this, new RoutedPropertyChangedEventArgs<double>(0, 0.96));
+                this.Slider_Change(this, new RoutedPropertyChangedEventArgs<double>(0, 0.96));
             }
         }
 
@@ -114,14 +117,14 @@ namespace WpfKolekcjaZdjec
 
         private void Details_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            GrdThumbnails.Visibility = System.Windows.Visibility.Hidden;
+           GrdThumbnails.Visibility = System.Windows.Visibility.Hidden;
             GrdSlideshow.Visibility = System.Windows.Visibility.Hidden;
             GrdDescription.Visibility = System.Windows.Visibility.Visible;
         }
 
-        /// <summary>
-        /// Shows the not implented dialog.
-        /// </summary>
+        // <summary>
+        // Shows the not implented dialog.
+        // </summary>
         private void ShowNotImplentedDialog()
         {
             RadWindow.Alert("Not implemented yet.");
@@ -140,6 +143,22 @@ namespace WpfKolekcjaZdjec
         private void ManageStructure_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             ShowNotImplentedDialog();
+        }
+
+        private void ImgNew_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            string openedImageName = string.Empty;
+            Microsoft.Win32.OpenFileDialog openImage = new Microsoft.Win32.OpenFileDialog();
+            openImage.Filter = "*.jpg|*.jpg|*.png|*.png| *.crt |*.crt| *.tiff| *.tiff";
+            openImage.ShowDialog();
+            openedImageName = openImage.FileName;          
+        } 
+
+        private void AboutItem_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            View.About aboutInfo = new View.About();
+           //// aboutInfo.Visibility = System.Windows.Visibility.Visible;
+           aboutInfo.Show();
         }
     }
 }

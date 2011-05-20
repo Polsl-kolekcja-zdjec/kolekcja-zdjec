@@ -8,10 +8,10 @@ using System.Windows;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("WpfKolekcjaZdjec")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("Autors: Eliza Krajewska, Wojciech Gawronski, Bartosz Kulis, Szymon Rakoczy")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("GKiO 1")]
-[assembly: AssemblyProduct("WpfKolekcjaZdjec")]
+[assembly: AssemblyProduct("PhotoManager")]
 [assembly: AssemblyCopyright("Copyright © GKiO1 2011")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

@@ -1,0 +1,79 @@
+﻿<Window x:Class="WpfKolekcjaZdjec.View.ImagePropertiesReadOnly"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Icon="/WpfKolekcjaZdjec;component/Images/MainIcon.ico"
+        Title="Image Properties" Height="341" Width="366" xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
+    <ScrollViewer>
+        <StackPanel HorizontalAlignment="Stretch" >
+            <Grid>
+                <Label Content="Name" Height="29" HorizontalAlignment="Left" VerticalAlignment="Top" Width="92" Margin="-1,2,0,0" />
+                <telerik:RadMaskedTextBox Height="22" HorizontalAlignment="Right" MaskType="None" Name="PhotoName" VerticalAlignment="Top" Width="199" Mask="" Margin="0,4,6,0" IsReadOnly="True" />
+                <Label Content="Resolution" Height="29" HorizontalAlignment="Left" VerticalAlignment="Top" Width="92" Margin="-1,27,0,0" />
+                <Label Content="Rate" Height="29" HorizontalAlignment="Left" VerticalAlignment="Top" Width="92" Margin="-1,52,0,0" />
+                <Label Content="Autors" Height="29" HorizontalAlignment="Left" VerticalAlignment="Top" Width="92" Margin="-1,77,0,0" />
+                <Label Content="Camera Name" Height="29" HorizontalAlignment="Left" VerticalAlignment="Top" Width="92" Margin="-1,102,0,0" />
+                <Label Content="Camera Model" Height="29" HorizontalAlignment="Left" VerticalAlignment="Top" Width="92" Margin="-1,127,0,0" />
+                <Label Content="Aperture" Height="29" HorizontalAlignment="Left" VerticalAlignment="Top" Width="92" Margin="-1,152,0,0" />
+                <Label Content="Shutter" Height="29" HorizontalAlignment="Left" Margin="-1,177,0,0" VerticalAlignment="Top" Width="92" />
+                <Label Content="ISO" Height="29" HorizontalAlignment="Left" Margin="-1,202,0,0" VerticalAlignment="Top" Width="92" />
+                <Label Content="Exposure Bias" Height="29" HorizontalAlignment="Left" Margin="-1,227,0,0" VerticalAlignment="Top" Width="92" />
+                <Label Content="Focal Lenght" Height="29" HorizontalAlignment="Left" Margin="-1,252,0,0" VerticalAlignment="Top" Width="92" />
+                <Label Content="Metering Mode" Height="29" HorizontalAlignment="Left" Margin="-1,277,0,0" VerticalAlignment="Top" Width="92" />
+                <Label Content="Subject Distance" Height="29" HorizontalAlignment="Left" Margin="-1,302,0,0" VerticalAlignment="Top" Width="109" />
+                <Label Content="Flash Mode" Height="29" HorizontalAlignment="Left" Margin="-1,327,0,0" VerticalAlignment="Top" Width="92" />
+                <Label Content="Flash Energy" Height="29" HorizontalAlignment="Left" Margin="-1,352,0,0" VerticalAlignment="Top" Width="92" />
+                <Label Content="35mm Focal Lenght" Height="29" HorizontalAlignment="Left" Margin="-1,377,0,0" VerticalAlignment="Top" Width="120" />
+                <Label Content="White Balance" Height="29" HorizontalAlignment="Left" Margin="-1,402,0,0" VerticalAlignment="Top" Width="120" />
+                <Label Content="Exposure Program" Height="29" HorizontalAlignment="Left" Margin="-1,427,0,0" VerticalAlignment="Top" Width="120" />
+                <Label Content="Lens Marker" Height="29" HorizontalAlignment="Left" Margin="-1,452,0,0" VerticalAlignment="Top" Width="120" />
+                <Label Content="Lens Model" Height="29" HorizontalAlignment="Left" Margin="-1,477,0,0" VerticalAlignment="Top" Width="120" />
+                <Label Content="Flash Marker" Height="29" HorizontalAlignment="Left" Margin="-1,502,0,0" VerticalAlignment="Top" Width="120" />
+                <Label Content="Flash Model" Height="29" HorizontalAlignment="Left" Margin="-1,527,0,0" VerticalAlignment="Top" Width="120" />
+                <Label Content="Light Source" Height="29" HorizontalAlignment="Left" Margin="-1,552,0,0" VerticalAlignment="Top" Width="120" />
+                <Label Content="Bits Per Pixel" Height="29" HorizontalAlignment="Left" Margin="-1,577,0,0" VerticalAlignment="Top" Width="120" />
+                <Label Content="Hash" Height="29" HorizontalAlignment="Left" Margin="-1,602,0,0" VerticalAlignment="Top" Width="120" />
+                <Label Content="Camera Serial Number" Height="29" HorizontalAlignment="Left" Margin="-1,627,0,0" VerticalAlignment="Top" Width="132" />
+                <Label Content="Digital Zoom" Height="29" HorizontalAlignment="Left" Margin="-1,652,0,0" VerticalAlignment="Top" Width="132" />
+                <Label Content="Brightness" Height="29" HorizontalAlignment="Left" Margin="-1,677,0,0" VerticalAlignment="Top" Width="132" />
+                <Label Content="Contrast" Height="29" HorizontalAlignment="Left" Margin="-1,702,0,0" VerticalAlignment="Top" Width="132" />
+                <Label Content="Saturation" Height="29" HorizontalAlignment="Left" Margin="-1,727,0,0" VerticalAlignment="Top" Width="132" />
+                <Label Content="Sharpness" Height="29" HorizontalAlignment="Left" Margin="-1,752,0,0" VerticalAlignment="Top" Width="132" />
+                <Label Content="Exif Version" Height="29" HorizontalAlignment="Left" Margin="-1,777,0,0" VerticalAlignment="Top" Width="132" />
+                <Label Content="Geographical Location" Height="29" HorizontalAlignment="Left" Margin="-1,802,0,0" VerticalAlignment="Top" Width="132" />
+                <telerik:RadRating Height="22" HorizontalAlignment="Right" Margin="139,54,0,0" Name="Rate" VerticalAlignment="Top" Width="192" IsReadOnly="True" />
+                <telerik:RadMaskedTextBox Height="22" HorizontalAlignment="Right" MaskType="None" Name="Resolution" VerticalAlignment="Top" Width="199" Mask="" Margin="0,29,6,0" IsReadOnly="True" />
+                <telerik:RadMaskedTextBox Height="22" HorizontalAlignment="Right" MaskType="None" Name="Autors" VerticalAlignment="Top" Width="199" Mask="" Margin="0,79,6,0" IsReadOnly="True" />
+                <telerik:RadMaskedTextBox Height="22" HorizontalAlignment="Right" MaskType="None" Name="CameraName" VerticalAlignment="Top" Width="199" Mask="" Margin="0,104,6,0" IsReadOnly="True" />
+                <telerik:RadMaskedTextBox Height="22" HorizontalAlignment="Right" MaskType="None" Name="CameraModel" VerticalAlignment="Top" Width="199" Mask="" Margin="0,129,6,0" IsReadOnly="True" />
+                <telerik:RadMaskedTextBox Height="22" HorizontalAlignment="Right" MaskType="None" Name="Aperture" VerticalAlignment="Top" Width="199" Mask="" Margin="0,154,6,0" IsReadOnly="True" />
+                <telerik:RadMaskedTextBox Height="22" HorizontalAlignment="Right" MaskType="None" Name="Shutter" VerticalAlignment="Top" Width="199" Mask="" Margin="0,179,6,0" IsReadOnly="True" />
+                <telerik:RadMaskedTextBox Height="22" HorizontalAlignment="Right" MaskType="None" Name="ISO" VerticalAlignment="Top" Width="199" Mask="" Margin="0,204,6,0" IsReadOnly="True" />
+                <telerik:RadMaskedTextBox Height="22" HorizontalAlignment="Right" MaskType="None" Name="ExposureBias" VerticalAlignment="Top" Width="199" Mask="" Margin="0,229,6,0" IsReadOnly="True" />
+                <telerik:RadMaskedTextBox Height="22" HorizontalAlignment="Right" MaskType="None" Name="FocalLenght" VerticalAlignment="Top" Width="199" Mask="" Margin="0,254,6,0" IsReadOnly="True"/>
+                <telerik:RadMaskedTextBox Height="22" HorizontalAlignment="Right" MaskType="None" Name="MeteringMode" VerticalAlignment="Top" Width="199" Mask="" Margin="0,279,6,0" IsReadOnly="True"/>
+                <telerik:RadMaskedTextBox Height="22" HorizontalAlignment="Right" MaskType="None" Name="SubjectDistance" VerticalAlignment="Top" Width="199" Mask="" Margin="0,304,6,0" IsReadOnly="True" />
+                <telerik:RadMaskedTextBox Height="22" HorizontalAlignment="Right" MaskType="None" Name="FlashMode" VerticalAlignment="Top" Width="199" Mask="" Margin="0,329,6,0" IsReadOnly="True"/>
+                <telerik:RadMaskedTextBox Height="22" HorizontalAlignment="Right" MaskType="None" Name="FlashEnergy" VerticalAlignment="Top" Width="199" Mask="" Margin="0,354,6,0" IsReadOnly="True" />
+                <telerik:RadMaskedTextBox Height="22" HorizontalAlignment="Right" MaskType="None" Name="FocalLenght35mm" VerticalAlignment="Top" Width="199" Mask="" Margin="0,379,6,0" IsReadOnly="True" />
+                <telerik:RadMaskedTextBox Height="22" HorizontalAlignment="Right" MaskType="None" Name="WhiteBalance" VerticalAlignment="Top" Width="199" Mask="" Margin="0,404,6,0" IsReadOnly="True" />
+                <telerik:RadMaskedTextBox Height="22" HorizontalAlignment="Right" MaskType="None" Name="ExposureProgram" VerticalAlignment="Top" Width="199" Mask="" Margin="0,429,6,0" IsReadOnly="True" />
+                <telerik:RadMaskedTextBox Height="22" HorizontalAlignment="Right" MaskType="None" Name="LensMarker" VerticalAlignment="Top" Width="199" Mask="" Margin="0,454,6,0" IsReadOnly="True" />
+                <telerik:RadMaskedTextBox Height="22" HorizontalAlignment="Right" MaskType="None" Name="LensModel" VerticalAlignment="Top" Width="199" Mask="" Margin="0,479,6,0" IsReadOnly="True"/>
+                <telerik:RadMaskedTextBox Height="22" HorizontalAlignment="Right" MaskType="None" Name="FlashMarker" VerticalAlignment="Top" Width="199" Mask="" Margin="0,504,6,0" IsReadOnly="True"/>
+                <telerik:RadMaskedTextBox Height="22" HorizontalAlignment="Right" MaskType="None" Name="FlashModel" VerticalAlignment="Top" Width="199" Mask="" Margin="0,529,6,0" IsReadOnly="True"/>
+                <telerik:RadMaskedTextBox Height="22" HorizontalAlignment="Right" MaskType="None" Name="LightSource" VerticalAlignment="Top" Width="199" Mask="" Margin="0,554,6,0" IsReadOnly="True"/>
+                <telerik:RadMaskedTextBox Height="22" HorizontalAlignment="Right" MaskType="None" Name="BitsPerPixel" VerticalAlignment="Top" Width="199" Mask="" Margin="0,579,6,0" IsReadOnly="True"/>
+                <telerik:RadMaskedTextBox Height="22" HorizontalAlignment="Right" MaskType="None" Name="Hash" VerticalAlignment="Top" Width="199" Mask="" Margin="0,604,6,0" IsReadOnly="True" />
+                <telerik:RadMaskedTextBox Height="22" HorizontalAlignment="Right" MaskType="None" Name="CameraSerialNumber" VerticalAlignment="Top" Width="199" Mask="" Margin="0,629,6,0" IsReadOnly="True" />
+                <telerik:RadMaskedTextBox Height="22" HorizontalAlignment="Right" MaskType="None" Name="DigitalZoom" VerticalAlignment="Top" Width="199" Mask="" Margin="0,654,6,0" IsReadOnly="True"  />
+                <telerik:RadMaskedTextBox Height="22" HorizontalAlignment="Right" MaskType="None" Name="Brightness" VerticalAlignment="Top" Width="199" Mask="" Margin="0,679,6,0" IsReadOnly="True"/>
+                <telerik:RadMaskedTextBox Height="22" HorizontalAlignment="Right" MaskType="None" Name="Contrast" VerticalAlignment="Top" Width="199" Mask="" Margin="0,704,6,0" IsReadOnly="True" />
+                <telerik:RadMaskedTextBox Height="22" HorizontalAlignment="Right" MaskType="None" Name="Saturation" VerticalAlignment="Top" Width="199" Mask="" Margin="0,729,6,0" IsReadOnly="True"/>
+                <telerik:RadMaskedTextBox Height="22" HorizontalAlignment="Right" MaskType="None" Name="Sharpness" VerticalAlignment="Top" Width="199" Mask="" Margin="0,754,6,0" IsReadOnly="True"/>
+                <telerik:RadMaskedTextBox Height="22" HorizontalAlignment="Right" MaskType="None" Name="ExifVersion" VerticalAlignment="Top" Width="199" Mask="" Margin="0,779,6,0" IsReadOnly="True"/>
+                <telerik:RadMaskedTextBox Height="22" HorizontalAlignment="Right" MaskType="None" Name="GeographicalLocation" VerticalAlignment="Top" Width="199" Mask="" Margin="0,804,6,0" IsReadOnly="True"/>
+              
+            </Grid>
+        </StackPanel>
+    </ScrollViewer>
+</Window>
