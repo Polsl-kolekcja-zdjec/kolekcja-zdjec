@@ -93,13 +93,9 @@ namespace WpfKolekcjaZdjec
 
         private void Slider_Change(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            if (e.NewValue > 0.03 && e.NewValue < 0.97)
+            if (e.NewValue > 0.04 && e.NewValue < 0.97)
             {
                 this.CarouselPanel.TopItemPathFraction = e.NewValue;
-                this.pthScaleCenterPoint.PathFraction = e.NewValue;
-                this.pthOpacityCenterPoint.PathFraction = e.NewValue;
-                this.pthOpacityLeftPoint.PathFraction = e.NewValue - 0.03;
-                this.pthOpacityRightPoint.PathFraction = e.NewValue + 0.03;
             }
             else if (e.NewValue <= 0.5)
             {
@@ -130,7 +126,7 @@ namespace WpfKolekcjaZdjec
             RadWindow.Alert("Not implemented yet.");
         }
 
-        private void Close_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        private void Close_Click(object sender, EventArgs e)
         {
             this.Close();
         }
@@ -152,13 +148,22 @@ namespace WpfKolekcjaZdjec
             openImage.Filter = "*.jpg|*.jpg|*.png|*.png| *.crt |*.crt| *.tiff| *.tiff";
             openImage.ShowDialog();
             openedImageName = openImage.FileName;          
-        } 
+        }
 
-        private void AboutItem_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        private void AboutItem_Click(object sender, EventArgs e)
         {
             View.About aboutInfo = new View.About();
-           //// aboutInfo.Visibility = System.Windows.Visibility.Visible;
            aboutInfo.Show();
+        }
+
+        private void CarouselNextPage_Click(object sender, RoutedEventArgs e)
+        {
+            this.CarouselPanel.PageRight();
+        }
+
+        private void CarouselPreviousPage_Click(object sender, RoutedEventArgs e)
+        {
+            this.CarouselPanel.PageLeft();
         }
     }
 }
