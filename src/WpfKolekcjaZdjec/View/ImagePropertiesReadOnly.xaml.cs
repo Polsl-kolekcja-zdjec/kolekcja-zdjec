@@ -18,6 +18,9 @@ namespace WpfKolekcjaZdjec.View
     // </summary>
     public partial class ImagePropertiesReadOnly : Window
     {
+        /// <summary>
+        /// Constructor for read only image properties window.
+        /// </summary>
         public ImagePropertiesReadOnly()
         {
             InitializeComponent();

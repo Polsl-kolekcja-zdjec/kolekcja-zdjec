@@ -18,6 +18,9 @@ namespace WpfKolekcjaZdjec.View
     // </summary>
     public partial class About : Window
     {
+        /// <summary>
+        /// Constructor for an about window.
+        /// </summary>
         public About()
         {
             InitializeComponent();

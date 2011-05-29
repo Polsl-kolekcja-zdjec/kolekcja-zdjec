@@ -18,6 +18,9 @@ namespace WpfKolekcjaZdjec.View
     // </summary>
     public partial class ImageProperties : Window
     {
+        /// <summary>
+        /// Constructor for Image properties window.
+        /// </summary>
         public ImageProperties()
         {
             InitializeComponent();

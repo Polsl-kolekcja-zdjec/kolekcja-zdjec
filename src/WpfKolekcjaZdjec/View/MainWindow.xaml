@@ -106,7 +106,7 @@
                                 <Border BorderBrush="#B2ADBDD1" BorderThickness="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
                                     <StackPanel Orientation="Horizontal" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" MinHeight="180" MaxHeight="410" MinWidth="620" Width="860">
                                         <!-- pobrane i wyświetlane zdjęcia -->
-                                        <Image Source="/WpfKolekcjaZdjec;component/Images/21.jpg" MaxHeight="200" MaxWidth="200" MinHeight="160" MinWidth="160" Height="Auto" Width="Auto" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="10" />
+                                        <Image Source="/WpfKolekcjaZdjec;component/Images/ekrajewskaSmall.jpg" MaxHeight="200" MaxWidth="200" MinHeight="160" MinWidth="160" Height="Auto" Width="Auto" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="10" />
                                         <Image Source="/WpfKolekcjaZdjec;component/Images/DreamsSmall.jpeg" MaxHeight="200" MaxWidth="200" Height="Auto" Width="Auto" MinHeight="160" MinWidth="160" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="10" />
                                         <Image Source="/WpfKolekcjaZdjec;component/Images/DreamsSmall.jpeg" MaxHeight="200" MaxWidth="200" Height="Auto" Width="Auto" MinHeight="160" MinWidth="160" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="10" />
                                         <Image Source="/WpfKolekcjaZdjec;component/Images/DreamsSmall.jpeg" MaxHeight="200" MaxWidth="200" Height="Auto" Width="Auto" MinHeight="160" MinWidth="160" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="10" />
@@ -188,16 +188,16 @@
                                         <Image Source="/WpfKolekcjaZdjec;component/Images/Dreams.jpeg" VerticalAlignment="Top" Width="180" Height="160" Margin="0" />
                                         <Image Source="/WpfKolekcjaZdjec;component/Images/Dreams.jpeg" VerticalAlignment="Top" Width="180" Height="160" Margin="0" />
                                         <Image Source="/WpfKolekcjaZdjec;component/Images/Dreams.jpeg" VerticalAlignment="Top" Width="180" Height="160" Margin="0" />
-                                        <Image Source="/WpfKolekcjaZdjec;component/Images/21.jpg" VerticalAlignment="Top" Width="175" Height="130" Margin="0" />
+                                        <Image Source="/WpfKolekcjaZdjec;component/Images/ekrajewskaSmall.jpg" VerticalAlignment="Top" Width="175" Height="130" Margin="0" />
                                         <Image Source="/WpfKolekcjaZdjec;component/Images/Dreams.jpeg" VerticalAlignment="Top" Width="180" Height="160" Margin="0" />
                                         <Image Source="/WpfKolekcjaZdjec;component/Images/Dreams.jpeg" VerticalAlignment="Top" Width="180" Height="160" Margin="0" />
                                         <Image Source="/WpfKolekcjaZdjec;component/Images/Dreams.jpeg" VerticalAlignment="Top" Width="180" Height="160" Margin="0" />
                                         <Image Source="/WpfKolekcjaZdjec;component/Images/Dreams.jpeg" VerticalAlignment="Top" Width="180" Height="160" Margin="0" />
                                         <Image Source="/WpfKolekcjaZdjec;component/Images/Dreams.jpeg" VerticalAlignment="Top" Width="180" Height="160" Margin="0" />
                                         <Image Source="/WpfKolekcjaZdjec;component/Images/Dreams.jpeg" VerticalAlignment="Top" Width="180" Height="160" Margin="0" />
-                                        <Image Source="/WpfKolekcjaZdjec;component/Images/21.jpg" VerticalAlignment="Top" Width="175" Height="130" Margin="0" />
+                                        <Image Source="/WpfKolekcjaZdjec;component/Images/ekrajewskaSmall.jpg" VerticalAlignment="Top" Width="175" Height="130" Margin="0" />
 
-                                    </telerik:RadCarouselPanel>   
+                                    </telerik:RadCarouselPanel>
                             </Border>
                         </Border>
                     
