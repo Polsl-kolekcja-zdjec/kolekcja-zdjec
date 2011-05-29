@@ -16,6 +16,8 @@
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <WarningLevel>4</WarningLevel>
     <IsWebBootstrapper>false</IsWebBootstrapper>
+    <JSLintSkip>
+    </JSLintSkip>
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -179,10 +181,63 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Entities\WpfKolekcjaZdjecEntitiesDataModel.Designer.cs">
+    <Compile Include="DataAccess\PhotosDataSource.cs" />
+    <Compile Include="Entities\Archive.cs">
+      <DependentUpon>PhotoCollectionEntityGenerator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\BaseAttributes.cs">
+      <DependentUpon>PhotoCollectionEntityGenerator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\CardReader.cs">
+      <DependentUpon>PhotoCollectionEntityGenerator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\DigitalCamera.cs">
+      <DependentUpon>PhotoCollectionEntityGenerator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\ExifParameters.cs">
+      <DependentUpon>PhotoCollectionEntityGenerator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\HddDirectory.cs">
+      <DependentUpon>PhotoCollectionEntityGenerator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\Pendrive.cs">
+      <DependentUpon>PhotoCollectionEntityGenerator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\Photo.cs">
+      <DependentUpon>PhotoCollectionEntityGenerator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\PhotoCollectionEntityGenerator.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>WpfKolekcjaZdjecEntitiesDataModel.edmx</DependentUpon>
+      <DependentUpon>PhotoCollectionEntityGenerator.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\PhotoCollectionEntityGenerator.Context.Extensions.cs">
+      <DependentUpon>PhotoCollectionEntityGenerator.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\PhotoCollectionEntityGenerator.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PhotoCollectionEntityGenerator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\PhotoCollectionModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PhotoCollectionModel.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\ReadOnlyArchive.cs">
+      <DependentUpon>PhotoCollectionEntityGenerator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\ReportsHistory.cs">
+      <DependentUpon>PhotoCollectionEntityGenerator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\SavedReport.cs">
+      <DependentUpon>PhotoCollectionEntityGenerator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\StandardAttributes.cs">
+      <DependentUpon>PhotoCollectionEntityGenerator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\Tag.cs">
+      <DependentUpon>PhotoCollectionEntityGenerator.tt</DependentUpon>
     </Compile>
     <Compile Include="View\ImageProperties.xaml.cs">
       <DependentUpon>ImageProperties.xaml</DependentUpon>
@@ -238,25 +293,35 @@
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <None Include="App.config" />
+    <EntityDeploy Include="Entities\PhotoCollectionModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>PhotoCollectionModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="Entities\PhotoCollectionEntityGenerator.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>PhotoCollectionEntityGenerator.Context.cs</LastGenOutput>
+    </None>
+    <None Include="Entities\PhotoCollectionEntityGenerator.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>PhotoCollectionEntityGenerator.cs</LastGenOutput>
+    </None>
+    <None Include="Entities\PhotoCollectionModel.edmx.sqlce" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <AppDesigner Include="Properties\" />
-    <EntityDeploy Include="Entities\WpfKolekcjaZdjecEntitiesDataModel.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>WpfKolekcjaZdjecEntitiesDataModel.Designer.cs</LastGenOutput>
-    </EntityDeploy>
     <None Include="Settings.StyleCop" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Business\" />
-    <Folder Include="DataAccess\" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="PhotoCollectionDatabase.sdf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Resource Include="MainIcon.ico" />
     <Resource Include="Resources\dreams.jpeg" />
-    <Content Include="Entities\WpfKolekcjaZdjecEntitiesDataModel.edmx.sql" />
     <Resource Include="Images\AddItem.png" />
     <Resource Include="Images\Address.png" />
     <Resource Include="Images\ArrowLeft.png" />
@@ -298,6 +363,8 @@
     <Resource Include="Images\Unlock.png" />
     <Resource Include="Images\USB.png" />
     <Resource Include="Images\UsbDongle.png" />
+    <Resource Include="Images\ekrajewska.jpg" />
+    <Resource Include="Images\ekrajewskaSmall.jpg" />
     <Content Include="Lib\design\Telerik.Windows.Controls.Charting.Design.dll" />
     <Content Include="Lib\design\Telerik.Windows.Controls.Charting.Expression.Design.dll" />
     <Content Include="Lib\design\Telerik.Windows.Controls.Charting.VisualStudio.Design.4.0.dll" />
@@ -449,11 +516,19 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.SQL.Server.Compact.3.5">
+      <Visible>False</Visible>
+      <ProductName>SQL Server Compact 3.5 SP2</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
     <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
       <Visible>False</Visible>
       <ProductName>Windows Installer 3.1</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(ProgramFiles)\MSBuild\Microsoft\StyleCop\v4.3\Microsoft.StyleCop.targets" />
