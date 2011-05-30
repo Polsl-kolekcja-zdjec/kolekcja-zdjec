@@ -68,6 +68,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.Entity" />
     <Reference Include="System.Drawing" />
@@ -181,6 +182,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Business\ConnectionStringHelper.cs" />
     <Compile Include="DataAccess\PhotosDataSource.cs" />
     <Compile Include="Entities\Archive.cs">
       <DependentUpon>PhotoCollectionEntityGenerator.tt</DependentUpon>
@@ -313,9 +315,7 @@
     <AppDesigner Include="Properties\" />
     <None Include="Settings.StyleCop" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Business\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="PhotoCollectionDatabase.sdf">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
