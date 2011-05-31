@@ -31,6 +31,29 @@ namespace WpfKolekcjaZdjec.DataAccess
         }
 
         /// <summary>
+        /// Get all photos.
+        /// </summary>
+        /// <returns>Photos enumerable collection.</returns>
+        public IEnumerable<Photo> GetAllPhotos()
+        {
+            PhotoCollectionDatabaseEntities context = new PhotoCollectionDatabaseEntities(_connectionString);
+
+            return from o in context.PhotoSet select o;
+        }
+
+        /// <summary>
+        /// Get one photo.
+        /// </summary>
+        /// <param name="id">Photo ID.</param>
+        /// <returns>One photo.</returns>
+        public Photo GetPhoto(int id)
+        {
+            PhotoCollectionDatabaseEntities context = new PhotoCollectionDatabaseEntities(_connectionString);
+
+            return (from o in context.PhotoSet where o.Id == id select o).First();
+        }
+
+        /// <summary>
         /// Adding new photo into database.
         /// </summary>
         /// <param name="newPhoto">New photo entity.</param>
