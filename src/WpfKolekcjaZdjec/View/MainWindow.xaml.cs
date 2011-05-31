@@ -32,6 +32,7 @@ namespace WpfKolekcjaZdjec
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
+            Business.Actions.StartupTests();
         }
 
         private void SearchTextBox_ValueChanged(object sender, Telerik.Windows.RadRoutedEventArgs e)
@@ -143,11 +144,12 @@ namespace WpfKolekcjaZdjec
 
         private void ImgNew_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            string openedImageName = string.Empty;
+            Business.Actions.AddPhoto();
+           /* string openedImageName = string.Empty;
             Microsoft.Win32.OpenFileDialog openImage = new Microsoft.Win32.OpenFileDialog();
             openImage.Filter = "*.jpg|*.jpg|*.png|*.png| *.crt |*.crt| *.tiff| *.tiff";
             openImage.ShowDialog();
-            openedImageName = openImage.FileName;          
+            openedImageName = openImage.FileName;      */    
         }
 
         private void AboutItem_Click(object sender, EventArgs e)

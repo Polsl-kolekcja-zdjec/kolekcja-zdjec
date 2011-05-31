@@ -30,15 +30,19 @@ namespace WpfKolekcjaZdjec.DataAccess
             _connectionString = actualConnectionString;
         }
 
-        /// <summary>
-        /// Get all photos.
-        /// </summary>
-        /// <returns>Photos enumerable collection.</returns>
         public IEnumerable<Photo> GetAllPhotos()
         {
             PhotoCollectionDatabaseEntities context = new PhotoCollectionDatabaseEntities(_connectionString);
-
             return from o in context.PhotoSet select o;
+        }
+
+        public Photo GetLastPhoto() 
+        {
+            PhotoCollectionDatabaseEntities context = new PhotoCollectionDatabaseEntities(_connectionString);
+            IEnumerable<Photo> query = from o in context.PhotoSet orderby o.Id ascending select o;
+            if (query.Count() == 0)
+                return null;
+            return query.Last();
         }
 
         /// <summary>

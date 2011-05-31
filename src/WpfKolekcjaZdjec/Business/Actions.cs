@@ -1,23 +1,27 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Configuration;
 using System.Linq;
-using System.Text;
 using WpfKolekcjaZdjec.Entities;
 
 namespace WpfKolekcjaZdjec.Business
 {
     public class Actions
     {
+        public static void StartupTests()
+        {
+            ThumbnailDirectoryExist();
+        }
+
         public static void AddPhoto()
         {
-            int thumbnailHeight = 400;
-            int thumbnailWidth = 400;
-            string thumbnailPath = "C:/program1/";
-            string openedImageName = string.Empty;
+            int thumbnailHeight = int.Parse(ConfigurationManager.AppSettings["thumbnailMaxHeight"].ToString());
+            int thumbnailWidth = int.Parse(ConfigurationManager.AppSettings["thumbnailMaxWidth"].ToString());
+            string thumbnailPath = ConfigurationManager.AppSettings["thumbnailDirectory"].ToString();
+            string connectionString = Business.ConnectionStringHelper.GetActualConnectionString();
+
             Microsoft.Win32.OpenFileDialog openImage = new Microsoft.Win32.OpenFileDialog();
             openImage.Filter = "Pliki obrazów (*.jpg, *.png, *.crt, *.tiff)|*.jpg;*.JPG;*.jpeg;*.JPEG;*.png;*.PNG;*.crt;*.CRT;*.tiff;*.TIFF|Wszystkie pliki (*.*)|*.*";
             openImage.ShowDialog();
-            openedImageName = openImage.FileName;
+            string openedImageName = openImage.FileName;
             string fileName = System.IO.Path.GetFileName(openedImageName);
             string filePath = openedImageName.Substring(0, openedImageName.Length - fileName.Length);
             System.Drawing.Bitmap image = AForge.Imaging.Image.FromFile(openedImageName);
@@ -25,21 +29,44 @@ namespace WpfKolekcjaZdjec.Business
             System.Drawing.Bitmap thumbnail = filter.Apply(image);
             string thumbnailFileName = LookForFreeFilename(thumbnailPath, fileName);
             thumbnail.Save(thumbnailPath + thumbnailFileName);
-            WpfKolekcjaZdjecEntitiesDataModelContainer db = new WpfKolekcjaZdjecEntitiesDataModelContainer();
-            var results = (from p in db.PhotoSet
-                          orderby p.Id descending
-                          select p.Id).Take(1);
+            
+            DataAccess.PhotosDataSource db = new DataAccess.PhotosDataSource(connectionString);
+            Photo lastPhoto = db.GetLastPhoto();
+            Photo photoObject = new Photo();
+            if (lastPhoto != null)
+                photoObject.Id = lastPhoto.Id + 1;
+            else
+                photoObject.Id = 1;
 
-            foreach (int ph in results) 
+            photoObject.Filename = StrToByteArray(fileName);
+            photoObject.FilePath = filePath;
+            photoObject.ThumbnailPath = StrToByteArray(thumbnailPath + thumbnailFileName);
+            photoObject.Title = fileName;
+            photoObject.Description = string.Empty;
+            DataAccess.TagsDataSource tableTags = new DataAccess.TagsDataSource(connectionString);
+            photoObject.Tag = tableTags.GetTag(0);
+
+            // TEMPORARY CONDITION
+            if (photoObject.Tag == null) 
             {
-                Console.WriteLine(ph.ToString());
-                Console.WriteLine("Siema!");
+                DataAccess.DevDataSource tmpDb = new DataAccess.DevDataSource(connectionString);
+                tmpDb.AddTemplateTag();
+                photoObject.Tag = tableTags.GetTag(0);
             }
 
-            Console.WriteLine("Siema!2");
+            DataAccess.ArchivesDataSource tableArchives = new DataAccess.ArchivesDataSource(connectionString);
+            photoObject.Archives = tableArchives.GetArchive(0);
 
-            //// Consoe.WriteLine(results.ToString());
-            // db.PhotoSet.AddObject(Photo.CreatePhoto(0, StrToByteArray(fileName), filePath, StrToByteArray(thumbnailPath + thumbnailFileName)));
+            // TEMPORARY CONDITION
+            if (photoObject.Archives == null) 
+            {
+                DataAccess.DevDataSource tmpDb = new DataAccess.DevDataSource(connectionString);
+                tmpDb.AddTemplateArchive();
+                photoObject.Archives = tableArchives.GetArchive(0);
+            }
+
+            db.AddPhoto(photoObject);
+
             // db.SaveChanges();
         }
 
@@ -80,6 +107,18 @@ namespace WpfKolekcjaZdjec.Business
             }
 
             return fileName;
+        }
+
+        public static bool ThumbnailDirectoryExist()
+        {
+            System.IO.DirectoryInfo dInfo = new System.IO.DirectoryInfo(ConfigurationManager.AppSettings["thumbnailDirectory"].ToString());
+            if (dInfo.Exists)
+            {
+                return true;             
+            }
+
+            dInfo.Create();
+            return false;
         }
     }
 }

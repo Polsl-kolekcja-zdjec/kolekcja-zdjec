@@ -67,6 +67,18 @@
     <ApplicationIcon>MainIcon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AForge, Version=2.1.5.0, Culture=neutral, PublicKeyToken=c1db6ff4eaa06aeb, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Lib\AForge.dll</HintPath>
+    </Reference>
+    <Reference Include="AForge.Imaging, Version=2.1.5.0, Culture=neutral, PublicKeyToken=ba8ddea9676ca48b, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Lib\AForge.Imaging.dll</HintPath>
+    </Reference>
+    <Reference Include="AForge.Imaging.Formats, Version=2.1.1.0, Culture=neutral, PublicKeyToken=8065ed5a639199a0, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Lib\AForge.Imaging.Formats.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Data" />
@@ -182,8 +194,12 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Business\Actions.cs" />
     <Compile Include="Business\ConnectionStringHelper.cs" />
+    <Compile Include="DataAccess\ArchivesDataSource.cs" />
+    <Compile Include="DataAccess\DevDataSource.cs" />
     <Compile Include="DataAccess\PhotosDataSource.cs" />
+    <Compile Include="DataAccess\TagsDataSource.cs" />
     <Compile Include="Entities\Archive.cs">
       <DependentUpon>PhotoCollectionEntityGenerator.tt</DependentUpon>
     </Compile>
@@ -317,6 +333,9 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <Content Include="Lib\AForge.dll" />
+    <Content Include="Lib\AForge.Imaging.dll" />
+    <Content Include="Lib\AForge.Imaging.Formats.dll" />
     <Content Include="PhotoCollectionDatabase.sdf">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
