@@ -37,11 +37,19 @@ namespace WpfKolekcjaZdjec.DataAccess
         /// <returns>One Archive.</returns>
         public Archive GetArchive(int id)
         {
-            PhotoCollectionDatabaseEntities context = new PhotoCollectionDatabaseEntities(_connectionString);
-            IEnumerable<Archive> t = from o in context.ArchiveSet where o.Id == id select o;
-            if (t.Count() != 0)
-                return t.First();
-            return null;
+            using (PhotoCollectionDatabaseEntities context = new PhotoCollectionDatabaseEntities(_connectionString))
+            {
+                IEnumerable<Archive> archive = from o in context.Archives where o.ID == id select o;
+
+                if (archive.Count() != 0)
+                {
+                    return archive.First();
+                }
+                else
+                {
+                    return null;
+                }
+            }
         }
     }
 }

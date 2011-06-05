@@ -77,41 +77,53 @@ namespace WpfKolekcjaZdjec.Entities
     
         #region ObjectSet Properties
     
-        public ObjectSet<Tag> TagSet
+        public ObjectSet<AdditionalAttribute> AdditionalAttributes
         {
-            get { return _tagSet  ?? (_tagSet = CreateObjectSet<Tag>("TagSet")); }
+            get { return _additionalAttributes  ?? (_additionalAttributes = CreateObjectSet<AdditionalAttribute>("AdditionalAttributes")); }
         }
-        private ObjectSet<Tag> _tagSet;
+        private ObjectSet<AdditionalAttribute> _additionalAttributes;
     
-        public ObjectSet<Photo> PhotoSet
+        public ObjectSet<Archive> Archives
         {
-            get { return _photoSet  ?? (_photoSet = CreateObjectSet<Photo>("PhotoSet")); }
+            get { return _archives  ?? (_archives = CreateObjectSet<Archive>("Archives")); }
         }
-        private ObjectSet<Photo> _photoSet;
+        private ObjectSet<Archive> _archives;
     
-        public ObjectSet<SavedReport> SavedReportSet
+        public ObjectSet<Attribute> Attributes
         {
-            get { return _savedReportSet  ?? (_savedReportSet = CreateObjectSet<SavedReport>("SavedReportSet")); }
+            get { return _attributes  ?? (_attributes = CreateObjectSet<Attribute>("Attributes")); }
         }
-        private ObjectSet<SavedReport> _savedReportSet;
+        private ObjectSet<Attribute> _attributes;
     
-        public ObjectSet<ReportsHistory> ReportsHistorySet
+        public ObjectSet<ExifAttribute> ExifAttributes
         {
-            get { return _reportsHistorySet  ?? (_reportsHistorySet = CreateObjectSet<ReportsHistory>("ReportsHistorySet")); }
+            get { return _exifAttributes  ?? (_exifAttributes = CreateObjectSet<ExifAttribute>("ExifAttributes")); }
         }
-        private ObjectSet<ReportsHistory> _reportsHistorySet;
+        private ObjectSet<ExifAttribute> _exifAttributes;
     
-        public ObjectSet<Archive> ArchiveSet
+        public ObjectSet<Photo> Photos
         {
-            get { return _archiveSet  ?? (_archiveSet = CreateObjectSet<Archive>("ArchiveSet")); }
+            get { return _photos  ?? (_photos = CreateObjectSet<Photo>("Photos")); }
         }
-        private ObjectSet<Archive> _archiveSet;
+        private ObjectSet<Photo> _photos;
     
-        public ObjectSet<BaseAttributes> BaseAttributesSet
+        public ObjectSet<ReportsHistory> ReportsHistories
         {
-            get { return _baseAttributesSet  ?? (_baseAttributesSet = CreateObjectSet<BaseAttributes>("BaseAttributesSet")); }
+            get { return _reportsHistories  ?? (_reportsHistories = CreateObjectSet<ReportsHistory>("ReportsHistories")); }
         }
-        private ObjectSet<BaseAttributes> _baseAttributesSet;
+        private ObjectSet<ReportsHistory> _reportsHistories;
+    
+        public ObjectSet<SavedReport> SavedReports
+        {
+            get { return _savedReports  ?? (_savedReports = CreateObjectSet<SavedReport>("SavedReports")); }
+        }
+        private ObjectSet<SavedReport> _savedReports;
+    
+        public ObjectSet<Tag> Tags
+        {
+            get { return _tags  ?? (_tags = CreateObjectSet<Tag>("Tags")); }
+        }
+        private ObjectSet<Tag> _tags;
 
         #endregion
     }

@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using WpfKolekcjaZdjec.Business;
 using WpfKolekcjaZdjec.Entities;
 
 namespace WpfKolekcjaZdjec.DataAccess
@@ -30,19 +31,37 @@ namespace WpfKolekcjaZdjec.DataAccess
             _connectionString = actualConnectionString;
         }
 
+        /// <summary>
+        /// Gets all photos.
+        /// </summary>
+        /// <returns>All photos collection.</returns>
         public IEnumerable<Photo> GetAllPhotos()
         {
-            PhotoCollectionDatabaseEntities context = new PhotoCollectionDatabaseEntities(_connectionString);
-            return from o in context.PhotoSet select o;
+            using (PhotoCollectionDatabaseEntities context = new PhotoCollectionDatabaseEntities(_connectionString))
+            {
+                return from o in context.Photos select o;
+            }
         }
 
-        public Photo GetLastPhoto() 
+        /// <summary>
+        /// Gets the last photo.
+        /// </summary>
+        /// <returns>Last photo entity.</returns>
+        public Photo GetLastPhoto()
         {
-            PhotoCollectionDatabaseEntities context = new PhotoCollectionDatabaseEntities(_connectionString);
-            IEnumerable<Photo> query = from o in context.PhotoSet orderby o.Id ascending select o;
-            if (query.Count() == 0)
-                return null;
-            return query.Last();
+            using (PhotoCollectionDatabaseEntities context = new PhotoCollectionDatabaseEntities(_connectionString))
+            {
+                IEnumerable<Photo> query = from o in context.Photos orderby o.ID ascending select o;
+
+                if (query.Count() == 0)
+                {
+                    return null;
+                }
+                else
+                {
+                    return query.Last();
+                }
+            }
         }
 
         /// <summary>
@@ -52,9 +71,10 @@ namespace WpfKolekcjaZdjec.DataAccess
         /// <returns>One photo.</returns>
         public Photo GetPhoto(int id)
         {
-            PhotoCollectionDatabaseEntities context = new PhotoCollectionDatabaseEntities(_connectionString);
-
-            return (from o in context.PhotoSet where o.Id == id select o).First();
+            using (PhotoCollectionDatabaseEntities context = new PhotoCollectionDatabaseEntities(_connectionString))
+            {
+                return (from o in context.Photos where o.ID == id select o).First();
+            }
         }
 
         /// <summary>
@@ -64,12 +84,14 @@ namespace WpfKolekcjaZdjec.DataAccess
         /// <returns>ID for created photo.</returns>
         public int AddPhoto(Photo newPhoto)
         {
-            PhotoCollectionDatabaseEntities context = new PhotoCollectionDatabaseEntities(_connectionString);
+            using (PhotoCollectionDatabaseEntities context = new PhotoCollectionDatabaseEntities(_connectionString))
+            {
+                newPhoto.ID = context.Photos.NextId(p => p.ID);
+                context.Photos.AddObject(newPhoto);
+                context.SaveChanges();
 
-            context.PhotoSet.AddObject(newPhoto);
-            context.SaveChanges();
-
-            return newPhoto.Id;
+                return newPhoto.ID;
+            }
         }
 
         /// <summary>
@@ -79,14 +101,16 @@ namespace WpfKolekcjaZdjec.DataAccess
         /// <returns>Row count for added group.</returns>
         public int AddPhotosGroup(List<Photo> photos)
         {
-            PhotoCollectionDatabaseEntities context = new PhotoCollectionDatabaseEntities(_connectionString);
-
-            foreach (Photo each in photos)
+            using (PhotoCollectionDatabaseEntities context = new PhotoCollectionDatabaseEntities(_connectionString))
             {
-                context.PhotoSet.AddObject(each);
-            }
+                foreach (Photo each in photos)
+                {
+                    each.ID = context.Photos.NextId(p => p.ID);
+                    context.Photos.AddObject(each);
+                }
 
-            return context.SaveChanges();
+                return context.SaveChanges();
+            }
         }
 
         /// <summary>
@@ -96,12 +120,13 @@ namespace WpfKolekcjaZdjec.DataAccess
         /// <returns>Operation status (for future dependencies).</returns>
         public bool DeletePhoto(int id)
         {
-            PhotoCollectionDatabaseEntities context = new PhotoCollectionDatabaseEntities(_connectionString);
+            using (PhotoCollectionDatabaseEntities context = new PhotoCollectionDatabaseEntities(_connectionString))
+            {
+                context.Photos.DeleteObject((from o in context.Photos where o.ID == id select o).First());
+                context.SaveChanges();
 
-            context.PhotoSet.DeleteObject((from o in context.PhotoSet where o.Id == id select o).First());
-            context.SaveChanges();
-
-            return true;
+                return true;
+            }
         }
 
         /// <summary>
@@ -111,14 +136,15 @@ namespace WpfKolekcjaZdjec.DataAccess
         /// <returns>Row count number.</returns>
         public int DeletePhotos(List<int> ids)
         {
-            PhotoCollectionDatabaseEntities context = new PhotoCollectionDatabaseEntities(_connectionString);
-
-            foreach (int id in ids)
+            using (PhotoCollectionDatabaseEntities context = new PhotoCollectionDatabaseEntities(_connectionString))
             {
-                context.PhotoSet.DeleteObject((from o in context.PhotoSet where o.Id == id select o).First());
-            }
+                foreach (int id in ids)
+                {
+                    context.Photos.DeleteObject((from o in context.Photos where o.ID == id select o).First());
+                }
 
-            return context.SaveChanges();
+                return context.SaveChanges();
+            }
         }
     }
 }

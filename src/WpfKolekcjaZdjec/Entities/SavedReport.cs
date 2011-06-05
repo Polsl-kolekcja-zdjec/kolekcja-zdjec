@@ -24,38 +24,23 @@ namespace WpfKolekcjaZdjec.Entities
         #region Primitive Properties
     
         [DataMember]
-        public int Id
+        public int ID
         {
-            get { return _id; }
+            get { return _iD; }
             set
             {
-                if (_id != value)
+                if (_iD != value)
                 {
                     if (ChangeTracker.ChangeTrackingEnabled && ChangeTracker.State != ObjectState.Added)
                     {
-                        throw new InvalidOperationException("The property 'Id' is part of the object's key and cannot be changed. Changes to key properties can only be made when the object is not being tracked or is in the Added state.");
+                        throw new InvalidOperationException("The property 'ID' is part of the object's key and cannot be changed. Changes to key properties can only be made when the object is not being tracked or is in the Added state.");
                     }
-                    _id = value;
-                    OnPropertyChanged("Id");
+                    _iD = value;
+                    OnPropertyChanged("ID");
                 }
             }
         }
-        private int _id;
-    
-        [DataMember]
-        public string Name
-        {
-            get { return _name; }
-            set
-            {
-                if (_name != value)
-                {
-                    _name = value;
-                    OnPropertyChanged("Name");
-                }
-            }
-        }
-        private string _name;
+        private int _iD;
     
         [DataMember]
         public System.DateTime CreationDate
@@ -88,6 +73,21 @@ namespace WpfKolekcjaZdjec.Entities
         private string _query;
     
         [DataMember]
+        public string Name
+        {
+            get { return _name; }
+            set
+            {
+                if (_name != value)
+                {
+                    _name = value;
+                    OnPropertyChanged("Name");
+                }
+            }
+        }
+        private string _name;
+    
+        [DataMember]
         public bool IsUserDefined
         {
             get { return _isUserDefined; }
@@ -100,45 +100,45 @@ namespace WpfKolekcjaZdjec.Entities
                 }
             }
         }
-        private bool _isUserDefined = true;
+        private bool _isUserDefined;
 
         #endregion
         #region Navigation Properties
     
         [DataMember]
-        public TrackableCollection<ReportsHistory> ReportsHistory
+        public TrackableCollection<ReportsHistory> ReportsHistories
         {
             get
             {
-                if (_reportsHistory == null)
+                if (_reportsHistories == null)
                 {
-                    _reportsHistory = new TrackableCollection<ReportsHistory>();
-                    _reportsHistory.CollectionChanged += FixupReportsHistory;
+                    _reportsHistories = new TrackableCollection<ReportsHistory>();
+                    _reportsHistories.CollectionChanged += FixupReportsHistories;
                 }
-                return _reportsHistory;
+                return _reportsHistories;
             }
             set
             {
-                if (!ReferenceEquals(_reportsHistory, value))
+                if (!ReferenceEquals(_reportsHistories, value))
                 {
                     if (ChangeTracker.ChangeTrackingEnabled)
                     {
                         throw new InvalidOperationException("Cannot set the FixupChangeTrackingCollection when ChangeTracking is enabled");
                     }
-                    if (_reportsHistory != null)
+                    if (_reportsHistories != null)
                     {
-                        _reportsHistory.CollectionChanged -= FixupReportsHistory;
+                        _reportsHistories.CollectionChanged -= FixupReportsHistories;
                     }
-                    _reportsHistory = value;
-                    if (_reportsHistory != null)
+                    _reportsHistories = value;
+                    if (_reportsHistories != null)
                     {
-                        _reportsHistory.CollectionChanged += FixupReportsHistory;
+                        _reportsHistories.CollectionChanged += FixupReportsHistories;
                     }
-                    OnNavigationPropertyChanged("ReportsHistory");
+                    OnNavigationPropertyChanged("ReportsHistories");
                 }
             }
         }
-        private TrackableCollection<ReportsHistory> _reportsHistory;
+        private TrackableCollection<ReportsHistory> _reportsHistories;
 
         #endregion
         #region ChangeTracking
@@ -218,13 +218,13 @@ namespace WpfKolekcjaZdjec.Entities
     
         protected virtual void ClearNavigationProperties()
         {
-            ReportsHistory.Clear();
+            ReportsHistories.Clear();
         }
 
         #endregion
         #region Association Fixup
     
-        private void FixupReportsHistory(object sender, NotifyCollectionChangedEventArgs e)
+        private void FixupReportsHistories(object sender, NotifyCollectionChangedEventArgs e)
         {
             if (IsDeserializing)
             {
@@ -242,7 +242,7 @@ namespace WpfKolekcjaZdjec.Entities
                         {
                             item.StartTracking();
                         }
-                        ChangeTracker.RecordAdditionToCollectionProperties("ReportsHistory", item);
+                        ChangeTracker.RecordAdditionToCollectionProperties("ReportsHistories", item);
                     }
                 }
             }
@@ -257,7 +257,7 @@ namespace WpfKolekcjaZdjec.Entities
                     }
                     if (ChangeTracker.ChangeTrackingEnabled)
                     {
-                        ChangeTracker.RecordRemovalFromCollectionProperties("ReportsHistory", item);
+                        ChangeTracker.RecordRemovalFromCollectionProperties("ReportsHistories", item);
                     }
                 }
             }

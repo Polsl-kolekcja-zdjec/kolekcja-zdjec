@@ -43,7 +43,6 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <DocumentationFile>bin\Debug\WpfKolekcjaZdjec.XML</DocumentationFile>
-    <StyleCopTreatErrorsAsWarnings>false</StyleCopTreatErrorsAsWarnings>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
@@ -56,7 +55,6 @@
     <WarningLevel>4</WarningLevel>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <DocumentationFile>bin\Release\WpfKolekcjaZdjec.XML</DocumentationFile>
-    <StyleCopTreatErrorsAsWarnings>false</StyleCopTreatErrorsAsWarnings>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup>
@@ -196,66 +194,52 @@
     </ApplicationDefinition>
     <Compile Include="Business\Actions.cs" />
     <Compile Include="Business\ConnectionStringHelper.cs" />
+    <Compile Include="Business\ExtensionMethods.cs" />
     <Compile Include="DataAccess\ArchivesDataSource.cs" />
     <Compile Include="DataAccess\DevDataSource.cs" />
     <Compile Include="DataAccess\PhotosDataSource.cs" />
     <Compile Include="DataAccess\TagsDataSource.cs" />
+    <Compile Include="Entities\AdditionalAttribute.cs">
+      <DependentUpon>PhotoCollectionEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="Entities\Archive.cs">
-      <DependentUpon>PhotoCollectionEntityGenerator.tt</DependentUpon>
+      <DependentUpon>PhotoCollectionEntities.tt</DependentUpon>
     </Compile>
-    <Compile Include="Entities\BaseAttributes.cs">
-      <DependentUpon>PhotoCollectionEntityGenerator.tt</DependentUpon>
+    <Compile Include="Entities\Attribute.cs">
+      <DependentUpon>PhotoCollectionEntities.tt</DependentUpon>
     </Compile>
-    <Compile Include="Entities\CardReader.cs">
-      <DependentUpon>PhotoCollectionEntityGenerator.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Entities\DigitalCamera.cs">
-      <DependentUpon>PhotoCollectionEntityGenerator.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Entities\ExifParameters.cs">
-      <DependentUpon>PhotoCollectionEntityGenerator.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Entities\HddDirectory.cs">
-      <DependentUpon>PhotoCollectionEntityGenerator.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Entities\Pendrive.cs">
-      <DependentUpon>PhotoCollectionEntityGenerator.tt</DependentUpon>
+    <Compile Include="Entities\ExifAttribute.cs">
+      <DependentUpon>PhotoCollectionEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Entities\Photo.cs">
-      <DependentUpon>PhotoCollectionEntityGenerator.tt</DependentUpon>
+      <DependentUpon>PhotoCollectionEntities.tt</DependentUpon>
     </Compile>
-    <Compile Include="Entities\PhotoCollectionEntityGenerator.Context.cs">
+    <Compile Include="Entities\PhotoCollectionEntities.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>PhotoCollectionEntityGenerator.Context.tt</DependentUpon>
+      <DependentUpon>PhotoCollectionEntities.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="Entities\PhotoCollectionEntityGenerator.Context.Extensions.cs">
-      <DependentUpon>PhotoCollectionEntityGenerator.Context.tt</DependentUpon>
+    <Compile Include="Entities\PhotoCollectionEntities.Context.Extensions.cs">
+      <DependentUpon>PhotoCollectionEntities.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="Entities\PhotoCollectionEntityGenerator.cs">
+    <Compile Include="Entities\PhotoCollectionEntities.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>PhotoCollectionEntityGenerator.tt</DependentUpon>
+      <DependentUpon>PhotoCollectionEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Entities\PhotoCollectionModel.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>PhotoCollectionModel.edmx</DependentUpon>
     </Compile>
-    <Compile Include="Entities\ReadOnlyArchive.cs">
-      <DependentUpon>PhotoCollectionEntityGenerator.tt</DependentUpon>
-    </Compile>
     <Compile Include="Entities\ReportsHistory.cs">
-      <DependentUpon>PhotoCollectionEntityGenerator.tt</DependentUpon>
+      <DependentUpon>PhotoCollectionEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Entities\SavedReport.cs">
-      <DependentUpon>PhotoCollectionEntityGenerator.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Entities\StandardAttributes.cs">
-      <DependentUpon>PhotoCollectionEntityGenerator.tt</DependentUpon>
+      <DependentUpon>PhotoCollectionEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Entities\Tag.cs">
-      <DependentUpon>PhotoCollectionEntityGenerator.tt</DependentUpon>
+      <DependentUpon>PhotoCollectionEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="View\ImageProperties.xaml.cs">
       <DependentUpon>ImageProperties.xaml</DependentUpon>
@@ -315,13 +299,13 @@
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>PhotoCollectionModel.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <None Include="Entities\PhotoCollectionEntityGenerator.Context.tt">
+    <None Include="Entities\PhotoCollectionEntities.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>PhotoCollectionEntityGenerator.Context.cs</LastGenOutput>
+      <LastGenOutput>PhotoCollectionEntities.Context.cs</LastGenOutput>
     </None>
-    <None Include="Entities\PhotoCollectionEntityGenerator.tt">
+    <None Include="Entities\PhotoCollectionEntities.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>PhotoCollectionEntityGenerator.cs</LastGenOutput>
+      <LastGenOutput>PhotoCollectionEntities.cs</LastGenOutput>
     </None>
     <None Include="Entities\PhotoCollectionModel.edmx.sqlce" />
     <None Include="Properties\Settings.settings">
@@ -329,7 +313,6 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <AppDesigner Include="Properties\" />
-    <None Include="Settings.StyleCop" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
@@ -550,5 +533,4 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <Import Project="$(ProgramFiles)\MSBuild\Microsoft\StyleCop\v4.3\Microsoft.StyleCop.targets" />
 </Project>

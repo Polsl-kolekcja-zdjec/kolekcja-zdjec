@@ -18,31 +18,31 @@ using System.Runtime.Serialization;
 namespace WpfKolekcjaZdjec.Entities
 {
     [DataContract(IsReference = true)]
-    [KnownType(typeof(Tag))]
     [KnownType(typeof(Archive))]
-    [KnownType(typeof(BaseAttributes))]
+    [KnownType(typeof(Attribute))]
+    [KnownType(typeof(Tag))]
     public partial class Photo: IObjectWithChangeTracker, INotifyPropertyChanged
     {
         #region Primitive Properties
     
         [DataMember]
-        public int Id
+        public int ID
         {
-            get { return _id; }
+            get { return _iD; }
             set
             {
-                if (_id != value)
+                if (_iD != value)
                 {
                     if (ChangeTracker.ChangeTrackingEnabled && ChangeTracker.State != ObjectState.Added)
                     {
-                        throw new InvalidOperationException("The property 'Id' is part of the object's key and cannot be changed. Changes to key properties can only be made when the object is not being tracked or is in the Added state.");
+                        throw new InvalidOperationException("The property 'ID' is part of the object's key and cannot be changed. Changes to key properties can only be made when the object is not being tracked or is in the Added state.");
                     }
-                    _id = value;
-                    OnPropertyChanged("Id");
+                    _iD = value;
+                    OnPropertyChanged("ID");
                 }
             }
         }
-        private int _id;
+        private int _iD;
     
         [DataMember]
         public string Description
@@ -58,21 +58,6 @@ namespace WpfKolekcjaZdjec.Entities
             }
         }
         private string _description;
-    
-        [DataMember]
-        public byte[] Filename
-        {
-            get { return _filename; }
-            set
-            {
-                if (_filename != value)
-                {
-                    _filename = value;
-                    OnPropertyChanged("Filename");
-                }
-            }
-        }
-        private byte[] _filename;
     
         [DataMember]
         public string FilePath
@@ -105,7 +90,7 @@ namespace WpfKolekcjaZdjec.Entities
         private string _title;
     
         [DataMember]
-        public byte[] ThumbnailPath
+        public string ThumbnailPath
         {
             get { return _thumbnailPath; }
             set
@@ -117,96 +102,160 @@ namespace WpfKolekcjaZdjec.Entities
                 }
             }
         }
-        private byte[] _thumbnailPath;
+        private string _thumbnailPath;
+    
+        [DataMember]
+        public Nullable<int> SourceID
+        {
+            get { return _sourceID; }
+            set
+            {
+                if (_sourceID != value)
+                {
+                    ChangeTracker.RecordOriginalValue("SourceID", _sourceID);
+                    if (!IsDeserializing)
+                    {
+                        if (Archive != null && Archive.ID != value)
+                        {
+                            Archive = null;
+                        }
+                    }
+                    _sourceID = value;
+                    OnPropertyChanged("SourceID");
+                }
+            }
+        }
+        private Nullable<int> _sourceID;
+    
+        [DataMember]
+        public Nullable<int> AttributesID
+        {
+            get { return _attributesID; }
+            set
+            {
+                if (_attributesID != value)
+                {
+                    ChangeTracker.RecordOriginalValue("AttributesID", _attributesID);
+                    if (!IsDeserializing)
+                    {
+                        if (Attribute != null && Attribute.ID != value)
+                        {
+                            Attribute = null;
+                        }
+                    }
+                    _attributesID = value;
+                    OnPropertyChanged("AttributesID");
+                }
+            }
+        }
+        private Nullable<int> _attributesID;
 
         #endregion
         #region Navigation Properties
     
         [DataMember]
-        public Tag Tag
+        public Archive Archive
         {
-            get { return _tag; }
+            get { return _archive; }
             set
             {
-                if (!ReferenceEquals(_tag, value))
+                if (!ReferenceEquals(_archive, value))
                 {
-                    var previousValue = _tag;
-                    _tag = value;
-                    FixupTag(previousValue);
-                    OnNavigationPropertyChanged("Tag");
+                    var previousValue = _archive;
+                    _archive = value;
+                    FixupArchive(previousValue);
+                    OnNavigationPropertyChanged("Archive");
                 }
             }
         }
-        private Tag _tag;
+        private Archive _archive;
     
         [DataMember]
-        public TrackableCollection<Archive> Source
+        public Attribute Attribute
+        {
+            get { return _attribute; }
+            set
+            {
+                if (!ReferenceEquals(_attribute, value))
+                {
+                    var previousValue = _attribute;
+                    _attribute = value;
+                    FixupAttribute(previousValue);
+                    OnNavigationPropertyChanged("Attribute");
+                }
+            }
+        }
+        private Attribute _attribute;
+    
+        [DataMember]
+        public TrackableCollection<Archive> Archives
         {
             get
             {
-                if (_source == null)
+                if (_archives == null)
                 {
-                    _source = new TrackableCollection<Archive>();
-                    _source.CollectionChanged += FixupSource;
+                    _archives = new TrackableCollection<Archive>();
+                    _archives.CollectionChanged += FixupArchives;
                 }
-                return _source;
+                return _archives;
             }
             set
             {
-                if (!ReferenceEquals(_source, value))
+                if (!ReferenceEquals(_archives, value))
                 {
                     if (ChangeTracker.ChangeTrackingEnabled)
                     {
                         throw new InvalidOperationException("Cannot set the FixupChangeTrackingCollection when ChangeTracking is enabled");
                     }
-                    if (_source != null)
+                    if (_archives != null)
                     {
-                        _source.CollectionChanged -= FixupSource;
+                        _archives.CollectionChanged -= FixupArchives;
                     }
-                    _source = value;
-                    if (_source != null)
-                    {
-                        _source.CollectionChanged += FixupSource;
-                    }
-                    OnNavigationPropertyChanged("Source");
-                }
-            }
-        }
-        private TrackableCollection<Archive> _source;
-    
-        [DataMember]
-        public Archive Archives
-        {
-            get { return _archives; }
-            set
-            {
-                if (!ReferenceEquals(_archives, value))
-                {
-                    var previousValue = _archives;
                     _archives = value;
-                    FixupArchives(previousValue);
+                    if (_archives != null)
+                    {
+                        _archives.CollectionChanged += FixupArchives;
+                    }
                     OnNavigationPropertyChanged("Archives");
                 }
             }
         }
-        private Archive _archives;
+        private TrackableCollection<Archive> _archives;
     
         [DataMember]
-        public BaseAttributes Attributes
+        public TrackableCollection<Tag> Tags
         {
-            get { return _attributes; }
+            get
+            {
+                if (_tags == null)
+                {
+                    _tags = new TrackableCollection<Tag>();
+                    _tags.CollectionChanged += FixupTags;
+                }
+                return _tags;
+            }
             set
             {
-                if (!ReferenceEquals(_attributes, value))
+                if (!ReferenceEquals(_tags, value))
                 {
-                    var previousValue = _attributes;
-                    _attributes = value;
-                    FixupAttributes(previousValue);
-                    OnNavigationPropertyChanged("Attributes");
+                    if (ChangeTracker.ChangeTrackingEnabled)
+                    {
+                        throw new InvalidOperationException("Cannot set the FixupChangeTrackingCollection when ChangeTracking is enabled");
+                    }
+                    if (_tags != null)
+                    {
+                        _tags.CollectionChanged -= FixupTags;
+                    }
+                    _tags = value;
+                    if (_tags != null)
+                    {
+                        _tags.CollectionChanged += FixupTags;
+                    }
+                    OnNavigationPropertyChanged("Tags");
                 }
             }
         }
-        private BaseAttributes _attributes;
+        private TrackableCollection<Tag> _tags;
 
         #endregion
         #region ChangeTracking
@@ -286,181 +335,104 @@ namespace WpfKolekcjaZdjec.Entities
     
         protected virtual void ClearNavigationProperties()
         {
-            Tag = null;
-            FixupTagKeys();
-            Source.Clear();
-            Archives = null;
-            FixupArchivesKeys();
-            Attributes = null;
-            FixupAttributesKeys();
+            Archive = null;
+            Attribute = null;
+            Archives.Clear();
+            Tags.Clear();
         }
 
         #endregion
         #region Association Fixup
     
-        private void FixupTag(Tag previousValue)
+        private void FixupArchive(Archive previousValue, bool skipKeys = false)
         {
             if (IsDeserializing)
             {
                 return;
             }
     
-            if (previousValue != null && previousValue.Photo.Contains(this))
+            if (previousValue != null && previousValue.Photos.Contains(this))
             {
-                previousValue.Photo.Remove(this);
+                previousValue.Photos.Remove(this);
             }
     
-            if (Tag != null)
+            if (Archive != null)
             {
-                if (!Tag.Photo.Contains(this))
+                if (!Archive.Photos.Contains(this))
                 {
-                    Tag.Photo.Add(this);
+                    Archive.Photos.Add(this);
                 }
     
+                SourceID = Archive.ID;
             }
+            else if (!skipKeys)
+            {
+                SourceID = null;
+            }
+    
             if (ChangeTracker.ChangeTrackingEnabled)
             {
-                if (ChangeTracker.OriginalValues.ContainsKey("Tag")
-                    && (ChangeTracker.OriginalValues["Tag"] == Tag))
+                if (ChangeTracker.OriginalValues.ContainsKey("Archive")
+                    && (ChangeTracker.OriginalValues["Archive"] == Archive))
                 {
-                    ChangeTracker.OriginalValues.Remove("Tag");
+                    ChangeTracker.OriginalValues.Remove("Archive");
                 }
                 else
                 {
-                    ChangeTracker.RecordOriginalValue("Tag", previousValue);
+                    ChangeTracker.RecordOriginalValue("Archive", previousValue);
                 }
-                if (Tag != null && !Tag.ChangeTracker.ChangeTrackingEnabled)
+                if (Archive != null && !Archive.ChangeTracker.ChangeTrackingEnabled)
                 {
-                    Tag.StartTracking();
+                    Archive.StartTracking();
                 }
-                FixupTagKeys();
             }
         }
     
-        private void FixupTagKeys()
-        {
-            const string IdKeyName = "Tag.Id";
-    
-            if(ChangeTracker.ExtendedProperties.ContainsKey(IdKeyName))
-            {
-                if(Tag == null ||
-                   !Equals(ChangeTracker.ExtendedProperties[IdKeyName], Tag.Id))
-                {
-                    ChangeTracker.RecordOriginalValue(IdKeyName, ChangeTracker.ExtendedProperties[IdKeyName]);
-                }
-                ChangeTracker.ExtendedProperties.Remove(IdKeyName);
-            }
-        }
-    
-        private void FixupArchives(Archive previousValue)
+        private void FixupAttribute(Attribute previousValue, bool skipKeys = false)
         {
             if (IsDeserializing)
             {
                 return;
             }
     
-            if (previousValue != null && previousValue.Photo_1.Contains(this))
+            if (previousValue != null && previousValue.Photos.Contains(this))
             {
-                previousValue.Photo_1.Remove(this);
+                previousValue.Photos.Remove(this);
             }
     
-            if (Archives != null)
+            if (Attribute != null)
             {
-                if (!Archives.Photo_1.Contains(this))
+                if (!Attribute.Photos.Contains(this))
                 {
-                    Archives.Photo_1.Add(this);
+                    Attribute.Photos.Add(this);
                 }
     
+                AttributesID = Attribute.ID;
             }
+            else if (!skipKeys)
+            {
+                AttributesID = null;
+            }
+    
             if (ChangeTracker.ChangeTrackingEnabled)
             {
-                if (ChangeTracker.OriginalValues.ContainsKey("Archives")
-                    && (ChangeTracker.OriginalValues["Archives"] == Archives))
+                if (ChangeTracker.OriginalValues.ContainsKey("Attribute")
+                    && (ChangeTracker.OriginalValues["Attribute"] == Attribute))
                 {
-                    ChangeTracker.OriginalValues.Remove("Archives");
+                    ChangeTracker.OriginalValues.Remove("Attribute");
                 }
                 else
                 {
-                    ChangeTracker.RecordOriginalValue("Archives", previousValue);
+                    ChangeTracker.RecordOriginalValue("Attribute", previousValue);
                 }
-                if (Archives != null && !Archives.ChangeTracker.ChangeTrackingEnabled)
+                if (Attribute != null && !Attribute.ChangeTracker.ChangeTrackingEnabled)
                 {
-                    Archives.StartTracking();
+                    Attribute.StartTracking();
                 }
-                FixupArchivesKeys();
             }
         }
     
-        private void FixupArchivesKeys()
-        {
-            const string IdKeyName = "Archives.Id";
-    
-            if(ChangeTracker.ExtendedProperties.ContainsKey(IdKeyName))
-            {
-                if(Archives == null ||
-                   !Equals(ChangeTracker.ExtendedProperties[IdKeyName], Archives.Id))
-                {
-                    ChangeTracker.RecordOriginalValue(IdKeyName, ChangeTracker.ExtendedProperties[IdKeyName]);
-                }
-                ChangeTracker.ExtendedProperties.Remove(IdKeyName);
-            }
-        }
-    
-        private void FixupAttributes(BaseAttributes previousValue)
-        {
-            if (IsDeserializing)
-            {
-                return;
-            }
-    
-            if (previousValue != null && previousValue.Photo.Contains(this))
-            {
-                previousValue.Photo.Remove(this);
-            }
-    
-            if (Attributes != null)
-            {
-                if (!Attributes.Photo.Contains(this))
-                {
-                    Attributes.Photo.Add(this);
-                }
-    
-            }
-            if (ChangeTracker.ChangeTrackingEnabled)
-            {
-                if (ChangeTracker.OriginalValues.ContainsKey("Attributes")
-                    && (ChangeTracker.OriginalValues["Attributes"] == Attributes))
-                {
-                    ChangeTracker.OriginalValues.Remove("Attributes");
-                }
-                else
-                {
-                    ChangeTracker.RecordOriginalValue("Attributes", previousValue);
-                }
-                if (Attributes != null && !Attributes.ChangeTracker.ChangeTrackingEnabled)
-                {
-                    Attributes.StartTracking();
-                }
-                FixupAttributesKeys();
-            }
-        }
-    
-        private void FixupAttributesKeys()
-        {
-            const string IdKeyName = "Attributes.Id";
-    
-            if(ChangeTracker.ExtendedProperties.ContainsKey(IdKeyName))
-            {
-                if(Attributes == null ||
-                   !Equals(ChangeTracker.ExtendedProperties[IdKeyName], Attributes.Id))
-                {
-                    ChangeTracker.RecordOriginalValue(IdKeyName, ChangeTracker.ExtendedProperties[IdKeyName]);
-                }
-                ChangeTracker.ExtendedProperties.Remove(IdKeyName);
-            }
-        }
-    
-        private void FixupSource(object sender, NotifyCollectionChangedEventArgs e)
+        private void FixupArchives(object sender, NotifyCollectionChangedEventArgs e)
         {
             if (IsDeserializing)
             {
@@ -471,14 +443,17 @@ namespace WpfKolekcjaZdjec.Entities
             {
                 foreach (Archive item in e.NewItems)
                 {
-                    item.Photo = this;
+                    if (!item.Photos1.Contains(this))
+                    {
+                        item.Photos1.Add(this);
+                    }
                     if (ChangeTracker.ChangeTrackingEnabled)
                     {
                         if (!item.ChangeTracker.ChangeTrackingEnabled)
                         {
                             item.StartTracking();
                         }
-                        ChangeTracker.RecordAdditionToCollectionProperties("Source", item);
+                        ChangeTracker.RecordAdditionToCollectionProperties("Archives", item);
                     }
                 }
             }
@@ -487,13 +462,55 @@ namespace WpfKolekcjaZdjec.Entities
             {
                 foreach (Archive item in e.OldItems)
                 {
-                    if (ReferenceEquals(item.Photo, this))
+                    if (item.Photos1.Contains(this))
                     {
-                        item.Photo = null;
+                        item.Photos1.Remove(this);
                     }
                     if (ChangeTracker.ChangeTrackingEnabled)
                     {
-                        ChangeTracker.RecordRemovalFromCollectionProperties("Source", item);
+                        ChangeTracker.RecordRemovalFromCollectionProperties("Archives", item);
+                    }
+                }
+            }
+        }
+    
+        private void FixupTags(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            if (IsDeserializing)
+            {
+                return;
+            }
+    
+            if (e.NewItems != null)
+            {
+                foreach (Tag item in e.NewItems)
+                {
+                    if (!item.Photos.Contains(this))
+                    {
+                        item.Photos.Add(this);
+                    }
+                    if (ChangeTracker.ChangeTrackingEnabled)
+                    {
+                        if (!item.ChangeTracker.ChangeTrackingEnabled)
+                        {
+                            item.StartTracking();
+                        }
+                        ChangeTracker.RecordAdditionToCollectionProperties("Tags", item);
+                    }
+                }
+            }
+    
+            if (e.OldItems != null)
+            {
+                foreach (Tag item in e.OldItems)
+                {
+                    if (item.Photos.Contains(this))
+                    {
+                        item.Photos.Remove(this);
+                    }
+                    if (ChangeTracker.ChangeTrackingEnabled)
+                    {
+                        ChangeTracker.RecordRemovalFromCollectionProperties("Tags", item);
                     }
                 }
             }

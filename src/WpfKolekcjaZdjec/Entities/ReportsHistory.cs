@@ -24,26 +24,26 @@ namespace WpfKolekcjaZdjec.Entities
         #region Primitive Properties
     
         [DataMember]
-        public int Id
+        public int ID
         {
-            get { return _id; }
+            get { return _iD; }
             set
             {
-                if (_id != value)
+                if (_iD != value)
                 {
                     if (ChangeTracker.ChangeTrackingEnabled && ChangeTracker.State != ObjectState.Added)
                     {
-                        throw new InvalidOperationException("The property 'Id' is part of the object's key and cannot be changed. Changes to key properties can only be made when the object is not being tracked or is in the Added state.");
+                        throw new InvalidOperationException("The property 'ID' is part of the object's key and cannot be changed. Changes to key properties can only be made when the object is not being tracked or is in the Added state.");
                     }
-                    _id = value;
-                    OnPropertyChanged("Id");
+                    _iD = value;
+                    OnPropertyChanged("ID");
                 }
             }
         }
-        private int _id;
+        private int _iD;
     
         [DataMember]
-        public byte[] Content
+        public string Content
         {
             get { return _content; }
             set
@@ -55,22 +55,45 @@ namespace WpfKolekcjaZdjec.Entities
                 }
             }
         }
-        private byte[] _content;
+        private string _content;
     
         [DataMember]
-        public System.DateTime UseDate
+        public System.DateTime LastUseDate
         {
-            get { return _useDate; }
+            get { return _lastUseDate; }
             set
             {
-                if (_useDate != value)
+                if (_lastUseDate != value)
                 {
-                    _useDate = value;
-                    OnPropertyChanged("UseDate");
+                    _lastUseDate = value;
+                    OnPropertyChanged("LastUseDate");
                 }
             }
         }
-        private System.DateTime _useDate;
+        private System.DateTime _lastUseDate;
+    
+        [DataMember]
+        public Nullable<int> SavedReportID
+        {
+            get { return _savedReportID; }
+            set
+            {
+                if (_savedReportID != value)
+                {
+                    ChangeTracker.RecordOriginalValue("SavedReportID", _savedReportID);
+                    if (!IsDeserializing)
+                    {
+                        if (SavedReport != null && SavedReport.ID != value)
+                        {
+                            SavedReport = null;
+                        }
+                    }
+                    _savedReportID = value;
+                    OnPropertyChanged("SavedReportID");
+                }
+            }
+        }
+        private Nullable<int> _savedReportID;
 
         #endregion
         #region Navigation Properties
@@ -171,32 +194,37 @@ namespace WpfKolekcjaZdjec.Entities
         protected virtual void ClearNavigationProperties()
         {
             SavedReport = null;
-            FixupSavedReportKeys();
         }
 
         #endregion
         #region Association Fixup
     
-        private void FixupSavedReport(SavedReport previousValue)
+        private void FixupSavedReport(SavedReport previousValue, bool skipKeys = false)
         {
             if (IsDeserializing)
             {
                 return;
             }
     
-            if (previousValue != null && previousValue.ReportsHistory.Contains(this))
+            if (previousValue != null && previousValue.ReportsHistories.Contains(this))
             {
-                previousValue.ReportsHistory.Remove(this);
+                previousValue.ReportsHistories.Remove(this);
             }
     
             if (SavedReport != null)
             {
-                if (!SavedReport.ReportsHistory.Contains(this))
+                if (!SavedReport.ReportsHistories.Contains(this))
                 {
-                    SavedReport.ReportsHistory.Add(this);
+                    SavedReport.ReportsHistories.Add(this);
                 }
     
+                SavedReportID = SavedReport.ID;
             }
+            else if (!skipKeys)
+            {
+                SavedReportID = null;
+            }
+    
             if (ChangeTracker.ChangeTrackingEnabled)
             {
                 if (ChangeTracker.OriginalValues.ContainsKey("SavedReport")
@@ -212,22 +240,6 @@ namespace WpfKolekcjaZdjec.Entities
                 {
                     SavedReport.StartTracking();
                 }
-                FixupSavedReportKeys();
-            }
-        }
-    
-        private void FixupSavedReportKeys()
-        {
-            const string IdKeyName = "SavedReport.Id";
-    
-            if(ChangeTracker.ExtendedProperties.ContainsKey(IdKeyName))
-            {
-                if(SavedReport == null ||
-                   !Equals(ChangeTracker.ExtendedProperties[IdKeyName], SavedReport.Id))
-                {
-                    ChangeTracker.RecordOriginalValue(IdKeyName, ChangeTracker.ExtendedProperties[IdKeyName]);
-                }
-                ChangeTracker.ExtendedProperties.Remove(IdKeyName);
             }
         }
 

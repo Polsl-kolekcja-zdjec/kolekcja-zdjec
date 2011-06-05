@@ -30,13 +30,26 @@ namespace WpfKolekcjaZdjec.DataAccess
             _connectionString = actualConnectionString;
         }
 
+        /// <summary>
+        /// Gets the tag.
+        /// </summary>
+        /// <param name="id">The id.</param>
+        /// <returns>Tag entity.</returns>
         public Tag GetTag(int id)
         {
-            PhotoCollectionDatabaseEntities context = new PhotoCollectionDatabaseEntities(_connectionString);
-            IEnumerable<Tag> t = from o in context.TagSet where o.Id == id select o;
-            if (t.Count() != 0)
-                return t.First();
-            return null;
+            using (PhotoCollectionDatabaseEntities context = new PhotoCollectionDatabaseEntities(_connectionString))
+            {
+                IEnumerable<Tag> tag = from o in context.Tags where o.ID == id select o;
+
+                if (tag.Count() != 0)
+                {
+                    return tag.First();
+                }
+                else
+                {
+                    return null;
+                }
+            }
         }
     }
 }

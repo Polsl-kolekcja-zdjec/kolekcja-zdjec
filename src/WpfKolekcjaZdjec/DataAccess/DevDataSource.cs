@@ -1,10 +1,14 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using WpfKolekcjaZdjec.Business;
 using WpfKolekcjaZdjec.Entities;
 
 namespace WpfKolekcjaZdjec.DataAccess
 {
-    public partial class DevDataSource
+    /// <summary>
+    /// Testing data source (only for development).
+    /// </summary>
+    public class DevDataSource
     {
         /// <summary>
         /// Connection string.
@@ -27,39 +31,59 @@ namespace WpfKolekcjaZdjec.DataAccess
             _connectionString = actualConnectionString;
         }
 
-        public void AddObjectsRequiredByPhoto() 
+        /// <summary>
+        /// Adds the objects required by photo.
+        /// </summary>
+        public void AddObjectsRequiredByPhoto()
         {
-            int tagId = AddTemplateTag();
-            int archiveId = AddTemplateArchive();
+            AddTemplateTag();
+            AddTemplateArchive();
         }
 
+        /// <summary>
+        /// Adds the template tag.
+        /// </summary>
+        /// <returns>Sample tag ID.</returns>
         public int AddTemplateTag()
         {
-            PhotoCollectionDatabaseEntities context = new PhotoCollectionDatabaseEntities(_connectionString);
-            Tag t = new Tag();
-            t.Id = 0;
-            t.IconPath = "none";
-            t.CreationDate = System.Convert.ToDateTime(System.DateTime.Now);
-            t.Name = "TemporaryTag";
-            t.Tag_ParentTag_Hierarchy = null;
-            context.TagSet.AddObject(t);
-            context.SaveChanges();
-            return t.Id;
+            using (PhotoCollectionDatabaseEntities context = new PhotoCollectionDatabaseEntities(_connectionString))
+            {
+                Tag tag = new Tag();
+
+                tag.ID = context.Tags.NextId(t => t.ID);
+                tag.IconPath = "none";
+                tag.CreationDate = System.Convert.ToDateTime(System.DateTime.Now);
+                tag.Name = "TemporaryTag";
+                tag.ParentID = null;
+
+                context.Tags.AddObject(tag);
+                context.SaveChanges();
+
+                return tag.ID;
+            }
         }
 
+        /// <summary>
+        /// Adds the template archive.
+        /// </summary>
+        /// <returns>Sample archive ID.</returns>
         public int AddTemplateArchive()
         {
-            PhotoCollectionDatabaseEntities context = new PhotoCollectionDatabaseEntities(_connectionString);
-            HddDirectory a = new HddDirectory();
-            a.Id = 0;
-            a.VolumeName = string.Empty;
-            a.Capacity = 1048567;
-            a.IsExternal = false;
-            a.DeviceId = "007";
-            a.HddLetter = "C";
-            context.ArchiveSet.AddObject(a);
-            context.SaveChanges();
-            return a.Id;
+            using (PhotoCollectionDatabaseEntities context = new PhotoCollectionDatabaseEntities(_connectionString))
+            {
+                Archive archive = new Archive();
+
+                archive.ID = context.Archives.NextId(a => a.ID);
+                archive.Capacity = 1048567;
+                archive.IsExternal = false;
+                archive.DeviceID = "007";
+                archive.HddLetter = "C";
+
+                context.Archives.AddObject(archive);
+                context.SaveChanges();
+
+                return archive.ID;
+            }
         }
     }
 }

@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server Compact Edition
 -- --------------------------------------------------
--- Date Created: 05/29/2011 08:28:20
+-- Date Created: 06/05/2011 12:02:21
 -- Generated from EDMX file: D:\Projects\Kolekcja-zdjec\src\WpfKolekcjaZdjec\Entities\PhotoCollectionModel.edmx
 -- --------------------------------------------------
 
@@ -12,31 +12,25 @@
 -- NOTE: if the constraint does not exist, an ignorable error will be reported.
 -- --------------------------------------------------
 
-    ALTER TABLE [TagSet] DROP CONSTRAINT [FK_TagTag];
+    ALTER TABLE [Attributes] DROP CONSTRAINT [FK_AdditionalAttributes];
 GO
-    ALTER TABLE [PhotoSet] DROP CONSTRAINT [FK_TagPhoto];
+    ALTER TABLE [Photos] DROP CONSTRAINT [FK_Attributes];
 GO
-    ALTER TABLE [ReportsHistorySet] DROP CONSTRAINT [FK_SavedReportReportsHistory];
+    ALTER TABLE [Photos2Locations] DROP CONSTRAINT [FK_DestinationArchive];
 GO
-    ALTER TABLE [ArchiveSet] DROP CONSTRAINT [FK_PhotoArchive];
+    ALTER TABLE [Attributes] DROP CONSTRAINT [FK_ExifAttributes];
 GO
-    ALTER TABLE [PhotoSet] DROP CONSTRAINT [FK_ArchivePhoto];
+    ALTER TABLE [Tags2Photos] DROP CONSTRAINT [FK_Photo];
 GO
-    ALTER TABLE [PhotoSet] DROP CONSTRAINT [FK_BaseAttributesPhoto];
+    ALTER TABLE [Photos2Locations] DROP CONSTRAINT [FK_PhotoLocated];
 GO
-    ALTER TABLE [ArchiveSet_HddDirectory] DROP CONSTRAINT [FK_HddDirectory_inherits_Archive];
+    ALTER TABLE [ReportsHistory] DROP CONSTRAINT [FK_SavedReport];
 GO
-    ALTER TABLE [ArchiveSet_Pendrive] DROP CONSTRAINT [FK_Pendrive_inherits_Archive];
+    ALTER TABLE [Photos] DROP CONSTRAINT [FK_Source];
 GO
-    ALTER TABLE [ArchiveSet_CardReader] DROP CONSTRAINT [FK_CardReader_inherits_Archive];
+    ALTER TABLE [Tags2Photos] DROP CONSTRAINT [FK_Tag];
 GO
-    ALTER TABLE [ArchiveSet_ReadOnlyArchive] DROP CONSTRAINT [FK_ReadOnlyArchive_inherits_Archive];
-GO
-    ALTER TABLE [ArchiveSet_DigitalCamera] DROP CONSTRAINT [FK_DigitalCamera_inherits_Archive];
-GO
-    ALTER TABLE [BaseAttributesSet_StandardAttributes] DROP CONSTRAINT [FK_StandardAttributes_inherits_BaseAttributes];
-GO
-    ALTER TABLE [BaseAttributesSet_ExifParameters] DROP CONSTRAINT [FK_ExifParameters_inherits_BaseAttributes];
+    ALTER TABLE [Tags] DROP CONSTRAINT [FK_TagsHierarchy];
 GO
 
 -- --------------------------------------------------
@@ -44,153 +38,70 @@ GO
 -- NOTE: if the table does not exist, an ignorable error will be reported.
 -- --------------------------------------------------
 
-    DROP TABLE [TagSet];
+    DROP TABLE [AdditionalAttributes];
 GO
-    DROP TABLE [PhotoSet];
+    DROP TABLE [Archives];
 GO
-    DROP TABLE [SavedReportSet];
+    DROP TABLE [Attributes];
 GO
-    DROP TABLE [ReportsHistorySet];
+    DROP TABLE [ExifAttributes];
 GO
-    DROP TABLE [ArchiveSet];
+    DROP TABLE [Photos];
 GO
-    DROP TABLE [BaseAttributesSet];
+    DROP TABLE [Photos2Locations];
 GO
-    DROP TABLE [ArchiveSet_HddDirectory];
+    DROP TABLE [ReportsHistory];
 GO
-    DROP TABLE [ArchiveSet_Pendrive];
+    DROP TABLE [SavedReports];
 GO
-    DROP TABLE [ArchiveSet_CardReader];
+    DROP TABLE [Tags];
 GO
-    DROP TABLE [ArchiveSet_ReadOnlyArchive];
-GO
-    DROP TABLE [ArchiveSet_DigitalCamera];
-GO
-    DROP TABLE [BaseAttributesSet_StandardAttributes];
-GO
-    DROP TABLE [BaseAttributesSet_ExifParameters];
+    DROP TABLE [Tags2Photos];
 GO
 
 -- --------------------------------------------------
 -- Creating all tables
 -- --------------------------------------------------
 
--- Creating table 'TagSet'
-CREATE TABLE [TagSet] (
-    [Id] int IDENTITY(1,1) NOT NULL,
-    [CreationDate] datetime  NOT NULL,
-    [Name] nvarchar(4000)  NOT NULL,
-    [IconPath] nvarchar(4000)  NULL,
-    [Tag_ParentTag_Hierarchy_Id] int  NOT NULL
+-- Creating table 'AdditionalAttributes'
+CREATE TABLE [AdditionalAttributes] (
+    [ID] int  NOT NULL,
+    [AdditionalParametersXML] nvarchar(4000)  NULL
 );
 GO
 
--- Creating table 'PhotoSet'
-CREATE TABLE [PhotoSet] (
-    [Id] int IDENTITY(1,1) NOT NULL,
-    [Description] nvarchar(4000)  NULL,
-    [Filename] varbinary(8000)  NOT NULL,
-    [FilePath] nvarchar(4000)  NOT NULL,
-    [Title] nvarchar(4000)  NULL,
-    [ThumbnailPath] varbinary(8000)  NOT NULL,
-    [Tag_Id] int  NOT NULL,
-    [Archives_Id] int  NOT NULL,
-    [Attributes_Id] int  NOT NULL
-);
-GO
-
--- Creating table 'SavedReportSet'
-CREATE TABLE [SavedReportSet] (
-    [Id] int IDENTITY(1,1) NOT NULL,
-    [Name] nvarchar(4000)  NOT NULL,
-    [CreationDate] datetime  NOT NULL,
-    [Query] nvarchar(4000)  NOT NULL,
-    [IsUserDefined] bit  NOT NULL
-);
-GO
-
--- Creating table 'ReportsHistorySet'
-CREATE TABLE [ReportsHistorySet] (
-    [Id] int IDENTITY(1,1) NOT NULL,
-    [Content] varbinary(8000)  NOT NULL,
-    [UseDate] datetime  NOT NULL,
-    [SavedReport_Id] int  NOT NULL
-);
-GO
-
--- Creating table 'ArchiveSet'
-CREATE TABLE [ArchiveSet] (
-    [Id] int IDENTITY(1,1) NOT NULL,
+-- Creating table 'Archives'
+CREATE TABLE [Archives] (
+    [ID] int  NOT NULL,
     [VolumeName] nvarchar(4000)  NOT NULL,
-    [Photo_Id] int  NOT NULL
+    [Capacity] bigint  NULL,
+    [HddLetter] nvarchar(4000)  NULL,
+    [DeviceID] nvarchar(4000)  NULL,
+    [IsExternal] bit  NULL,
+    [DiscLetter] nvarchar(4000)  NULL,
+    [DiscType] nvarchar(4000)  NULL,
+    [ArchiveType] nvarchar(4000)  NOT NULL
 );
 GO
 
--- Creating table 'BaseAttributesSet'
-CREATE TABLE [BaseAttributesSet] (
-    [Id] int IDENTITY(1,1) NOT NULL,
+-- Creating table 'Attributes'
+CREATE TABLE [Attributes] (
+    [ID] int  NOT NULL,
     [Author] nvarchar(4000)  NOT NULL,
     [BitsPerPixel] smallint  NOT NULL,
     [Hash] nvarchar(4000)  NOT NULL,
-    [Height] bigint  NOT NULL,
-    [Width] bigint  NOT NULL,
-    [Rate] smallint  NOT NULL
+    [Height] int  NOT NULL,
+    [Width] int  NOT NULL,
+    [Rate] int  NOT NULL,
+    [AreExifAttributesPossible] bit  NOT NULL,
+    [AdditionalAttributesID] int  NULL,
+    [ExifAttributesID] int  NULL
 );
 GO
 
--- Creating table 'ArchiveSet_HddDirectory'
-CREATE TABLE [ArchiveSet_HddDirectory] (
-    [Capacity] bigint  NOT NULL,
-    [IsExternal] bit  NOT NULL,
-    [DeviceId] nvarchar(4000)  NOT NULL,
-    [HddLetter] nvarchar(4000)  NOT NULL,
-    [Id] int  NOT NULL
-);
-GO
-
--- Creating table 'ArchiveSet_Pendrive'
-CREATE TABLE [ArchiveSet_Pendrive] (
-    [Capacity] bigint  NOT NULL,
-    [HddLetter] nvarchar(4000)  NOT NULL,
-    [DeviceId] nvarchar(4000)  NOT NULL,
-    [Id] int  NOT NULL
-);
-GO
-
--- Creating table 'ArchiveSet_CardReader'
-CREATE TABLE [ArchiveSet_CardReader] (
-    [Capacity] bigint  NOT NULL,
-    [HddLetter] nvarchar(4000)  NOT NULL,
-    [DeviceId] nvarchar(4000)  NOT NULL,
-    [Id] int  NOT NULL
-);
-GO
-
--- Creating table 'ArchiveSet_ReadOnlyArchive'
-CREATE TABLE [ArchiveSet_ReadOnlyArchive] (
-    [Capacity] bigint  NOT NULL,
-    [DiscLetter] nvarchar(4000)  NOT NULL,
-    [DiscType] nvarchar(4000)  NOT NULL,
-    [Id] int  NOT NULL
-);
-GO
-
--- Creating table 'ArchiveSet_DigitalCamera'
-CREATE TABLE [ArchiveSet_DigitalCamera] (
-    [DeviceId] nvarchar(4000)  NOT NULL,
-    [Id] int  NOT NULL
-);
-GO
-
--- Creating table 'BaseAttributesSet_StandardAttributes'
-CREATE TABLE [BaseAttributesSet_StandardAttributes] (
-    [AdditionalParametersXML] nvarchar(4000)  NULL,
-    [Id] int  NOT NULL
-);
-GO
-
--- Creating table 'BaseAttributesSet_ExifParameters'
-CREATE TABLE [BaseAttributesSet_ExifParameters] (
+-- Creating table 'ExifAttributes'
+CREATE TABLE [ExifAttributes] (
+    [ID] int  NOT NULL,
     [AdditionalParametersXML] nvarchar(4000)  NULL,
     [CameraModel] nvarchar(4000)  NOT NULL,
     [CameraName] nvarchar(4000)  NOT NULL,
@@ -217,8 +128,62 @@ CREATE TABLE [BaseAttributesSet_ExifParameters] (
     [Saturation] nvarchar(4000)  NOT NULL,
     [Sharpness] nvarchar(4000)  NOT NULL,
     [DigitalZoom] bigint  NOT NULL,
-    [ExifVersion] bigint  NOT NULL,
-    [Id] int  NOT NULL
+    [ExifVersion] bigint  NOT NULL
+);
+GO
+
+-- Creating table 'Photos'
+CREATE TABLE [Photos] (
+    [ID] int  NOT NULL,
+    [Description] nvarchar(4000)  NOT NULL,
+    [FilePath] nvarchar(4000)  NOT NULL,
+    [Title] nvarchar(4000)  NOT NULL,
+    [ThumbnailPath] nvarchar(4000)  NULL,
+    [SourceID] int  NULL,
+    [AttributesID] int  NULL
+);
+GO
+
+-- Creating table 'ReportsHistories'
+CREATE TABLE [ReportsHistories] (
+    [ID] int  NOT NULL,
+    [Content] nvarchar(4000)  NOT NULL,
+    [LastUseDate] datetime  NOT NULL,
+    [SavedReportID] int  NULL
+);
+GO
+
+-- Creating table 'SavedReports'
+CREATE TABLE [SavedReports] (
+    [ID] int  NOT NULL,
+    [CreationDate] datetime  NOT NULL,
+    [Query] nvarchar(4000)  NOT NULL,
+    [Name] nvarchar(4000)  NOT NULL,
+    [IsUserDefined] bit  NOT NULL
+);
+GO
+
+-- Creating table 'Tags'
+CREATE TABLE [Tags] (
+    [ID] int  NOT NULL,
+    [CreationDate] datetime  NOT NULL,
+    [Name] nvarchar(100)  NOT NULL,
+    [IconPath] nvarchar(4000)  NULL,
+    [ParentID] int  NULL
+);
+GO
+
+-- Creating table 'Photos2Locations'
+CREATE TABLE [Photos2Locations] (
+    [Archives_ID] int  NOT NULL,
+    [Photos1_ID] int  NOT NULL
+);
+GO
+
+-- Creating table 'Tags2Photos'
+CREATE TABLE [Tags2Photos] (
+    [Photos_ID] int  NOT NULL,
+    [Tags_ID] int  NOT NULL
 );
 GO
 
@@ -226,233 +191,193 @@ GO
 -- Creating all PRIMARY KEY constraints
 -- --------------------------------------------------
 
--- Creating primary key on [Id] in table 'TagSet'
-ALTER TABLE [TagSet]
-ADD CONSTRAINT [PK_TagSet]
-    PRIMARY KEY ([Id] );
+-- Creating primary key on [ID] in table 'AdditionalAttributes'
+ALTER TABLE [AdditionalAttributes]
+ADD CONSTRAINT [PK_AdditionalAttributes]
+    PRIMARY KEY ([ID] );
 GO
 
--- Creating primary key on [Id] in table 'PhotoSet'
-ALTER TABLE [PhotoSet]
-ADD CONSTRAINT [PK_PhotoSet]
-    PRIMARY KEY ([Id] );
+-- Creating primary key on [ID] in table 'Archives'
+ALTER TABLE [Archives]
+ADD CONSTRAINT [PK_Archives]
+    PRIMARY KEY ([ID] );
 GO
 
--- Creating primary key on [Id] in table 'SavedReportSet'
-ALTER TABLE [SavedReportSet]
-ADD CONSTRAINT [PK_SavedReportSet]
-    PRIMARY KEY ([Id] );
+-- Creating primary key on [ID] in table 'Attributes'
+ALTER TABLE [Attributes]
+ADD CONSTRAINT [PK_Attributes]
+    PRIMARY KEY ([ID] );
 GO
 
--- Creating primary key on [Id] in table 'ReportsHistorySet'
-ALTER TABLE [ReportsHistorySet]
-ADD CONSTRAINT [PK_ReportsHistorySet]
-    PRIMARY KEY ([Id] );
+-- Creating primary key on [ID] in table 'ExifAttributes'
+ALTER TABLE [ExifAttributes]
+ADD CONSTRAINT [PK_ExifAttributes]
+    PRIMARY KEY ([ID] );
 GO
 
--- Creating primary key on [Id] in table 'ArchiveSet'
-ALTER TABLE [ArchiveSet]
-ADD CONSTRAINT [PK_ArchiveSet]
-    PRIMARY KEY ([Id] );
+-- Creating primary key on [ID] in table 'Photos'
+ALTER TABLE [Photos]
+ADD CONSTRAINT [PK_Photos]
+    PRIMARY KEY ([ID] );
 GO
 
--- Creating primary key on [Id] in table 'BaseAttributesSet'
-ALTER TABLE [BaseAttributesSet]
-ADD CONSTRAINT [PK_BaseAttributesSet]
-    PRIMARY KEY ([Id] );
+-- Creating primary key on [ID] in table 'ReportsHistories'
+ALTER TABLE [ReportsHistories]
+ADD CONSTRAINT [PK_ReportsHistories]
+    PRIMARY KEY ([ID] );
 GO
 
--- Creating primary key on [Id] in table 'ArchiveSet_HddDirectory'
-ALTER TABLE [ArchiveSet_HddDirectory]
-ADD CONSTRAINT [PK_ArchiveSet_HddDirectory]
-    PRIMARY KEY ([Id] );
+-- Creating primary key on [ID] in table 'SavedReports'
+ALTER TABLE [SavedReports]
+ADD CONSTRAINT [PK_SavedReports]
+    PRIMARY KEY ([ID] );
 GO
 
--- Creating primary key on [Id] in table 'ArchiveSet_Pendrive'
-ALTER TABLE [ArchiveSet_Pendrive]
-ADD CONSTRAINT [PK_ArchiveSet_Pendrive]
-    PRIMARY KEY ([Id] );
+-- Creating primary key on [ID] in table 'Tags'
+ALTER TABLE [Tags]
+ADD CONSTRAINT [PK_Tags]
+    PRIMARY KEY ([ID] );
 GO
 
--- Creating primary key on [Id] in table 'ArchiveSet_CardReader'
-ALTER TABLE [ArchiveSet_CardReader]
-ADD CONSTRAINT [PK_ArchiveSet_CardReader]
-    PRIMARY KEY ([Id] );
+-- Creating primary key on [Archives_ID], [Photos1_ID] in table 'Photos2Locations'
+ALTER TABLE [Photos2Locations]
+ADD CONSTRAINT [PK_Photos2Locations]
+    PRIMARY KEY ([Archives_ID], [Photos1_ID] );
 GO
 
--- Creating primary key on [Id] in table 'ArchiveSet_ReadOnlyArchive'
-ALTER TABLE [ArchiveSet_ReadOnlyArchive]
-ADD CONSTRAINT [PK_ArchiveSet_ReadOnlyArchive]
-    PRIMARY KEY ([Id] );
-GO
-
--- Creating primary key on [Id] in table 'ArchiveSet_DigitalCamera'
-ALTER TABLE [ArchiveSet_DigitalCamera]
-ADD CONSTRAINT [PK_ArchiveSet_DigitalCamera]
-    PRIMARY KEY ([Id] );
-GO
-
--- Creating primary key on [Id] in table 'BaseAttributesSet_StandardAttributes'
-ALTER TABLE [BaseAttributesSet_StandardAttributes]
-ADD CONSTRAINT [PK_BaseAttributesSet_StandardAttributes]
-    PRIMARY KEY ([Id] );
-GO
-
--- Creating primary key on [Id] in table 'BaseAttributesSet_ExifParameters'
-ALTER TABLE [BaseAttributesSet_ExifParameters]
-ADD CONSTRAINT [PK_BaseAttributesSet_ExifParameters]
-    PRIMARY KEY ([Id] );
+-- Creating primary key on [Photos_ID], [Tags_ID] in table 'Tags2Photos'
+ALTER TABLE [Tags2Photos]
+ADD CONSTRAINT [PK_Tags2Photos]
+    PRIMARY KEY ([Photos_ID], [Tags_ID] );
 GO
 
 -- --------------------------------------------------
 -- Creating all FOREIGN KEY constraints
 -- --------------------------------------------------
 
--- Creating foreign key on [Tag_ParentTag_Hierarchy_Id] in table 'TagSet'
-ALTER TABLE [TagSet]
-ADD CONSTRAINT [FK_TagTag]
-    FOREIGN KEY ([Tag_ParentTag_Hierarchy_Id])
-    REFERENCES [TagSet]
-        ([Id])
+-- Creating foreign key on [AdditionalAttributesID] in table 'Attributes'
+ALTER TABLE [Attributes]
+ADD CONSTRAINT [FK_AdditionalAttributes]
+    FOREIGN KEY ([AdditionalAttributesID])
+    REFERENCES [AdditionalAttributes]
+        ([ID])
     ON DELETE NO ACTION ON UPDATE NO ACTION;
 
--- Creating non-clustered index for FOREIGN KEY 'FK_TagTag'
-CREATE INDEX [IX_FK_TagTag]
-ON [TagSet]
-    ([Tag_ParentTag_Hierarchy_Id]);
+-- Creating non-clustered index for FOREIGN KEY 'FK_AdditionalAttributes'
+CREATE INDEX [IX_FK_AdditionalAttributes]
+ON [Attributes]
+    ([AdditionalAttributesID]);
 GO
 
--- Creating foreign key on [Tag_Id] in table 'PhotoSet'
-ALTER TABLE [PhotoSet]
-ADD CONSTRAINT [FK_TagPhoto]
-    FOREIGN KEY ([Tag_Id])
-    REFERENCES [TagSet]
-        ([Id])
+-- Creating foreign key on [SourceID] in table 'Photos'
+ALTER TABLE [Photos]
+ADD CONSTRAINT [FK_Source]
+    FOREIGN KEY ([SourceID])
+    REFERENCES [Archives]
+        ([ID])
     ON DELETE NO ACTION ON UPDATE NO ACTION;
 
--- Creating non-clustered index for FOREIGN KEY 'FK_TagPhoto'
-CREATE INDEX [IX_FK_TagPhoto]
-ON [PhotoSet]
-    ([Tag_Id]);
+-- Creating non-clustered index for FOREIGN KEY 'FK_Source'
+CREATE INDEX [IX_FK_Source]
+ON [Photos]
+    ([SourceID]);
 GO
 
--- Creating foreign key on [SavedReport_Id] in table 'ReportsHistorySet'
-ALTER TABLE [ReportsHistorySet]
-ADD CONSTRAINT [FK_SavedReportReportsHistory]
-    FOREIGN KEY ([SavedReport_Id])
-    REFERENCES [SavedReportSet]
-        ([Id])
+-- Creating foreign key on [AttributesID] in table 'Photos'
+ALTER TABLE [Photos]
+ADD CONSTRAINT [FK_Attributes]
+    FOREIGN KEY ([AttributesID])
+    REFERENCES [Attributes]
+        ([ID])
     ON DELETE NO ACTION ON UPDATE NO ACTION;
 
--- Creating non-clustered index for FOREIGN KEY 'FK_SavedReportReportsHistory'
-CREATE INDEX [IX_FK_SavedReportReportsHistory]
-ON [ReportsHistorySet]
-    ([SavedReport_Id]);
+-- Creating non-clustered index for FOREIGN KEY 'FK_Attributes'
+CREATE INDEX [IX_FK_Attributes]
+ON [Photos]
+    ([AttributesID]);
 GO
 
--- Creating foreign key on [Photo_Id] in table 'ArchiveSet'
-ALTER TABLE [ArchiveSet]
-ADD CONSTRAINT [FK_PhotoArchive]
-    FOREIGN KEY ([Photo_Id])
-    REFERENCES [PhotoSet]
-        ([Id])
+-- Creating foreign key on [ExifAttributesID] in table 'Attributes'
+ALTER TABLE [Attributes]
+ADD CONSTRAINT [FK_ExifAttributes]
+    FOREIGN KEY ([ExifAttributesID])
+    REFERENCES [ExifAttributes]
+        ([ID])
     ON DELETE NO ACTION ON UPDATE NO ACTION;
 
--- Creating non-clustered index for FOREIGN KEY 'FK_PhotoArchive'
-CREATE INDEX [IX_FK_PhotoArchive]
-ON [ArchiveSet]
-    ([Photo_Id]);
+-- Creating non-clustered index for FOREIGN KEY 'FK_ExifAttributes'
+CREATE INDEX [IX_FK_ExifAttributes]
+ON [Attributes]
+    ([ExifAttributesID]);
 GO
 
--- Creating foreign key on [Archives_Id] in table 'PhotoSet'
-ALTER TABLE [PhotoSet]
-ADD CONSTRAINT [FK_ArchivePhoto]
-    FOREIGN KEY ([Archives_Id])
-    REFERENCES [ArchiveSet]
-        ([Id])
+-- Creating foreign key on [SavedReportID] in table 'ReportsHistories'
+ALTER TABLE [ReportsHistories]
+ADD CONSTRAINT [FK_SavedReport]
+    FOREIGN KEY ([SavedReportID])
+    REFERENCES [SavedReports]
+        ([ID])
     ON DELETE NO ACTION ON UPDATE NO ACTION;
 
--- Creating non-clustered index for FOREIGN KEY 'FK_ArchivePhoto'
-CREATE INDEX [IX_FK_ArchivePhoto]
-ON [PhotoSet]
-    ([Archives_Id]);
+-- Creating non-clustered index for FOREIGN KEY 'FK_SavedReport'
+CREATE INDEX [IX_FK_SavedReport]
+ON [ReportsHistories]
+    ([SavedReportID]);
 GO
 
--- Creating foreign key on [Attributes_Id] in table 'PhotoSet'
-ALTER TABLE [PhotoSet]
-ADD CONSTRAINT [FK_BaseAttributesPhoto]
-    FOREIGN KEY ([Attributes_Id])
-    REFERENCES [BaseAttributesSet]
-        ([Id])
-    ON DELETE NO ACTION ON UPDATE NO ACTION;
-
--- Creating non-clustered index for FOREIGN KEY 'FK_BaseAttributesPhoto'
-CREATE INDEX [IX_FK_BaseAttributesPhoto]
-ON [PhotoSet]
-    ([Attributes_Id]);
-GO
-
--- Creating foreign key on [Id] in table 'ArchiveSet_HddDirectory'
-ALTER TABLE [ArchiveSet_HddDirectory]
-ADD CONSTRAINT [FK_HddDirectory_inherits_Archive]
-    FOREIGN KEY ([Id])
-    REFERENCES [ArchiveSet]
-        ([Id])
+-- Creating foreign key on [ID] in table 'Tags'
+ALTER TABLE [Tags]
+ADD CONSTRAINT [FK_TagsHierarchy]
+    FOREIGN KEY ([ID])
+    REFERENCES [Tags]
+        ([ID])
     ON DELETE NO ACTION ON UPDATE NO ACTION;
 GO
 
--- Creating foreign key on [Id] in table 'ArchiveSet_Pendrive'
-ALTER TABLE [ArchiveSet_Pendrive]
-ADD CONSTRAINT [FK_Pendrive_inherits_Archive]
-    FOREIGN KEY ([Id])
-    REFERENCES [ArchiveSet]
-        ([Id])
+-- Creating foreign key on [Archives_ID] in table 'Photos2Locations'
+ALTER TABLE [Photos2Locations]
+ADD CONSTRAINT [FK_Photos2Locations_Archive]
+    FOREIGN KEY ([Archives_ID])
+    REFERENCES [Archives]
+        ([ID])
     ON DELETE NO ACTION ON UPDATE NO ACTION;
 GO
 
--- Creating foreign key on [Id] in table 'ArchiveSet_CardReader'
-ALTER TABLE [ArchiveSet_CardReader]
-ADD CONSTRAINT [FK_CardReader_inherits_Archive]
-    FOREIGN KEY ([Id])
-    REFERENCES [ArchiveSet]
-        ([Id])
+-- Creating foreign key on [Photos1_ID] in table 'Photos2Locations'
+ALTER TABLE [Photos2Locations]
+ADD CONSTRAINT [FK_Photos2Locations_Photo]
+    FOREIGN KEY ([Photos1_ID])
+    REFERENCES [Photos]
+        ([ID])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_Photos2Locations_Photo'
+CREATE INDEX [IX_FK_Photos2Locations_Photo]
+ON [Photos2Locations]
+    ([Photos1_ID]);
+GO
+
+-- Creating foreign key on [Photos_ID] in table 'Tags2Photos'
+ALTER TABLE [Tags2Photos]
+ADD CONSTRAINT [FK_Tags2Photos_Photo]
+    FOREIGN KEY ([Photos_ID])
+    REFERENCES [Photos]
+        ([ID])
     ON DELETE NO ACTION ON UPDATE NO ACTION;
 GO
 
--- Creating foreign key on [Id] in table 'ArchiveSet_ReadOnlyArchive'
-ALTER TABLE [ArchiveSet_ReadOnlyArchive]
-ADD CONSTRAINT [FK_ReadOnlyArchive_inherits_Archive]
-    FOREIGN KEY ([Id])
-    REFERENCES [ArchiveSet]
-        ([Id])
+-- Creating foreign key on [Tags_ID] in table 'Tags2Photos'
+ALTER TABLE [Tags2Photos]
+ADD CONSTRAINT [FK_Tags2Photos_Tag]
+    FOREIGN KEY ([Tags_ID])
+    REFERENCES [Tags]
+        ([ID])
     ON DELETE NO ACTION ON UPDATE NO ACTION;
-GO
 
--- Creating foreign key on [Id] in table 'ArchiveSet_DigitalCamera'
-ALTER TABLE [ArchiveSet_DigitalCamera]
-ADD CONSTRAINT [FK_DigitalCamera_inherits_Archive]
-    FOREIGN KEY ([Id])
-    REFERENCES [ArchiveSet]
-        ([Id])
-    ON DELETE NO ACTION ON UPDATE NO ACTION;
-GO
-
--- Creating foreign key on [Id] in table 'BaseAttributesSet_StandardAttributes'
-ALTER TABLE [BaseAttributesSet_StandardAttributes]
-ADD CONSTRAINT [FK_StandardAttributes_inherits_BaseAttributes]
-    FOREIGN KEY ([Id])
-    REFERENCES [BaseAttributesSet]
-        ([Id])
-    ON DELETE NO ACTION ON UPDATE NO ACTION;
-GO
-
--- Creating foreign key on [Id] in table 'BaseAttributesSet_ExifParameters'
-ALTER TABLE [BaseAttributesSet_ExifParameters]
-ADD CONSTRAINT [FK_ExifParameters_inherits_BaseAttributes]
-    FOREIGN KEY ([Id])
-    REFERENCES [BaseAttributesSet]
-        ([Id])
-    ON DELETE NO ACTION ON UPDATE NO ACTION;
+-- Creating non-clustered index for FOREIGN KEY 'FK_Tags2Photos_Tag'
+CREATE INDEX [IX_FK_Tags2Photos_Tag]
+ON [Tags2Photos]
+    ([Tags_ID]);
 GO
 
 -- --------------------------------------------------

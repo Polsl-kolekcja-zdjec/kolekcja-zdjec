@@ -18,159 +18,82 @@ using System.Runtime.Serialization;
 namespace WpfKolekcjaZdjec.Entities
 {
     [DataContract(IsReference = true)]
-    [KnownType(typeof(StandardAttributes))]
-    [KnownType(typeof(ExifParameters))]
-    [KnownType(typeof(Photo))]
-    public abstract partial class BaseAttributes: IObjectWithChangeTracker, INotifyPropertyChanged
+    [KnownType(typeof(Attribute))]
+    public partial class AdditionalAttribute: IObjectWithChangeTracker, INotifyPropertyChanged
     {
         #region Primitive Properties
     
         [DataMember]
-        public int Id
+        public int ID
         {
-            get { return _id; }
+            get { return _iD; }
             set
             {
-                if (_id != value)
+                if (_iD != value)
                 {
                     if (ChangeTracker.ChangeTrackingEnabled && ChangeTracker.State != ObjectState.Added)
                     {
-                        throw new InvalidOperationException("The property 'Id' is part of the object's key and cannot be changed. Changes to key properties can only be made when the object is not being tracked or is in the Added state.");
+                        throw new InvalidOperationException("The property 'ID' is part of the object's key and cannot be changed. Changes to key properties can only be made when the object is not being tracked or is in the Added state.");
                     }
-                    _id = value;
-                    OnPropertyChanged("Id");
+                    _iD = value;
+                    OnPropertyChanged("ID");
                 }
             }
         }
-        private int _id;
+        private int _iD;
     
         [DataMember]
-        public string Author
+        public string AdditionalParametersXML
         {
-            get { return _author; }
+            get { return _additionalParametersXML; }
             set
             {
-                if (_author != value)
+                if (_additionalParametersXML != value)
                 {
-                    _author = value;
-                    OnPropertyChanged("Author");
+                    _additionalParametersXML = value;
+                    OnPropertyChanged("AdditionalParametersXML");
                 }
             }
         }
-        private string _author;
-    
-        [DataMember]
-        public short BitsPerPixel
-        {
-            get { return _bitsPerPixel; }
-            set
-            {
-                if (_bitsPerPixel != value)
-                {
-                    _bitsPerPixel = value;
-                    OnPropertyChanged("BitsPerPixel");
-                }
-            }
-        }
-        private short _bitsPerPixel;
-    
-        [DataMember]
-        public string Hash
-        {
-            get { return _hash; }
-            set
-            {
-                if (_hash != value)
-                {
-                    _hash = value;
-                    OnPropertyChanged("Hash");
-                }
-            }
-        }
-        private string _hash;
-    
-        [DataMember]
-        public long Height
-        {
-            get { return _height; }
-            set
-            {
-                if (_height != value)
-                {
-                    _height = value;
-                    OnPropertyChanged("Height");
-                }
-            }
-        }
-        private long _height;
-    
-        [DataMember]
-        public long Width
-        {
-            get { return _width; }
-            set
-            {
-                if (_width != value)
-                {
-                    _width = value;
-                    OnPropertyChanged("Width");
-                }
-            }
-        }
-        private long _width;
-    
-        [DataMember]
-        public short Rate
-        {
-            get { return _rate; }
-            set
-            {
-                if (_rate != value)
-                {
-                    _rate = value;
-                    OnPropertyChanged("Rate");
-                }
-            }
-        }
-        private short _rate = 0;
+        private string _additionalParametersXML;
 
         #endregion
         #region Navigation Properties
     
         [DataMember]
-        public TrackableCollection<Photo> Photo
+        public TrackableCollection<Attribute> Attributes
         {
             get
             {
-                if (_photo == null)
+                if (_attributes == null)
                 {
-                    _photo = new TrackableCollection<Photo>();
-                    _photo.CollectionChanged += FixupPhoto;
+                    _attributes = new TrackableCollection<Attribute>();
+                    _attributes.CollectionChanged += FixupAttributes;
                 }
-                return _photo;
+                return _attributes;
             }
             set
             {
-                if (!ReferenceEquals(_photo, value))
+                if (!ReferenceEquals(_attributes, value))
                 {
                     if (ChangeTracker.ChangeTrackingEnabled)
                     {
                         throw new InvalidOperationException("Cannot set the FixupChangeTrackingCollection when ChangeTracking is enabled");
                     }
-                    if (_photo != null)
+                    if (_attributes != null)
                     {
-                        _photo.CollectionChanged -= FixupPhoto;
+                        _attributes.CollectionChanged -= FixupAttributes;
                     }
-                    _photo = value;
-                    if (_photo != null)
+                    _attributes = value;
+                    if (_attributes != null)
                     {
-                        _photo.CollectionChanged += FixupPhoto;
+                        _attributes.CollectionChanged += FixupAttributes;
                     }
-                    OnNavigationPropertyChanged("Photo");
+                    OnNavigationPropertyChanged("Attributes");
                 }
             }
         }
-        private TrackableCollection<Photo> _photo;
+        private TrackableCollection<Attribute> _attributes;
 
         #endregion
         #region ChangeTracking
@@ -250,13 +173,13 @@ namespace WpfKolekcjaZdjec.Entities
     
         protected virtual void ClearNavigationProperties()
         {
-            Photo.Clear();
+            Attributes.Clear();
         }
 
         #endregion
         #region Association Fixup
     
-        private void FixupPhoto(object sender, NotifyCollectionChangedEventArgs e)
+        private void FixupAttributes(object sender, NotifyCollectionChangedEventArgs e)
         {
             if (IsDeserializing)
             {
@@ -265,31 +188,31 @@ namespace WpfKolekcjaZdjec.Entities
     
             if (e.NewItems != null)
             {
-                foreach (Photo item in e.NewItems)
+                foreach (Attribute item in e.NewItems)
                 {
-                    item.Attributes = this;
+                    item.AdditionalAttribute = this;
                     if (ChangeTracker.ChangeTrackingEnabled)
                     {
                         if (!item.ChangeTracker.ChangeTrackingEnabled)
                         {
                             item.StartTracking();
                         }
-                        ChangeTracker.RecordAdditionToCollectionProperties("Photo", item);
+                        ChangeTracker.RecordAdditionToCollectionProperties("Attributes", item);
                     }
                 }
             }
     
             if (e.OldItems != null)
             {
-                foreach (Photo item in e.OldItems)
+                foreach (Attribute item in e.OldItems)
                 {
-                    if (ReferenceEquals(item.Attributes, this))
+                    if (ReferenceEquals(item.AdditionalAttribute, this))
                     {
-                        item.Attributes = null;
+                        item.AdditionalAttribute = null;
                     }
                     if (ChangeTracker.ChangeTrackingEnabled)
                     {
-                        ChangeTracker.RecordRemovalFromCollectionProperties("Photo", item);
+                        ChangeTracker.RecordRemovalFromCollectionProperties("Attributes", item);
                     }
                 }
             }

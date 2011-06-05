@@ -18,9 +18,29 @@ using System.Runtime.Serialization;
 namespace WpfKolekcjaZdjec.Entities
 {
     [DataContract(IsReference = true)]
-    public partial class ExifParameters : BaseAttributes, IObjectWithChangeTracker, INotifyPropertyChanged
+    [KnownType(typeof(Attribute))]
+    public partial class ExifAttribute: IObjectWithChangeTracker, INotifyPropertyChanged
     {
         #region Primitive Properties
+    
+        [DataMember]
+        public int ID
+        {
+            get { return _iD; }
+            set
+            {
+                if (_iD != value)
+                {
+                    if (ChangeTracker.ChangeTrackingEnabled && ChangeTracker.State != ObjectState.Added)
+                    {
+                        throw new InvalidOperationException("The property 'ID' is part of the object's key and cannot be changed. Changes to key properties can only be made when the object is not being tracked or is in the Added state.");
+                    }
+                    _iD = value;
+                    OnPropertyChanged("ID");
+                }
+            }
+        }
+        private int _iD;
     
         [DataMember]
         public string AdditionalParametersXML
@@ -428,11 +448,164 @@ namespace WpfKolekcjaZdjec.Entities
         private long _exifVersion;
 
         #endregion
+        #region Navigation Properties
+    
+        [DataMember]
+        public TrackableCollection<Attribute> Attributes
+        {
+            get
+            {
+                if (_attributes == null)
+                {
+                    _attributes = new TrackableCollection<Attribute>();
+                    _attributes.CollectionChanged += FixupAttributes;
+                }
+                return _attributes;
+            }
+            set
+            {
+                if (!ReferenceEquals(_attributes, value))
+                {
+                    if (ChangeTracker.ChangeTrackingEnabled)
+                    {
+                        throw new InvalidOperationException("Cannot set the FixupChangeTrackingCollection when ChangeTracking is enabled");
+                    }
+                    if (_attributes != null)
+                    {
+                        _attributes.CollectionChanged -= FixupAttributes;
+                    }
+                    _attributes = value;
+                    if (_attributes != null)
+                    {
+                        _attributes.CollectionChanged += FixupAttributes;
+                    }
+                    OnNavigationPropertyChanged("Attributes");
+                }
+            }
+        }
+        private TrackableCollection<Attribute> _attributes;
+
+        #endregion
         #region ChangeTracking
     
-        protected override void ClearNavigationProperties()
+        protected virtual void OnPropertyChanged(String propertyName)
         {
-            base.ClearNavigationProperties();
+            if (ChangeTracker.State != ObjectState.Added && ChangeTracker.State != ObjectState.Deleted)
+            {
+                ChangeTracker.State = ObjectState.Modified;
+            }
+            if (_propertyChanged != null)
+            {
+                _propertyChanged(this, new PropertyChangedEventArgs(propertyName));
+            }
+        }
+    
+        protected virtual void OnNavigationPropertyChanged(String propertyName)
+        {
+            if (_propertyChanged != null)
+            {
+                _propertyChanged(this, new PropertyChangedEventArgs(propertyName));
+            }
+        }
+    
+        event PropertyChangedEventHandler INotifyPropertyChanged.PropertyChanged{ add { _propertyChanged += value; } remove { _propertyChanged -= value; } }
+        private event PropertyChangedEventHandler _propertyChanged;
+        private ObjectChangeTracker _changeTracker;
+    
+        [DataMember]
+        public ObjectChangeTracker ChangeTracker
+        {
+            get
+            {
+                if (_changeTracker == null)
+                {
+                    _changeTracker = new ObjectChangeTracker();
+                    _changeTracker.ObjectStateChanging += HandleObjectStateChanging;
+                }
+                return _changeTracker;
+            }
+            set
+            {
+                if(_changeTracker != null)
+                {
+                    _changeTracker.ObjectStateChanging -= HandleObjectStateChanging;
+                }
+                _changeTracker = value;
+                if(_changeTracker != null)
+                {
+                    _changeTracker.ObjectStateChanging += HandleObjectStateChanging;
+                }
+            }
+        }
+    
+        private void HandleObjectStateChanging(object sender, ObjectStateChangingEventArgs e)
+        {
+            if (e.NewState == ObjectState.Deleted)
+            {
+                ClearNavigationProperties();
+            }
+        }
+    
+        protected bool IsDeserializing { get; private set; }
+    
+        [OnDeserializing]
+        public void OnDeserializingMethod(StreamingContext context)
+        {
+            IsDeserializing = true;
+        }
+    
+        [OnDeserialized]
+        public void OnDeserializedMethod(StreamingContext context)
+        {
+            IsDeserializing = false;
+            ChangeTracker.ChangeTrackingEnabled = true;
+        }
+    
+        protected virtual void ClearNavigationProperties()
+        {
+            Attributes.Clear();
+        }
+
+        #endregion
+        #region Association Fixup
+    
+        private void FixupAttributes(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            if (IsDeserializing)
+            {
+                return;
+            }
+    
+            if (e.NewItems != null)
+            {
+                foreach (Attribute item in e.NewItems)
+                {
+                    item.ExifAttribute = this;
+                    if (ChangeTracker.ChangeTrackingEnabled)
+                    {
+                        if (!item.ChangeTracker.ChangeTrackingEnabled)
+                        {
+                            item.StartTracking();
+                        }
+                        ChangeTracker.RecordAdditionToCollectionProperties("Attributes", item);
+                    }
+                }
+            }
+    
+            if (e.OldItems != null)
+            {
+                foreach (Attribute item in e.OldItems)
+                {
+                    if (ReferenceEquals(item.ExifAttribute, this))
+                    {
+                        item.ExifAttribute = null;
+                    }
+                    if (ChangeTracker.ChangeTrackingEnabled)
+                    {
+                        ChangeTracker.RecordRemovalFromCollectionProperties("Attributes", item);
+                    }
+                }
+            }
         }
 
         #endregion

@@ -25,23 +25,30 @@ namespace WpfKolekcjaZdjec.Entities
         #region Primitive Properties
     
         [DataMember]
-        public int Id
+        public int ID
         {
-            get { return _id; }
+            get { return _iD; }
             set
             {
-                if (_id != value)
+                if (_iD != value)
                 {
                     if (ChangeTracker.ChangeTrackingEnabled && ChangeTracker.State != ObjectState.Added)
                     {
-                        throw new InvalidOperationException("The property 'Id' is part of the object's key and cannot be changed. Changes to key properties can only be made when the object is not being tracked or is in the Added state.");
+                        throw new InvalidOperationException("The property 'ID' is part of the object's key and cannot be changed. Changes to key properties can only be made when the object is not being tracked or is in the Added state.");
                     }
-                    _id = value;
-                    OnPropertyChanged("Id");
+                    if (!IsDeserializing)
+                    {
+                        if (Tag1 != null && Tag1.ID != value)
+                        {
+                            Tag1 = null;
+                        }
+                    }
+                    _iD = value;
+                    OnPropertyChanged("ID");
                 }
             }
         }
-        private int _id;
+        private int _iD;
     
         [DataMember]
         public System.DateTime CreationDate
@@ -87,96 +94,102 @@ namespace WpfKolekcjaZdjec.Entities
             }
         }
         private string _iconPath;
+    
+        [DataMember]
+        public Nullable<int> ParentID
+        {
+            get { return _parentID; }
+            set
+            {
+                if (_parentID != value)
+                {
+                    _parentID = value;
+                    OnPropertyChanged("ParentID");
+                }
+            }
+        }
+        private Nullable<int> _parentID;
 
         #endregion
         #region Navigation Properties
     
         [DataMember]
-        public TrackableCollection<Tag> Tag_SubTags_Hierarchy
+        public Tag Tags1
+        {
+            get { return _tags1; }
+            set
+            {
+                if (!ReferenceEquals(_tags1, value))
+                {
+                    var previousValue = _tags1;
+                    _tags1 = value;
+                    FixupTags1(previousValue);
+                    OnNavigationPropertyChanged("Tags1");
+                }
+            }
+        }
+        private Tag _tags1;
+    
+        [DataMember]
+        public Tag Tag1
+        {
+            get { return _tag1; }
+            set
+            {
+                if (!ReferenceEquals(_tag1, value))
+                {
+                    if (ChangeTracker.ChangeTrackingEnabled && ChangeTracker.State != ObjectState.Added && value != null)
+                    {
+                        // This the dependent end of an identifying relationship, so the principal end cannot be changed if it is already set,
+                        // otherwise it can only be set to an entity with a primary key that is the same value as the dependent's foreign key.
+                        if (ID != value.ID)
+                        {
+                            throw new InvalidOperationException("The principal end of an identifying relationship can only be changed when the dependent end is in the Added state.");
+                        }
+                    }
+                    var previousValue = _tag1;
+                    _tag1 = value;
+                    FixupTag1(previousValue);
+                    OnNavigationPropertyChanged("Tag1");
+                }
+            }
+        }
+        private Tag _tag1;
+    
+        [DataMember]
+        public TrackableCollection<Photo> Photos
         {
             get
             {
-                if (_tag_SubTags_Hierarchy == null)
+                if (_photos == null)
                 {
-                    _tag_SubTags_Hierarchy = new TrackableCollection<Tag>();
-                    _tag_SubTags_Hierarchy.CollectionChanged += FixupTag_SubTags_Hierarchy;
+                    _photos = new TrackableCollection<Photo>();
+                    _photos.CollectionChanged += FixupPhotos;
                 }
-                return _tag_SubTags_Hierarchy;
+                return _photos;
             }
             set
             {
-                if (!ReferenceEquals(_tag_SubTags_Hierarchy, value))
+                if (!ReferenceEquals(_photos, value))
                 {
                     if (ChangeTracker.ChangeTrackingEnabled)
                     {
                         throw new InvalidOperationException("Cannot set the FixupChangeTrackingCollection when ChangeTracking is enabled");
                     }
-                    if (_tag_SubTags_Hierarchy != null)
+                    if (_photos != null)
                     {
-                        _tag_SubTags_Hierarchy.CollectionChanged -= FixupTag_SubTags_Hierarchy;
+                        _photos.CollectionChanged -= FixupPhotos;
                     }
-                    _tag_SubTags_Hierarchy = value;
-                    if (_tag_SubTags_Hierarchy != null)
+                    _photos = value;
+                    if (_photos != null)
                     {
-                        _tag_SubTags_Hierarchy.CollectionChanged += FixupTag_SubTags_Hierarchy;
+                        _photos.CollectionChanged += FixupPhotos;
                     }
-                    OnNavigationPropertyChanged("Tag_SubTags_Hierarchy");
+                    OnNavigationPropertyChanged("Photos");
                 }
             }
         }
-        private TrackableCollection<Tag> _tag_SubTags_Hierarchy;
-    
-        [DataMember]
-        public Tag Tag_ParentTag_Hierarchy
-        {
-            get { return _tag_ParentTag_Hierarchy; }
-            set
-            {
-                if (!ReferenceEquals(_tag_ParentTag_Hierarchy, value))
-                {
-                    var previousValue = _tag_ParentTag_Hierarchy;
-                    _tag_ParentTag_Hierarchy = value;
-                    FixupTag_ParentTag_Hierarchy(previousValue);
-                    OnNavigationPropertyChanged("Tag_ParentTag_Hierarchy");
-                }
-            }
-        }
-        private Tag _tag_ParentTag_Hierarchy;
-    
-        [DataMember]
-        public TrackableCollection<Photo> Photo
-        {
-            get
-            {
-                if (_photo == null)
-                {
-                    _photo = new TrackableCollection<Photo>();
-                    _photo.CollectionChanged += FixupPhoto;
-                }
-                return _photo;
-            }
-            set
-            {
-                if (!ReferenceEquals(_photo, value))
-                {
-                    if (ChangeTracker.ChangeTrackingEnabled)
-                    {
-                        throw new InvalidOperationException("Cannot set the FixupChangeTrackingCollection when ChangeTracking is enabled");
-                    }
-                    if (_photo != null)
-                    {
-                        _photo.CollectionChanged -= FixupPhoto;
-                    }
-                    _photo = value;
-                    if (_photo != null)
-                    {
-                        _photo.CollectionChanged += FixupPhoto;
-                    }
-                    OnNavigationPropertyChanged("Photo");
-                }
-            }
-        }
-        private TrackableCollection<Photo> _photo;
+        private TrackableCollection<Photo> _photos;
 
         #endregion
         #region ChangeTracking
@@ -254,111 +267,116 @@ namespace WpfKolekcjaZdjec.Entities
             ChangeTracker.ChangeTrackingEnabled = true;
         }
     
+        // This entity type is the dependent end in at least one association that performs cascade deletes.
+        // This event handler will process notifications that occur when the principal end is deleted.
+        internal void HandleCascadeDelete(object sender, ObjectStateChangingEventArgs e)
+        {
+            if (e.NewState == ObjectState.Deleted)
+            {
+                this.MarkAsDeleted();
+            }
+        }
+    
         protected virtual void ClearNavigationProperties()
         {
-            Tag_SubTags_Hierarchy.Clear();
-            Tag_ParentTag_Hierarchy = null;
-            FixupTag_ParentTag_HierarchyKeys();
-            Photo.Clear();
+            Tags1 = null;
+            Tag1 = null;
+            Photos.Clear();
         }
 
         #endregion
         #region Association Fixup
     
-        private void FixupTag_ParentTag_Hierarchy(Tag previousValue)
+        private void FixupTags1(Tag previousValue)
         {
+            // This is the principal end in an association that performs cascade deletes.
+            // Update the event listener to refer to the new dependent.
+            if (previousValue != null)
+            {
+                ChangeTracker.ObjectStateChanging -= previousValue.HandleCascadeDelete;
+            }
+    
+            if (Tags1 != null)
+            {
+                ChangeTracker.ObjectStateChanging += Tags1.HandleCascadeDelete;
+            }
+    
             if (IsDeserializing)
             {
                 return;
             }
     
-            if (previousValue != null && previousValue.Tag_SubTags_Hierarchy.Contains(this))
+            if (previousValue != null && ReferenceEquals(previousValue.Tag1, this))
             {
-                previousValue.Tag_SubTags_Hierarchy.Remove(this);
+                previousValue.Tag1 = null;
             }
     
-            if (Tag_ParentTag_Hierarchy != null)
+            if (Tags1 != null)
             {
-                if (!Tag_ParentTag_Hierarchy.Tag_SubTags_Hierarchy.Contains(this))
-                {
-                    Tag_ParentTag_Hierarchy.Tag_SubTags_Hierarchy.Add(this);
-                }
-    
+                Tags1.Tag1 = this;
             }
+    
             if (ChangeTracker.ChangeTrackingEnabled)
             {
-                if (ChangeTracker.OriginalValues.ContainsKey("Tag_ParentTag_Hierarchy")
-                    && (ChangeTracker.OriginalValues["Tag_ParentTag_Hierarchy"] == Tag_ParentTag_Hierarchy))
+                if (ChangeTracker.OriginalValues.ContainsKey("Tags1")
+                    && (ChangeTracker.OriginalValues["Tags1"] == Tags1))
                 {
-                    ChangeTracker.OriginalValues.Remove("Tag_ParentTag_Hierarchy");
+                    ChangeTracker.OriginalValues.Remove("Tags1");
                 }
                 else
                 {
-                    ChangeTracker.RecordOriginalValue("Tag_ParentTag_Hierarchy", previousValue);
+                    ChangeTracker.RecordOriginalValue("Tags1", previousValue);
+                    // This is the principal end of an identifying association, so the dependent must be deleted when the relationship is removed.
+                    // If the current state of the dependent is Added, the relationship can be changed without causing the dependent to be deleted.
+                    if (previousValue != null && previousValue.ChangeTracker.State != ObjectState.Added)
+                    {
+                        previousValue.MarkAsDeleted();
+                    }
                 }
-                if (Tag_ParentTag_Hierarchy != null && !Tag_ParentTag_Hierarchy.ChangeTracker.ChangeTrackingEnabled)
+                if (Tags1 != null && !Tags1.ChangeTracker.ChangeTrackingEnabled)
                 {
-                    Tag_ParentTag_Hierarchy.StartTracking();
+                    Tags1.StartTracking();
                 }
-                FixupTag_ParentTag_HierarchyKeys();
             }
         }
     
-        private void FixupTag_ParentTag_HierarchyKeys()
-        {
-            const string IdKeyName = "Tag_ParentTag_Hierarchy.Id";
-    
-            if(ChangeTracker.ExtendedProperties.ContainsKey(IdKeyName))
-            {
-                if(Tag_ParentTag_Hierarchy == null ||
-                   !Equals(ChangeTracker.ExtendedProperties[IdKeyName], Tag_ParentTag_Hierarchy.Id))
-                {
-                    ChangeTracker.RecordOriginalValue(IdKeyName, ChangeTracker.ExtendedProperties[IdKeyName]);
-                }
-                ChangeTracker.ExtendedProperties.Remove(IdKeyName);
-            }
-        }
-    
-        private void FixupTag_SubTags_Hierarchy(object sender, NotifyCollectionChangedEventArgs e)
+        private void FixupTag1(Tag previousValue)
         {
             if (IsDeserializing)
             {
                 return;
             }
     
-            if (e.NewItems != null)
+            if (previousValue != null && ReferenceEquals(previousValue.Tags1, this))
             {
-                foreach (Tag item in e.NewItems)
-                {
-                    item.Tag_ParentTag_Hierarchy = this;
-                    if (ChangeTracker.ChangeTrackingEnabled)
-                    {
-                        if (!item.ChangeTracker.ChangeTrackingEnabled)
-                        {
-                            item.StartTracking();
-                        }
-                        ChangeTracker.RecordAdditionToCollectionProperties("Tag_SubTags_Hierarchy", item);
-                    }
-                }
+                previousValue.Tags1 = null;
             }
     
-            if (e.OldItems != null)
+            if (Tag1 != null)
             {
-                foreach (Tag item in e.OldItems)
+                Tag1.Tags1 = this;
+                ID = Tag1.ID;
+            }
+    
+            if (ChangeTracker.ChangeTrackingEnabled)
+            {
+                if (ChangeTracker.OriginalValues.ContainsKey("Tag1")
+                    && (ChangeTracker.OriginalValues["Tag1"] == Tag1))
                 {
-                    if (ReferenceEquals(item.Tag_ParentTag_Hierarchy, this))
-                    {
-                        item.Tag_ParentTag_Hierarchy = null;
-                    }
-                    if (ChangeTracker.ChangeTrackingEnabled)
-                    {
-                        ChangeTracker.RecordRemovalFromCollectionProperties("Tag_SubTags_Hierarchy", item);
-                    }
+                    ChangeTracker.OriginalValues.Remove("Tag1");
+                }
+                else
+                {
+                    ChangeTracker.RecordOriginalValue("Tag1", previousValue);
+                }
+                if (Tag1 != null && !Tag1.ChangeTracker.ChangeTrackingEnabled)
+                {
+                    Tag1.StartTracking();
                 }
             }
         }
     
-        private void FixupPhoto(object sender, NotifyCollectionChangedEventArgs e)
+        private void FixupPhotos(object sender, NotifyCollectionChangedEventArgs e)
         {
             if (IsDeserializing)
             {
@@ -369,14 +387,17 @@ namespace WpfKolekcjaZdjec.Entities
             {
                 foreach (Photo item in e.NewItems)
                 {
-                    item.Tag = this;
+                    if (!item.Tags.Contains(this))
+                    {
+                        item.Tags.Add(this);
+                    }
                     if (ChangeTracker.ChangeTrackingEnabled)
                     {
                         if (!item.ChangeTracker.ChangeTrackingEnabled)
                         {
                             item.StartTracking();
                         }
-                        ChangeTracker.RecordAdditionToCollectionProperties("Photo", item);
+                        ChangeTracker.RecordAdditionToCollectionProperties("Photos", item);
                     }
                 }
             }
@@ -385,13 +406,13 @@ namespace WpfKolekcjaZdjec.Entities
             {
                 foreach (Photo item in e.OldItems)
                 {
-                    if (ReferenceEquals(item.Tag, this))
+                    if (item.Tags.Contains(this))
                     {
-                        item.Tag = null;
+                        item.Tags.Remove(this);
                     }
                     if (ChangeTracker.ChangeTrackingEnabled)
                     {
-                        ChangeTracker.RecordRemovalFromCollectionProperties("Photo", item);
+                        ChangeTracker.RecordRemovalFromCollectionProperties("Photos", item);
                     }
                 }
             }

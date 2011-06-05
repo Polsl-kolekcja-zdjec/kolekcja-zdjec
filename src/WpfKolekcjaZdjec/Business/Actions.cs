@@ -1,16 +1,30 @@
 ﻿using System.Configuration;
+using System.Drawing;
+using System.IO;
 using System.Linq;
+using System.Text;
+using Microsoft.Win32;
+using WpfKolekcjaZdjec.DataAccess;
 using WpfKolekcjaZdjec.Entities;
 
 namespace WpfKolekcjaZdjec.Business
 {
+    /// <summary>
+    /// Business actions.
+    /// </summary>
     public class Actions
     {
+        /// <summary>
+        /// Startups the tests.
+        /// </summary>
         public static void StartupTests()
         {
             ThumbnailDirectoryExist();
         }
 
+        /// <summary>
+        /// Adds the photo.
+        /// </summary>
         public static void AddPhoto()
         {
             int thumbnailHeight = int.Parse(ConfigurationManager.AppSettings["thumbnailMaxHeight"].ToString());
@@ -18,72 +32,51 @@ namespace WpfKolekcjaZdjec.Business
             string thumbnailPath = ConfigurationManager.AppSettings["thumbnailDirectory"].ToString();
             string connectionString = Business.ConnectionStringHelper.GetActualConnectionString();
 
-            Microsoft.Win32.OpenFileDialog openImage = new Microsoft.Win32.OpenFileDialog();
+            OpenFileDialog openImage = new OpenFileDialog();
             openImage.Filter = "Pliki obrazów (*.jpg, *.png, *.crt, *.tiff)|*.jpg;*.JPG;*.jpeg;*.JPEG;*.png;*.PNG;*.crt;*.CRT;*.tiff;*.TIFF|Wszystkie pliki (*.*)|*.*";
             openImage.ShowDialog();
-            string openedImageName = openImage.FileName;
-            string fileName = System.IO.Path.GetFileName(openedImageName);
-            string filePath = openedImageName.Substring(0, openedImageName.Length - fileName.Length);
-            System.Drawing.Bitmap image = AForge.Imaging.Image.FromFile(openedImageName);
-            AForge.Imaging.Filters.ResizeNearestNeighbor filter = new AForge.Imaging.Filters.ResizeNearestNeighbor(thumbnailWidth, thumbnailHeight);
-            System.Drawing.Bitmap thumbnail = filter.Apply(image);
-            string thumbnailFileName = LookForFreeFilename(thumbnailPath, fileName);
-            thumbnail.Save(thumbnailPath + thumbnailFileName);
-            
-            DataAccess.PhotosDataSource db = new DataAccess.PhotosDataSource(connectionString);
-            Photo lastPhoto = db.GetLastPhoto();
-            Photo photoObject = new Photo();
-            if (lastPhoto != null)
-                photoObject.Id = lastPhoto.Id + 1;
-            else
-                photoObject.Id = 1;
 
-            photoObject.Filename = StrToByteArray(fileName);
+            string openedImageName = openImage.FileName;
+            string fileName = Path.GetFileName(openedImageName);
+            string filePath = openedImageName.Substring(0, openedImageName.Length - fileName.Length);
+
+            Bitmap image = AForge.Imaging.Image.FromFile(openedImageName);
+            AForge.Imaging.Filters.ResizeNearestNeighbor filter = new AForge.Imaging.Filters.ResizeNearestNeighbor(thumbnailWidth, thumbnailHeight);
+            Bitmap thumbnail = filter.Apply(image);
+
+            string thumbnailFileName = LookForFreeFilename(thumbnailPath, fileName);
+            string thumbnailSavedPath = Path.Combine(thumbnailPath, thumbnailFileName);
+            thumbnail.Save(thumbnailSavedPath);
+
+            PhotosDataSource db = new PhotosDataSource(connectionString);
+            Photo photoObject = new Photo();
+
             photoObject.FilePath = filePath;
-            photoObject.ThumbnailPath = StrToByteArray(thumbnailPath + thumbnailFileName);
+            photoObject.ThumbnailPath = thumbnailSavedPath;
+
             photoObject.Title = fileName;
             photoObject.Description = string.Empty;
-            DataAccess.TagsDataSource tableTags = new DataAccess.TagsDataSource(connectionString);
-            photoObject.Tag = tableTags.GetTag(0);
 
-            // TEMPORARY CONDITION
-            if (photoObject.Tag == null) 
-            {
-                DataAccess.DevDataSource tmpDb = new DataAccess.DevDataSource(connectionString);
-                tmpDb.AddTemplateTag();
-                photoObject.Tag = tableTags.GetTag(0);
-            }
-
-            DataAccess.ArchivesDataSource tableArchives = new DataAccess.ArchivesDataSource(connectionString);
-            photoObject.Archives = tableArchives.GetArchive(0);
-
-            // TEMPORARY CONDITION
-            if (photoObject.Archives == null) 
-            {
-                DataAccess.DevDataSource tmpDb = new DataAccess.DevDataSource(connectionString);
-                tmpDb.AddTemplateArchive();
-                photoObject.Archives = tableArchives.GetArchive(0);
-            }
+            photoObject.Archive = null;
+            photoObject.Attribute = null;
 
             db.AddPhoto(photoObject);
-
-            // db.SaveChanges();
         }
 
-        public static byte[] StrToByteArray(string str)
-        {
-            System.Text.UTF8Encoding encoding = new System.Text.UTF8Encoding();
-            return encoding.GetBytes(str);
-        }
-
+        /// <summary>
+        /// Looks for free filename.
+        /// </summary>
+        /// <param name="path">The path.</param>
+        /// <param name="fileName">Name of the file.</param>
+        /// <returns>File name.</returns>
         public static string LookForFreeFilename(string path, string fileName)
         {
-            if (System.IO.File.Exists(path + fileName))
+            if (File.Exists(path + fileName))
             {
-                string[] splittedFilename = fileName.Split(".".ToCharArray());
-                string file = string.Empty;
-                string extension;
-                int i;
+                string[] splittedFilename = fileName.Split('.');
+                string file = string.Empty, extension = string.Empty;
+                int i = 0;
+
                 for (i = 0; i < splittedFilename.Count() - 1; ++i) 
                 {
                     if (i > 0)
@@ -97,8 +90,9 @@ namespace WpfKolekcjaZdjec.Business
                 }
 
                 extension = splittedFilename[i];
+
                 int counter = 2;
-                while (System.IO.File.Exists(path + file + "[" + counter + "]." + extension)) 
+                while (File.Exists(path + file + "[" + counter + "]." + extension)) 
                 {
                     counter++;
                 }
@@ -109,12 +103,16 @@ namespace WpfKolekcjaZdjec.Business
             return fileName;
         }
 
+        /// <summary>
+        /// Thumbnails the directory exist.
+        /// </summary>
+        /// <returns>Value indicates whether a thumbnails directory exists.</returns>
         public static bool ThumbnailDirectoryExist()
         {
-            System.IO.DirectoryInfo dInfo = new System.IO.DirectoryInfo(ConfigurationManager.AppSettings["thumbnailDirectory"].ToString());
+            DirectoryInfo dInfo = new DirectoryInfo(ConfigurationManager.AppSettings["thumbnailDirectory"].ToString());
             if (dInfo.Exists)
             {
-                return true;             
+                return true;
             }
 
             dInfo.Create();
