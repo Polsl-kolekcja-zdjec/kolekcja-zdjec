@@ -12,6 +12,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Telerik.Windows.Controls;
+using WpfKolekcjaZdjec.Business;
 
 namespace WpfKolekcjaZdjec
 {
@@ -75,7 +76,11 @@ namespace WpfKolekcjaZdjec
 
         private void Report_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            ShowNotImplentedDialog();
+            // wgawronski: Temporary solution - Getting list of all photos.
+            foreach (var i in Actions.GetAllPhotos())
+            {
+                MessageBox.Show(i.Title);
+            }
         }
 
         private void Slideshow_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)

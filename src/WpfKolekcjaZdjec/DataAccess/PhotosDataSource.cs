@@ -35,11 +35,11 @@ namespace WpfKolekcjaZdjec.DataAccess
         /// Gets all photos.
         /// </summary>
         /// <returns>All photos collection.</returns>
-        public IEnumerable<Photo> GetAllPhotos()
+        public List<Photo> GetAllPhotos()
         {
             using (PhotoCollectionDatabaseEntities context = new PhotoCollectionDatabaseEntities(_connectionString))
             {
-                return from o in context.Photos select o;
+                return (from o in context.Photos select o).ToList();
             }
         }
 

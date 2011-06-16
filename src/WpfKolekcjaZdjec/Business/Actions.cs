@@ -6,6 +6,7 @@ using System.Text;
 using Microsoft.Win32;
 using WpfKolekcjaZdjec.DataAccess;
 using WpfKolekcjaZdjec.Entities;
+using System.Collections.Generic;
 
 namespace WpfKolekcjaZdjec.Business
 {
@@ -20,6 +21,17 @@ namespace WpfKolekcjaZdjec.Business
         public static void StartupTests()
         {
             ThumbnailDirectoryExist();
+        }
+
+        /// <summary>
+        /// Gets all photos.
+        /// </summary>
+        /// <returns>Photos list.</returns>
+        public static List<Photo> GetAllPhotos()
+        {
+            string connectionString = Business.ConnectionStringHelper.GetActualConnectionString();
+            PhotosDataSource db = new PhotosDataSource(connectionString);
+            return db.GetAllPhotos();
         }
 
         /// <summary>
