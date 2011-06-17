@@ -8,4 +8,5 @@ Projekt prowadzony na zajęcia z projektów BD2 oraz PP.
 * C# - .NET 4.0 oraz WPF
 * Microsoft Visual Studio 2010 
 * git
-* SQL Server 2008
+* SQL Server Compact Edition 20088
+* Telerik WPF Controls
