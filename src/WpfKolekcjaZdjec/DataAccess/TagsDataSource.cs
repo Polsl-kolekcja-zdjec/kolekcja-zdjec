@@ -30,6 +30,19 @@ namespace WpfKolekcjaZdjec.DataAccess
             _connectionString = actualConnectionString;
         }
 
+
+        /// <summary>
+        /// Gets all tags.
+        /// </summary>
+        /// <returns>All photos collection.</returns>
+        public List<Tag> GetAllTags()
+        {
+            using (PhotoCollectionDatabaseEntities context = new PhotoCollectionDatabaseEntities(_connectionString))
+            {
+                return (from o in context.Tags select o).ToList();
+            }
+        }
+
         /// <summary>
         /// Gets the tag.
         /// </summary>

@@ -197,6 +197,7 @@
     <Compile Include="Business\ExtensionMethods.cs" />
     <Compile Include="DataAccess\ArchivesDataSource.cs" />
     <Compile Include="DataAccess\DevDataSource.cs" />
+    <Compile Include="DataAccess\ExifAttributesDataSource.cs" />
     <Compile Include="DataAccess\PhotosDataSource.cs" />
     <Compile Include="DataAccess\TagsDataSource.cs" />
     <Compile Include="Entities\AdditionalAttribute.cs">

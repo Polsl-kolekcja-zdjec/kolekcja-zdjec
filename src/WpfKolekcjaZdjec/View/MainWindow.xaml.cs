@@ -64,14 +64,19 @@ namespace WpfKolekcjaZdjec
         private void ShowExif_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             View.ImagePropertiesReadOnly exifDataReadOnly = new View.ImagePropertiesReadOnly();
-            exifDataReadOnly.PhotoName.Value = "przykład przypisania w C#";
+            foreach (var i in Actions.GetAllExif())
+            {
+               // musisz tylko dopisać wszystkie parametry do odpowiednich pól w formatce ( to po lewej) z bazy 
+                exifDataReadOnly.ISO.Value = i.ISO;
+                exifDataReadOnly.WhiteBalance.Value = i.WhiteBalance;
+           }
+            
             exifDataReadOnly.Show();
         }
 
         private void EditExif_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            View.ImageProperties exifData = new View.ImageProperties();
-            exifData.Show();
+            Business.Actions.AddExif();
         }
 
         private void Report_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -150,11 +155,6 @@ namespace WpfKolekcjaZdjec
         private void ImgNew_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             Business.Actions.AddPhoto();
-           /* string openedImageName = string.Empty;
-            Microsoft.Win32.OpenFileDialog openImage = new Microsoft.Win32.OpenFileDialog();
-            openImage.Filter = "*.jpg|*.jpg|*.png|*.png| *.crt |*.crt| *.tiff| *.tiff";
-            openImage.ShowDialog();
-            openedImageName = openImage.FileName;      */    
         }
 
         private void AboutItem_Click(object sender, EventArgs e)

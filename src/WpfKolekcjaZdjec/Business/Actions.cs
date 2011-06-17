@@ -35,6 +35,48 @@ namespace WpfKolekcjaZdjec.Business
         }
 
         /// <summary>
+        /// Gets all tags.
+        /// </summary>
+        /// <returns>Tags list.</returns>
+        public static List<Tag> GetAllTags()
+        {
+            string connectionString = Business.ConnectionStringHelper.GetActualConnectionString();
+            TagsDataSource db = new TagsDataSource(connectionString);
+            return db.GetAllTags();
+        }
+
+        /// <summary>
+        /// Gets all exif.
+        /// </summary>
+        /// <returns>Exif list.</returns>
+        public static List<ExifAttribute> GetAllExif()
+        {
+            string connectionString = Business.ConnectionStringHelper.GetActualConnectionString();
+            ExifAttributesDataSource db = new ExifAttributesDataSource(connectionString);
+            return db.GetAllExif();
+        }
+
+        /// <summary>
+        /// Adds the exif.
+        /// </summary>
+        public static void AddExif()
+        {
+            //wyswietlenie mojego pięknego okna dotyczącego Exifów
+            View.ImageProperties exifData = new View.ImageProperties();
+            exifData.Show();
+
+            //połączenie z bazą
+            string connectionString = Business.ConnectionStringHelper.GetActualConnectionString();
+            ExifAttributesDataSource db = new ExifAttributesDataSource(connectionString);
+            ExifAttribute exifObject = new ExifAttribute();
+
+            //tu przepisujesz dane ze zdjęcia do odpowiednich pól bazy, napisalam ci przyklad na sztywno
+            //mają się wyswietlac w zaleznosci od zaznaczonego zdjecia (ewentualnie dla ostatnio dodanego jak inaczej nie umiesz)
+            exifObject.WhiteBalance = "Auto";
+            exifObject.ISO = 400;
+            db.AddExif(exifObject);
+        }
+        /// <summary>
         /// Adds the photo.
         /// </summary>
         public static void AddPhoto()
