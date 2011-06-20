@@ -7,7 +7,7 @@ namespace WpfKolekcjaZdjec.DataAccess
     /// <summary>
     /// Data source for tags.
     /// </summary>
-    public partial class TagsDataSource
+    public class TagsDataSource
     {
         /// <summary>
         /// Connection string.
@@ -30,6 +30,23 @@ namespace WpfKolekcjaZdjec.DataAccess
             _connectionString = actualConnectionString;
         }
 
+        /// <summary>
+        /// Adding new tag into database.
+        /// </summary>
+        /// <param name="newTag">New tag entity.</param>
+        /// <returns>ID for created tag.</returns>
+        public int AddTag(Tag newTag)
+        {
+            using (PhotoCollectionDatabaseEntities context = new PhotoCollectionDatabaseEntities(_connectionString))
+            {
+                newTag.ID = context.Tags.NextId(p => p.ID);
+
+                context.Tags.AddObject(newTag);
+                context.SaveChanges();
+
+                return newTag.ID;
+            }
+        }
 
         /// <summary>
         /// Gets all tags.
@@ -40,6 +57,37 @@ namespace WpfKolekcjaZdjec.DataAccess
             using (PhotoCollectionDatabaseEntities context = new PhotoCollectionDatabaseEntities(_connectionString))
             {
                 return (from o in context.Tags select o).ToList();
+            }
+        }
+
+        /// <summary>
+        /// Gets all tags for photo id.
+        /// </summary>
+        /// <param name="photoId">The photo id.</param>
+        /// <returns>All assigned tags to the photo.</returns>
+        public List<Tag> GetTagsForPhoto(int photoId)
+        {
+            using (PhotoCollectionDatabaseEntities context = new PhotoCollectionDatabaseEntities(_connectionString))
+            {
+                return (from o in context.Tags
+                        join p in context.Photos on photoId equals p.ID
+                        select o).ToList();
+            }
+        }
+
+        /// <summary>
+        /// Deleting tag by id.
+        /// </summary>
+        /// <param name="id">Tag ID for deletion.</param>
+        /// <returns>Operation status (for future dependencies).</returns>
+        public bool DeleteTag(int id)
+        {
+            using (PhotoCollectionDatabaseEntities context = new PhotoCollectionDatabaseEntities(_connectionString))
+            {
+                context.Tags.DeleteObject((from o in context.Tags where o.ID == id select o).First());
+                context.SaveChanges();
+
+                return true;
             }
         }
 

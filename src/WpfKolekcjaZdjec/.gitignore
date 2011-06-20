@@ -1,4 +1,6 @@
 bin/
 obj/
+SamplePlugin/bin/
+SamplePlugin/obj/
 *.suo
 *.user

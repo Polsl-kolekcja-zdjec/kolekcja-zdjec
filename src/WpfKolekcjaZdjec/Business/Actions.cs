@@ -7,8 +7,9 @@ using Microsoft.Win32;
 using WpfKolekcjaZdjec.DataAccess;
 using WpfKolekcjaZdjec.Entities;
 using System.Collections.Generic;
+using System;
 
-namespace WpfKolekcjaZdjec.Business
+namespace WpfKolekcjaZdjec.DataAccess
 {
     /// <summary>
     /// Business actions.
@@ -29,8 +30,8 @@ namespace WpfKolekcjaZdjec.Business
         /// <returns>Photos list.</returns>
         public static List<Photo> GetAllPhotos()
         {
-            string connectionString = Business.ConnectionStringHelper.GetActualConnectionString();
-            PhotosDataSource db = new PhotosDataSource(connectionString);
+            PhotosDataSource db = new PhotosDataSource(ConnectionStringHelper.GetActualConnectionString());
+
             return db.GetAllPhotos();
         }
 
@@ -40,8 +41,8 @@ namespace WpfKolekcjaZdjec.Business
         /// <returns>Tags list.</returns>
         public static List<Tag> GetAllTags()
         {
-            string connectionString = Business.ConnectionStringHelper.GetActualConnectionString();
-            TagsDataSource db = new TagsDataSource(connectionString);
+            TagsDataSource db = new TagsDataSource(ConnectionStringHelper.GetActualConnectionString());
+
             return db.GetAllTags();
         }
 
@@ -51,9 +52,20 @@ namespace WpfKolekcjaZdjec.Business
         /// <returns>Exif list.</returns>
         public static List<ExifAttribute> GetAllExif()
         {
-            string connectionString = Business.ConnectionStringHelper.GetActualConnectionString();
-            ExifAttributesDataSource db = new ExifAttributesDataSource(connectionString);
+            ExifAttributesDataSource db = new ExifAttributesDataSource(ConnectionStringHelper.GetActualConnectionString());
+
             return db.GetAllExif();
+        }
+
+        /// <summary>
+        /// Gets all archives.
+        /// </summary>
+        /// <returns>Archives list.</returns>
+        public static List<Archive> GetAllArchives()
+        {
+            ArchivesDataSource db = new ArchivesDataSource(ConnectionStringHelper.GetActualConnectionString());
+
+            return db.GetAllArchives();
         }
 
         /// <summary>
@@ -61,34 +73,35 @@ namespace WpfKolekcjaZdjec.Business
         /// </summary>
         public static void AddExif()
         {
-            //wyswietlenie mojego pięknego okna dotyczącego Exifów
+            // Show Exif property window.
             View.ImageProperties exifData = new View.ImageProperties();
             exifData.Show();
 
-            //połączenie z bazą
-            string connectionString = Business.ConnectionStringHelper.GetActualConnectionString();
+            // Connecting data base.
+            string connectionString = DataAccess.ConnectionStringHelper.GetActualConnectionString();
             ExifAttributesDataSource db = new ExifAttributesDataSource(connectionString);
             ExifAttribute exifObject = new ExifAttribute();
 
-            //tu przepisujesz dane ze zdjęcia do odpowiednich pól bazy, napisalam ci przyklad na sztywno
-            //mają się wyswietlac w zaleznosci od zaznaczonego zdjecia (ewentualnie dla ostatnio dodanego jak inaczej nie umiesz)
+            // TODO: tu przepisujesz dane ze zdjęcia do odpowiednich pól bazy, napisalam ci przyklad na sztywno
+            // TODO: mają się wyswietlac w zaleznosci od zaznaczonego zdjecia (ewentualnie dla ostatnio dodanego jak inaczej nie umiesz)
             exifObject.WhiteBalance = "Auto";
             exifObject.ISO = 400;
+
             db.AddExif(exifObject);
         }
+
         /// <summary>
         /// Adds the photo.
         /// </summary>
         public static void AddPhoto()
         {
             string thumbnailPath = ConfigurationManager.AppSettings["thumbnailDirectory"].ToString();
-            string connectionString = Business.ConnectionStringHelper.GetActualConnectionString();
+            string connectionString = ConnectionStringHelper.GetActualConnectionString();
 
             OpenFileDialog openImage = new OpenFileDialog();
             openImage.Filter = "Pliki obrazów (*.jpg, *.png, *.crt, *.tiff)|*.jpg;*.JPG;*.jpeg;*.JPEG;*.png;*.PNG;*.crt;*.CRT;*.tiff;*.TIFF|Wszystkie pliki (*.*)|*.*";
             openImage.ShowDialog();
-            
-            
+
             if (openImage.CheckFileExists)
             {
                 string openedImageName = openImage.FileName;
@@ -96,14 +109,17 @@ namespace WpfKolekcjaZdjec.Business
                 string filePath = openedImageName.Substring(0, openedImageName.Length - fileName.Length);
 
                 Bitmap image = AForge.Imaging.Image.FromFile(openedImageName);
-                int[] thumbnailSizes = getThumbnailSize(image.Width, image.Height);
+                int[] thumbnailSizes = GetThumbnailSize(image.Width, image.Height);
+
                 int thumbnailWidth = thumbnailSizes[0];
                 int thumbnailHeight = thumbnailSizes[1];
+
                 AForge.Imaging.Filters.ResizeBicubic filter = new AForge.Imaging.Filters.ResizeBicubic(thumbnailWidth, thumbnailHeight);
                 Bitmap thumbnail = filter.Apply(image);
 
                 string thumbnailFileName = LookForFreeFilename(thumbnailPath, fileName);
                 string thumbnailSavedPath = Path.Combine(thumbnailPath, thumbnailFileName);
+
                 thumbnail.Save(thumbnailSavedPath);
 
                 PhotosDataSource db = new PhotosDataSource(connectionString);
@@ -129,10 +145,29 @@ namespace WpfKolekcjaZdjec.Business
         /// Delete selected Photo.
         /// </summary>
         /// <param name="toDelete">Photo to delete.</param>
-        /// <returns>Deleted photo id or 0 when fails.</returns>
-        public static int DeletePhoto(Photo toDelete)
+        /// <returns>Deleting photo operation state.</returns>
+        public static bool DeletePhoto(Photo toDelete)
         {
-            return 0;
+            PhotosDataSource db = new PhotosDataSource(ConnectionStringHelper.GetActualConnectionString());
+            return db.DeletePhoto(toDelete.ID);
+        }
+
+        /// <summary>
+        /// Delete all specified photos.
+        /// </summary>
+        /// <param name="toDeleteList">Photo to delete.</param>
+        /// <returns>Number of deleted photos.</returns>
+        public static int DeletePhotos(List<Photo> toDeleteList)
+        {
+            PhotosDataSource db = new PhotosDataSource(ConnectionStringHelper.GetActualConnectionString());
+
+            List<int> ids = new List<int>();
+            foreach (Photo p in toDeleteList)
+            {
+                ids.Add(p.ID);
+            }
+
+            return db.DeletePhotos(ids);
         }
 
         /// <summary>
@@ -183,19 +218,36 @@ namespace WpfKolekcjaZdjec.Business
         /// <param name="maxWidth">Width of thumbnail.</param>
         /// <param name="maxHeight">Height of thumbnail.</param>
         /// <returns>Array with new Width and Height values.</returns>
-        public static int[] getThumbnailSize(int normalSizeWidth, int normalSizeHeight, int maxWidth = 0, int maxHeight = 0)
+        public static int[] GetThumbnailSize(int normalSizeWidth, int normalSizeHeight, int maxWidth = 0, int maxHeight = 0)
         {
-            if (maxWidth == 0)
+            try
             {
-                maxWidth = int.Parse(ConfigurationManager.AppSettings["thumbnailMaxWidth"].ToString());
+                if (maxWidth == 0)
+                {
+                    maxWidth = int.Parse(ConfigurationManager.AppSettings["ThumbnailMaxWidth"].ToString());
+                }
             }
-            if (maxHeight == 0)
+            catch (Exception)
             {
-                maxHeight = int.Parse(ConfigurationManager.AppSettings["thumbnailMaxHeight"].ToString());
+                // Default width;
+                maxWidth = 300;
+            }
+
+            try
+            {
+                if (maxHeight == 0)
+                {
+                    maxHeight = int.Parse(ConfigurationManager.AppSettings["ThumbnailMaxHeight"].ToString());
+                }
+            }
+            catch (Exception)
+            {
+                maxHeight = 300;
             }
 
             int calibrateSize = (int)((normalSizeWidth * maxHeight / (double)normalSizeHeight) + 0.5);
             int[] retArr = new int[2];
+
             if (maxWidth < calibrateSize)
             {
                 calibrateSize = (int)((normalSizeHeight * maxWidth / (double)normalSizeWidth) + 0.5);
@@ -207,6 +259,7 @@ namespace WpfKolekcjaZdjec.Business
                 retArr[0] = calibrateSize;
                 retArr[1] = maxHeight;
             }
+
             return retArr;
         }
 
@@ -216,14 +269,17 @@ namespace WpfKolekcjaZdjec.Business
         /// <returns>Value indicates whether a thumbnails directory exists.</returns>
         public static bool ThumbnailDirectoryExist()
         {
-            DirectoryInfo dInfo = new DirectoryInfo(ConfigurationManager.AppSettings["thumbnailDirectory"].ToString());
+            DirectoryInfo dInfo = new DirectoryInfo(ConfigurationManager.AppSettings["ThumbnailDirectory"].ToString());
+
             if (dInfo.Exists)
             {
                 return true;
             }
-
-            dInfo.Create();
-            return false;
+            else
+            {
+                dInfo.Create();
+                return false;
+            }
         }
     }
 }

@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using WpfKolekcjaZdjec.Business;
 using WpfKolekcjaZdjec.Entities;
 
 namespace WpfKolekcjaZdjec.DataAccess

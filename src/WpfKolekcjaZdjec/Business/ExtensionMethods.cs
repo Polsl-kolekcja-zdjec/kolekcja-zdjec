@@ -3,7 +3,7 @@ using System.Data.Objects;
 using System.Linq;
 using System.Linq.Expressions;
 
-namespace WpfKolekcjaZdjec.Business
+namespace WpfKolekcjaZdjec.DataAccess
 {
     /// <summary>
     /// Extension methods.

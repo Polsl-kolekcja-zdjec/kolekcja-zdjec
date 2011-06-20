@@ -12,6 +12,8 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Telerik.Windows.Controls;
+using WpfKolekcjaZdjec.DataAccess;
+using WpfKolekcjaZdjec.Plugins;
 using WpfKolekcjaZdjec.Business;
 
 namespace WpfKolekcjaZdjec
@@ -19,8 +21,23 @@ namespace WpfKolekcjaZdjec
     /// <summary>
     /// Interaction logic for MainWindow.xaml.
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class MainWindow : Window, IHostPlugin
     {
+        #region IHostPlugin methods.
+
+        /// <summary>
+        /// Registers the specified plugin.
+        /// </summary>
+        /// <param name="plugin">The plugin interface implementation.</param>
+        /// <returns>Status of this operation.</returns>
+        public bool Register(IPlugin plugin)
+        {
+            MessageBox.Show(plugin.Name, "Plugin loaded");
+            return plugin.Execute();
+        }
+
+        #endregion
+
         /// <summary>
         /// Constructor for MainWindow.
         /// </summary>
@@ -33,7 +50,11 @@ namespace WpfKolekcjaZdjec
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            Business.Actions.StartupTests();
+            // Business actions.
+            Actions.StartupTests();
+
+            // Load all plugins.
+            PluginsBusiness.RegisterPluginsFromDirectory(this);
         }
 
         private void SearchTextBox_ValueChanged(object sender, Telerik.Windows.RadRoutedEventArgs e)
@@ -76,7 +97,7 @@ namespace WpfKolekcjaZdjec
 
         private void EditExif_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            Business.Actions.AddExif();
+            DataAccess.Actions.AddExif();
         }
 
         private void Report_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -154,7 +175,7 @@ namespace WpfKolekcjaZdjec
 
         private void ImgNew_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            Business.Actions.AddPhoto();
+            DataAccess.Actions.AddPhoto();
         }
 
         private void AboutItem_Click(object sender, EventArgs e)

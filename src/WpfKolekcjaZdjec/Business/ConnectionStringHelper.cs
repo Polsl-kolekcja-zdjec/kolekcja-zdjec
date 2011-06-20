@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Configuration;
 
-namespace WpfKolekcjaZdjec.Business
+namespace WpfKolekcjaZdjec.DataAccess
 {
     /// <summary>
     /// Static helper for connection strings.
