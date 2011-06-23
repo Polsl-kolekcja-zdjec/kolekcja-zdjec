@@ -106,7 +106,7 @@
                                 <Border BorderBrush="#B2ADBDD1" BorderThickness="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
                                     <StackPanel Orientation="Horizontal" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" MinHeight="180" MaxHeight="410" MinWidth="620" Width="860">
                                         <!-- pobrane i wyświetlane zdjęcia -->
-                                        <Image Source="/WpfKolekcjaZdjec;component/Images/ekrajewskaSmall.jpg" MaxHeight="200" MaxWidth="200" MinHeight="160" MinWidth="160" Height="Auto" Width="Auto" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="10" />
+                                        <Image Name="PhotoSourceThumbails" Source="/WpfKolekcjaZdjec;component/Images/ekrajewskaSmall.jpg" MaxHeight="200" MaxWidth="200" MinHeight="160" MinWidth="160" Height="Auto" Width="Auto" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="10" />
                                         <Image Source="/WpfKolekcjaZdjec;component/Images/DreamsSmall.jpeg" MaxHeight="200" MaxWidth="200" Height="Auto" Width="Auto" MinHeight="160" MinWidth="160" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="10" />
                                         <Image Source="/WpfKolekcjaZdjec;component/Images/DreamsSmall.jpeg" MaxHeight="200" MaxWidth="200" Height="Auto" Width="Auto" MinHeight="160" MinWidth="160" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="10" />
                                         <Image Source="/WpfKolekcjaZdjec;component/Images/DreamsSmall.jpeg" MaxHeight="200" MaxWidth="200" Height="Auto" Width="Auto" MinHeight="160" MinWidth="160" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="10" />
@@ -128,7 +128,7 @@
                                     <StackPanel Orientation="Horizontal" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" MinHeight="180" MaxHeight="410" MinWidth="620" Width="860">
                                         <Border BorderBrush="#FFE0E0E0" Margin="10 0 0 0" MinWidth="98" Height="125" Width="Auto" HorizontalAlignment="Left">
                                             <!--zdjęcie nr1 do załadowania z poziomu c# (Source)-->
-                                            <Image Source="/WpfKolekcjaZdjec;component/Images/DreamsSmall.jpeg" Height="90" Width="125" />
+                                            <Image Name="PhotoSourceDescription" Source="/WpfKolekcjaZdjec;component/Images/ekrajewskaSmall.jpg" Height="90" Width="125" />
                                         </Border>
 
                                         <StackPanel Margin="15 35 0 0" HorizontalAlignment="Left" Width="93" Height="113">
@@ -139,9 +139,9 @@
 
                                         <!--wartości poszczególnych pól do wypełnienia z poziomu c# dla zdjęcia nr1 (Text)-->
                                         <StackPanel Margin="0 35 15 0" HorizontalAlignment="Left" Width="231" MinWidth="155" Height="106">
-                                            <TextBlock Margin="0 0 0 10" FontSize="10" Text="dreams.jpg" />
+                                            <TextBlock Name="PhotoName" Margin="0 0 0 10" FontSize="10" Text="dreams.jpg" />
                                             <TextBlock Margin="0 0 0 10" FontSize="10" Text="27-02-2007" />
-                                            <TextBlock Margin="0 0 0 10" FontSize="10" Text="taken by analog camera" Height="53" />
+                                            <TextBlock Name ="PhotoDescription" Margin="0 0 0 10" FontSize="10" Text="taken by analog camera" Height="53" />
                                         </StackPanel>
 
                                         <!--te same czynności dla zdjęcia nr2-->
@@ -179,18 +179,14 @@
                                             </telerik:PathStopCollection>
                                         </telerik:RadCarouselPanel.ScaleStops>
 
-                                        <Image Source="/WpfKolekcjaZdjec;component/Images/Dreams.jpeg" VerticalAlignment="Top" Width="180" Height="160" Margin="0" />
-                                        <Image Source="/WpfKolekcjaZdjec;component/Images/Dreams.jpeg" VerticalAlignment="Top" Width="180" Height="160" Margin="0" />
-                                        <Image Source="/WpfKolekcjaZdjec;component/Images/Dreams.jpeg" VerticalAlignment="Top" Width="180" Height="160" Margin="0" />
-                                        <Image Source="/WpfKolekcjaZdjec;component/Images/Dreams.jpeg" VerticalAlignment="Top" Width="180" Height="160" Margin="0" />
-                                        <Image Source="/WpfKolekcjaZdjec;component/Images/Dreams.jpeg" VerticalAlignment="Top" Width="180" Height="160" Margin="0" />
-                                        <Image Source="/WpfKolekcjaZdjec;component/Images/Dreams.jpeg" VerticalAlignment="Top" Width="180" Height="160" Margin="0" />
-                                        <Image Source="/WpfKolekcjaZdjec;component/Images/Dreams.jpeg" VerticalAlignment="Top" Width="180" Height="160" Margin="0" />
-                                        <Image Source="/WpfKolekcjaZdjec;component/Images/Dreams.jpeg" VerticalAlignment="Top" Width="180" Height="160" Margin="0" />
-                                        <Image Source="/WpfKolekcjaZdjec;component/Images/Dreams.jpeg" VerticalAlignment="Top" Width="180" Height="160" Margin="0" />
+                                        <Image Name="PhotoSourceSlideshow" Source="/WpfKolekcjaZdjec;component/Images/Dreams.jpeg" VerticalAlignment="Top" Width="180" Height="130" Margin="0" />
+                                        <Image Source="/WpfKolekcjaZdjec;component/Images/Dreams.jpeg" VerticalAlignment="Top" Width="180" Height="130" Margin="0" />
+                                        <Image Source="/WpfKolekcjaZdjec;component/Images/Dreams.jpeg" VerticalAlignment="Top" Width="180" Height="130" Margin="0" />
+                                        <Image Source="/WpfKolekcjaZdjec;component/Images/Dreams.jpeg" VerticalAlignment="Top" Width="180" Height="130" Margin="0" />
+                                        <Image Source="/WpfKolekcjaZdjec;component/Images/Dreams.jpeg" VerticalAlignment="Top" Width="180" Height="130" Margin="0" />
                                         <Image Source="/WpfKolekcjaZdjec;component/Images/ekrajewskaSmall.jpg" VerticalAlignment="Top" Width="175" Height="130" Margin="0" />
-                                        <Image Source="/WpfKolekcjaZdjec;component/Images/Dreams.jpeg" VerticalAlignment="Top" Width="180" Height="160" Margin="0" />
-                                        <Image Source="/WpfKolekcjaZdjec;component/Images/Dreams.jpeg" VerticalAlignment="Top" Width="180" Height="160" Margin="0" />
+                                        <Image Source="/WpfKolekcjaZdjec;component/Images/Dreams.jpeg" VerticalAlignment="Top" Width="180" Height="130" Margin="0" />
+                                        <Image Source="/WpfKolekcjaZdjec;component/Images/Dreams.jpeg" VerticalAlignment="Top" Width="180" Height="130" Margin="0" />
                                         <Image Source="/WpfKolekcjaZdjec;component/Images/Dreams.jpeg" VerticalAlignment="Top" Width="180" Height="160" Margin="0" />
                                         <Image Source="/WpfKolekcjaZdjec;component/Images/Dreams.jpeg" VerticalAlignment="Top" Width="180" Height="160" Margin="0" />
                                         <Image Source="/WpfKolekcjaZdjec;component/Images/Dreams.jpeg" VerticalAlignment="Top" Width="180" Height="160" Margin="0" />

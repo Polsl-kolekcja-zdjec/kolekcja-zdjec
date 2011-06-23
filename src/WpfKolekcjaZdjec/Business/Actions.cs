@@ -107,29 +107,31 @@ namespace WpfKolekcjaZdjec.DataAccess
                 string openedImageName = openImage.FileName;
                 string fileName = Path.GetFileName(openedImageName);
                 string filePath = openedImageName.Substring(0, openedImageName.Length - fileName.Length);
+                string newFilePath = ChangePath(filePath);
 
                 Bitmap image = AForge.Imaging.Image.FromFile(openedImageName);
-                int[] thumbnailSizes = GetThumbnailSize(image.Width, image.Height);
 
-                int thumbnailWidth = thumbnailSizes[0];
-                int thumbnailHeight = thumbnailSizes[1];
+                //int[] thumbnailSizes = GetThumbnailSize(image.Width, image.Height);
 
-                AForge.Imaging.Filters.ResizeBicubic filter = new AForge.Imaging.Filters.ResizeBicubic(thumbnailWidth, thumbnailHeight);
-                Bitmap thumbnail = filter.Apply(image);
+                //int thumbnailWidth = thumbnailSizes[0];
+                //int thumbnailHeight = thumbnailSizes[1];
 
-                string thumbnailFileName = LookForFreeFilename(thumbnailPath, fileName);
-                string thumbnailSavedPath = Path.Combine(thumbnailPath, thumbnailFileName);
+                //AForge.Imaging.Filters.ResizeBicubic filter = new AForge.Imaging.Filters.ResizeBicubic(thumbnailWidth, thumbnailHeight);
+                //Bitmap thumbnail = filter.Apply(image);
 
-                thumbnail.Save(thumbnailSavedPath);
+                //string thumbnailFileName = LookForFreeFilename(thumbnailPath, fileName);
+                //string thumbnailSavedPath = Path.Combine(thumbnailPath, thumbnailFileName);
+
+                //thumbnail.Save(thumbnailSavedPath);
 
                 PhotosDataSource db = new PhotosDataSource(connectionString);
                 Photo photoObject = new Photo();
 
-                photoObject.FilePath = filePath;
-                photoObject.ThumbnailPath = thumbnailSavedPath;
+                photoObject.FilePath = newFilePath;
+                photoObject.ThumbnailPath = string.Empty;// thumbnailSavedPath;
 
                 photoObject.Title = fileName;
-                photoObject.Description = string.Empty;
+                photoObject.Description = "fuck jeah";//string.Empty;
 
                 // TODO: get and add archive ID to photo
                 photoObject.Archive = null;
@@ -170,6 +172,18 @@ namespace WpfKolekcjaZdjec.DataAccess
             return db.DeletePhotos(ids);
         }
 
+        /// <summary>
+        /// Change \ to \\ in path.
+        /// </summary>
+        /// <param name="path">The path.</param>
+        /// <returns>New path.</returns>
+         public static string ChangePath(string path)
+        {
+            string sign;  // sign = ' \ '
+            sign = "\\";
+            path =  path.Replace(sign, "\\");
+            return path;
+        }
         /// <summary>
         /// Looks for free filename.
         /// </summary>

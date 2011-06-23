@@ -51,10 +51,15 @@ namespace WpfKolekcjaZdjec
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             // Business actions.
-            Actions.StartupTests();
+       //   Actions.StartupTests();
 
             // Load all plugins.
-            PluginsBusiness.RegisterPluginsFromDirectory(this);
+         // PluginsBusiness.RegisterPluginsFromDirectory(this);
+            foreach (var i in Actions.GetAllPhotos())
+            {
+                if(i.ID != null) //jeśli jest coś w bazie :>
+                    GetAndShowImagesFromDatabase();
+            }
         }
 
         private void SearchTextBox_ValueChanged(object sender, Telerik.Windows.RadRoutedEventArgs e)
@@ -102,11 +107,16 @@ namespace WpfKolekcjaZdjec
 
         private void Report_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            // wgawronski: Temporary solution - Getting list of all photos.
+            String fullName;
+
+            // wgawronski: Tremporary solution - Getting list of all photos.
             foreach (var i in Actions.GetAllPhotos())
             {
-                MessageBox.Show(i.Title);
+                fullName = i.FilePath + i.Title;
+                MessageBox.Show(fullName);
             }
+
+
         }
 
         private void Slideshow_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -176,6 +186,24 @@ namespace WpfKolekcjaZdjec
         private void ImgNew_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             DataAccess.Actions.AddPhoto();
+            GetAndShowImagesFromDatabase();            
+        }
+
+        private void GetAndShowImagesFromDatabase()
+        {
+            String fullName;
+            ImageSourceConverter photoCon = new ImageSourceConverter();
+
+            foreach (var i in Actions.GetAllPhotos())
+            {
+                fullName = i.FilePath + i.Title;
+                ImageSource photoSource = (ImageSource)photoCon.ConvertFromString(fullName);
+                PhotoName.Text = i.Title;
+                PhotoDescription.Text = i.Description;
+                PhotoSourceDescription.Source = photoSource;
+                PhotoSourceSlideshow.Source = photoSource;
+                PhotoSourceThumbails.Source = photoSource;
+            }
         }
 
         private void AboutItem_Click(object sender, EventArgs e)
