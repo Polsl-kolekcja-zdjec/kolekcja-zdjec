@@ -46,7 +46,7 @@ namespace WpfKolekcjaZdjec
         {
             InitializeComponent();
             GrdThumbnails.Visibility = System.Windows.Visibility.Hidden;
-            GrdDescription.Visibility = System.Windows.Visibility.Hidden;
+            GrdSlideshow.Visibility = System.Windows.Visibility.Hidden;
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -132,22 +132,6 @@ namespace WpfKolekcjaZdjec
           GrdDescription.Visibility = System.Windows.Visibility.Hidden;
         }
 
-        private void Slider_Change(object sender, RoutedPropertyChangedEventArgs<double> e)
-        {
-            if (e.NewValue > 0.04 && e.NewValue < 0.97)
-            {
-                this.CarouselPanel.TopItemPathFraction = e.NewValue;
-            }
-            else if (e.NewValue <= 0.5)
-            {
-                this.Slider_Change(this, new RoutedPropertyChangedEventArgs<double>(0, 0.04));
-            }
-            else if (e.NewValue >= 0.97)
-            {
-                this.Slider_Change(this, new RoutedPropertyChangedEventArgs<double>(0, 0.96));
-            }
-        }
-
         private void Windows_Init(object sender, EventArgs e)
         {
         }
@@ -191,8 +175,9 @@ namespace WpfKolekcjaZdjec
         private void GetAndShowImagesFromDatabase()
         {
             List<Photo> photos = Actions.GetAllPhotos();            
-            dziwka2.DataContext = photos;
-            dziwka.DataContext = photos;
+            PhotoDescriptions.DataContext = photos;
+            PhotoThumbails.DataContext = photos;
+            CarouselPanel.DataContext = photos;
         }
 
         private void AboutItem_Click(object sender, EventArgs e)
@@ -201,14 +186,5 @@ namespace WpfKolekcjaZdjec
            aboutInfo.Show();
         }
 
-        private void CarouselNextPage_Click(object sender, RoutedEventArgs e)
-        {
-            this.CarouselPanel.PageRight();
-        }
-
-        private void CarouselPreviousPage_Click(object sender, RoutedEventArgs e)
-        {
-            this.CarouselPanel.PageLeft();
-        }
     }
 }
