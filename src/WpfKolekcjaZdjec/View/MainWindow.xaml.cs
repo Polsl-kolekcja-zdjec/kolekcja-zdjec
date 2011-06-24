@@ -15,6 +15,7 @@ using Telerik.Windows.Controls;
 using WpfKolekcjaZdjec.DataAccess;
 using WpfKolekcjaZdjec.Plugins;
 using WpfKolekcjaZdjec.Business;
+using WpfKolekcjaZdjec.Entities;
 
 namespace WpfKolekcjaZdjec
 {
@@ -107,13 +108,11 @@ namespace WpfKolekcjaZdjec
 
         private void Report_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            String fullName;
 
             // wgawronski: Tremporary solution - Getting list of all photos.
             foreach (var i in Actions.GetAllPhotos())
             {
-                fullName = i.FilePath + i.Title;
-                MessageBox.Show(fullName);
+                MessageBox.Show(i.FilePath);
             }
 
 
@@ -191,19 +190,9 @@ namespace WpfKolekcjaZdjec
 
         private void GetAndShowImagesFromDatabase()
         {
-            String fullName;
-            ImageSourceConverter photoCon = new ImageSourceConverter();
-
-            foreach (var i in Actions.GetAllPhotos())
-            {
-                fullName = i.FilePath + i.Title;
-                ImageSource photoSource = (ImageSource)photoCon.ConvertFromString(fullName);
-                PhotoName.Text = i.Title;
-                PhotoDescription.Text = i.Description;
-                PhotoSourceDescription.Source = photoSource;
-                PhotoSourceSlideshow.Source = photoSource;
-                PhotoSourceThumbails.Source = photoSource;
-            }
+            List<Photo> photos = Actions.GetAllPhotos();            
+            dziwka2.DataContext = photos;
+            dziwka.DataContext = photos;
         }
 
         private void AboutItem_Click(object sender, EventArgs e)

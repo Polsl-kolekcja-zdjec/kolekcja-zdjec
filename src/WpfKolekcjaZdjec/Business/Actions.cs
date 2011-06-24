@@ -24,6 +24,7 @@ namespace WpfKolekcjaZdjec.DataAccess
             ThumbnailDirectoryExist();
         }
 
+
         /// <summary>
         /// Gets all photos.
         /// </summary>
@@ -31,8 +32,19 @@ namespace WpfKolekcjaZdjec.DataAccess
         public static List<Photo> GetAllPhotos()
         {
             PhotosDataSource db = new PhotosDataSource(ConnectionStringHelper.GetActualConnectionString());
+            
 
             return db.GetAllPhotos();
+        }
+
+        /// <summary>
+        /// Get one photo.
+        /// </summary>
+        /// <param name="id">Photo ID.</param>
+        /// <returns>One photo.</returns>
+        public Photo GetPhoto(int id) { 
+            PhotosDataSource db = new PhotosDataSource(ConnectionStringHelper.GetActualConnectionString());
+            return db.GetPhoto(id);
         }
 
         /// <summary>
@@ -108,6 +120,7 @@ namespace WpfKolekcjaZdjec.DataAccess
                 string fileName = Path.GetFileName(openedImageName);
                 string filePath = openedImageName.Substring(0, openedImageName.Length - fileName.Length);
                 string newFilePath = ChangePath(filePath);
+                
 
                 Bitmap image = AForge.Imaging.Image.FromFile(openedImageName);
 
@@ -123,6 +136,7 @@ namespace WpfKolekcjaZdjec.DataAccess
                 //string thumbnailSavedPath = Path.Combine(thumbnailPath, thumbnailFileName);
 
                 //thumbnail.Save(thumbnailSavedPath);
+                newFilePath = newFilePath + fileName;
 
                 PhotosDataSource db = new PhotosDataSource(connectionString);
                 Photo photoObject = new Photo();
@@ -140,6 +154,7 @@ namespace WpfKolekcjaZdjec.DataAccess
                 photoObject.Attribute = null;
 
                 db.AddPhoto(photoObject);
+
             }
         }
 
