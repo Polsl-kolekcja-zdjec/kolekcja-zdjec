@@ -27,7 +27,7 @@
 
             </Grid.ColumnDefinitions>
 
-            <Grid Grid.Column="0" Width="Auto">
+            <Grid Width="Auto" Margin="0,-2">
                 <telerik:RadOutlookBar Name="ActionOptions" Margin="-6,0,4,0" HorizontalAlignment="Stretch" MaxWidth="160" IsMinimizable="True">
 
                     <telerik:RadOutlookBarItem Header="Folders" FontWeight="Bold" Icon="/WpfKolekcjaZdjec;component/Images/Tree.png" SmallIcon="/WpfKolekcjaZdjec;component/Images/Tree.png">
@@ -97,13 +97,12 @@
                     </telerik:RadOutlookBarItem>
                 </telerik:RadOutlookBar>
             </Grid>
-     
             <Grid Grid.Column="1" >
                
                
                 <Grid.Resources>
                     <DataTemplate x:Key="templateForThumbails">
-                         <Image Source="{Binding Path=FilePath}" MaxHeight="200" MaxWidth="200" Height="Auto" Width="Auto" MinHeight="160" MinWidth="160" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="10" />                     
+                         <Image Source="{Binding Path=FilePath}" MaxHeight="200" MaxWidth="200" Height="Auto" Width="Auto" MinHeight="160" MinWidth="160" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="10" MouseLeftButtonDown="Image_MouseLeftButtonDown" />                     
                      </DataTemplate>
                     
                     <DataTemplate x:Key="templateForDescription">
@@ -166,7 +165,7 @@
                                         </Border>
 
                                         <StackPanel Grid.Row="1" Orientation="Horizontal">
-                                            <Image Source="{Binding Path=FilePath}" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" MinWidth="400" MinHeight="200" Margin="0" />
+                                            <Image Source="{Binding Path=FilePath}" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" MinWidth="400" MinHeight="200" Margin="0" MouseLeftButtonDown="Image_MouseLeftButtonDown_1" />
                                         </StackPanel>
 
 
@@ -292,15 +291,15 @@
 
         </Grid>
         <!-- ikony (wraz z opisami): -->
-        <Image Height="32" HorizontalAlignment="Left" Margin="129,0,0,27" Name="ImgBurn" Source="/WpfKolekcjaZdjec;component/Images/Burn.png" Stretch="Fill" VerticalAlignment="Bottom" Width="32" MouseLeftButtonDown="Burn_MouseLeftButtonDown"/>
+        <Image Height="32" HorizontalAlignment="Left" Margin="133,0,0,27" Name="ImgRemove" Source="/WpfKolekcjaZdjec;component/Images/DeleteItem.png" Stretch="Fill" VerticalAlignment="Bottom" Width="32" MouseLeftButtonDown="ImgRemove_MouseLeftButtonDown" />
         <Image Height="32" HorizontalAlignment="Left" Margin="214,0,0,26" Name="ImgSecurity" Source="/WpfKolekcjaZdjec;component/Images/Lock.png" Stretch="Fill" VerticalAlignment="Bottom" Width="32" />
-        <Image Height="32" HorizontalAlignment="Left" Margin="299,0,0,26" Name="ImgRename" Source="/WpfKolekcjaZdjec;component/Images/Rename.png" Stretch="Fill" VerticalAlignment="Bottom" Width="32" />
+        <Image Height="32" HorizontalAlignment="Left" Margin="299,0,0,26" Name="ImgRename" Source="/WpfKolekcjaZdjec;component/Images/Rename.png" Stretch="Fill" VerticalAlignment="Bottom" Width="32" MouseLeftButtonDown="ImgRename_MouseLeftButtonDown"/>
         <Image Height="32" HorizontalAlignment="Left" Margin="385,0,0,26" Name="ImgPersonal" Source="/WpfKolekcjaZdjec;component/Images/Person.png" Stretch="Fill" VerticalAlignment="Bottom" Width="32" MouseLeftButtonDown="Personal_MouseLeftButtonDown" />
 
         <Label Content="security" Height="28" HorizontalAlignment="Left" Margin="203,0,0,0" Name="lblSecurity" VerticalAlignment="Bottom" Width="61" />
         <Label Content="rename" Height="28" HorizontalAlignment="Left" Margin="288,0,0,0" Name="lblRename" VerticalAlignment="Bottom" />
         <Label Content="view your data" Height="28" HorizontalAlignment="Left" Margin="357,0,0,0" Name="lblViewData" VerticalAlignment="Bottom" />
-        <Label Content="burn disc" Height="28" HorizontalAlignment="Left" Margin="117,0,0,0" Name="lblBurnDisc" VerticalAlignment="Bottom" />
+        <Label Content="remove all" Height="28" HorizontalAlignment="Left" Margin="117,0,0,0" Name="lblBurnDisc" VerticalAlignment="Bottom" />
         <Label Content="generate report" Height="28" HorizontalAlignment="Left" Margin="12,0,0,0" Name="lblGenerateReport" VerticalAlignment="Bottom" />
 
 
