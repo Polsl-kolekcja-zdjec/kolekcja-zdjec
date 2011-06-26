@@ -13,9 +13,9 @@ using System.Windows.Shapes;
 
 namespace WpfKolekcjaZdjec.View
 {
-    // <summary>
-    // Interaction logic for About.xaml
-    // </summary>
+    /// <summary>
+    /// Interaction logic for About.xaml.
+    /// </summary>
     public partial class About : Window
     {
         /// <summary>

@@ -31,8 +31,6 @@ namespace WpfKolekcjaZdjec.DataAccess
         public static List<Photo> GetAllPhotos()
         {
             PhotosDataSource db = new PhotosDataSource(ConnectionStringHelper.GetActualConnectionString());
-            
-
             return db.GetAllPhotos();
         }
 
@@ -41,7 +39,8 @@ namespace WpfKolekcjaZdjec.DataAccess
         /// </summary>
         /// <param name="id">Photo ID.</param>
         /// <returns>One photo.</returns>
-        public static Photo GetPhoto(int id) { 
+        public static Photo GetPhoto(int id)
+        {
             PhotosDataSource db = new PhotosDataSource(ConnectionStringHelper.GetActualConnectionString());
             return db.GetPhoto(id);
         }
@@ -204,13 +203,16 @@ namespace WpfKolekcjaZdjec.DataAccess
         /// <returns>File name.</returns>
         public static string LookForFreeFilename(string path, string fileName)
         {
+            // Setting by default a png extension - resized images are PNG files.
+            const string Extension = "png";
+
             if (File.Exists(path + fileName))
             {
                 string[] splittedFilename = fileName.Split('.');
-                string file = string.Empty, extension = string.Empty;
-                int i = 0;
 
-                for (i = 0; i < splittedFilename.Count() - 1; ++i) 
+                string file = string.Empty;
+
+                for (int i = 0; i < splittedFilename.Count() - 1; ++i)
                 {
                     if (i > 0)
                     {
@@ -222,15 +224,17 @@ namespace WpfKolekcjaZdjec.DataAccess
                     }
                 }
 
-                extension = splittedFilename[i];
-
                 int counter = 2;
-                while (File.Exists(path + file + "[" + counter + "]." + extension)) 
+                while (File.Exists(path + file + "[" + counter + "]." + Extension))
                 {
                     counter++;
                 }
 
-                fileName = file + "[" + counter + "]." + extension;
+                fileName = file + "[" + counter + "]." + Extension;
+            }
+            else
+            {
+                fileName = fileName.Substring(0, fileName.LastIndexOf('.') + 1) + Extension;
             }
 
             return fileName;
@@ -354,10 +358,12 @@ namespace WpfKolekcjaZdjec.DataAccess
         /// <returns>Operation's status.</returns>
         public static bool TagPhoto(int photoID, String tagName)
         {
-            PhotosDataSource dbPhotos = new PhotosDataSource(ConnectionStringHelper.GetActualConnectionString());
+            string connectionString = ConnectionStringHelper.GetActualConnectionString();
+
+            PhotosDataSource dbPhotos = new PhotosDataSource(connectionString);
             List<Photo> allPhotos = dbPhotos.GetAllPhotos();
 
-            TagsDataSource dbTags = new TagsDataSource(ConnectionStringHelper.GetActualConnectionString());
+            TagsDataSource dbTags = new TagsDataSource(connectionString);
             List<Tag> allTags = dbTags.GetAllTags();
 
             // Searching photo.
@@ -374,10 +380,20 @@ namespace WpfKolekcjaZdjec.DataAccess
                 return false;
             }
 
-            photoResult.Tags.Add(tagResult);
-            tagResult.Photos.Add(photoResult);
+            // Updates collections.
+            using (PhotoCollectionDatabaseEntities context = new PhotoCollectionDatabaseEntities(connectionString))
+            {
+                Photo photo = (from o in context.Photos where o.ID == photoID select o).First();
 
-            //TODO: connection to database and saving changes
+                photo.Tags.Add(tagResult);
+                photo.AcceptChanges();
+
+                Tag tag = (from o in context.Tags where o.Name == tagName select o).First();
+
+                tag.Photos.Add(photoResult);
+                tag.AcceptChanges();
+            }
+
             return true;
         }
     }

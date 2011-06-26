@@ -13,12 +13,11 @@ using System.Windows.Shapes;
 
 namespace WpfKolekcjaZdjec.View
 {
-    // <summary>
-    // Interaction logic for ImagePropertiesReadOnly.xaml
-    // </summary>
+    /// <summary>
+    /// Interaction logic for ImagePropertiesReadOnly.xaml.
+    /// </summary>
     public partial class ImagePropertiesReadOnly : Window
     {
- 
         /// <summary>
         /// Constructor for read only image properties window.
         /// </summary>
@@ -26,7 +25,5 @@ namespace WpfKolekcjaZdjec.View
         {
             InitializeComponent();
         }
-
- 
     }
 }

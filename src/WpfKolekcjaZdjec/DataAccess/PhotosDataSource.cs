@@ -145,19 +145,5 @@ namespace WpfKolekcjaZdjec.DataAccess
                 return context.SaveChanges();
             }
         }
-
-        /// <summary>
-        /// TODO
-        /// </summary>
-        /// <param name="photoID"></param>
-        /// <param name="tagToAdd"></param>
-        /// <returns></returns>
-        public int TagPhoto(int photoID, Tag tagToAdd)
-        {
-            using (PhotoCollectionDatabaseEntities context = new PhotoCollectionDatabaseEntities(_connectionString))
-            {
-                return context.SaveChanges();
-            }
-        }
     }
 }

@@ -1,53 +1,87 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using System.Configuration;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
 using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
+using WpfKolekcjaZdjec.Entities;
+using System.IO;
+using WpfKolekcjaZdjec.DataAccess;
 
 namespace WpfKolekcjaZdjec.View
 {
     /// <summary>
-    /// Interaction logic for TagPhotos.xaml
+    /// Interaction logic for TagPhotos.xaml.
     /// </summary>
     public partial class TagPhotos : Window
     {
-        Entities.Photo selectedPhoto;
-        Image errorImage = new Image();
-        bool close;
+        /// <summary>
+        /// Selected photo.
+        /// </summary>
+        private Photo selectedPhoto;
 
+        /// <summary>
+        /// Error image.
+        /// </summary>
+        private Image errorImage = new Image();
+
+        /// <summary>
+        /// Is closed?
+        /// </summary>
+        private bool close;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TagPhotos"/> class.
+        /// </summary>
         public TagPhotos()
         {
             InitializeComponent();
+
             errorImage.Source = PhotoThumbnail.Source;
             close = false;
-            //wypelnij liste tagow
+
+            // Wypelnij liste tagow.
             List<Entities.Tag> allTags = DataAccess.Actions.GetAllTags();
-            foreach (Entities.Tag currentTag in allTags)
+            foreach (Tag currentTag in allTags)
             {
                 TagsListBox.Items.Add(currentTag.Name);
             }
         }
 
-        public Entities.Photo SelectedPhoto
+        /// <summary>
+        /// Gets or sets the selected photo.
+        /// </summary>
+        /// <value>
+        /// The selected photo.
+        /// </value>
+        public Photo SelectedPhoto
         {
-            get { return selectedPhoto; }
+            get
+            {
+                return selectedPhoto;
+            }
+
             set
             {
                 selectedPhoto = value;
             }
         }
 
+        /// <summary>
+        /// Gets a value indicating whether [close window].
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if [close window]; otherwise, <c>false</c>.
+        /// </value>
         public bool CloseWindow
         {
-            get { return close; }
+            get
+            {
+                return close;
+            }
         }
+
         /// <summary>
         /// Refresh window.
         /// </summary>
@@ -63,36 +97,31 @@ namespace WpfKolekcjaZdjec.View
         /// </summary>
         private void ViewThumbnail()
         {
-            //wyswietlanie miniaturki + info
+            // Wyswietlanie miniaturki + info.
             if (selectedPhoto == null)
             {
-                /*BitmapImage thumbnailBitmap = new BitmapImage();
-                thumbnailBitmap.BeginInit();
-                thumbnailBitmap.UriSource = new Uri(@"..\..\Images\NothingSelected.jpg");
-                thumbnailBitmap.DecodePixelWidth = 200;
-                thumbnailBitmap.EndInit();
-                PhotoThumbnail.Width = 200;
-                PhotoThumbnail.Source = thumbnailBitmap;*/
-                //MessageBox.Show("No photo selected.", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
                 SelectTagTextBlock.Text = "You can not tag a photo now.";
                 PhotoInfoTextBlock.Text = "Please select a photo first.";
             }
             else
             {
                 BitmapImage thumbnailBitmap = new BitmapImage();
-                //to bedzie dobre jak bedzie miniaturka
-                /*
-                 thumbnailBitmap.BeginInit();
-                thumbnailBitmap.UriSource = new Uri(@p1.ThumbnailPath);
-                thumbnailBitmap.EndInit();
-                */
-                //to jest dobre tymczasowo
+
                 thumbnailBitmap.BeginInit();
-                thumbnailBitmap.UriSource = new Uri(@selectedPhoto.FilePath);
-                thumbnailBitmap.DecodePixelWidth = 200;
+                thumbnailBitmap.UriSource = new Uri(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, selectedPhoto.ThumbnailPath));
                 thumbnailBitmap.EndInit();
-                PhotoThumbnail.Width = 200;
+
+                try
+                {
+                    PhotoThumbnail.Width = int.Parse(ConfigurationManager.AppSettings["ThumbnailMaxWidth"].ToString());
+                }
+                catch(Exception)
+                {
+                    PhotoThumbnail.Width = 300;
+                }
+
                 PhotoThumbnail.Source = thumbnailBitmap;
+
                 SelectTagTextBlock.Text = "Please select a tag:";
                 PhotoInfoTextBlock.Text = "Selected photo: " + selectedPhoto.Title;
             }
@@ -105,81 +134,88 @@ namespace WpfKolekcjaZdjec.View
         /// <returns>True if successful</returns>
         private Boolean AddTag(String tagName)
         {
-            //if empty returning false
-            if (tagName.Length < 1)
+            // If empty returning false.
+            if (string.IsNullOrWhiteSpace(tagName))
             {
-                MessageBox.Show("Error.\n\nMissing text.", "Error.", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("Type the tag name, please.", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
                 return false;
             }
-            //else if meaning less returning false
-            else if (tagName.Length == 1)
-            {
-                if (tagName[0] < 33)
-                {
-                    MessageBox.Show("Error.\n\nMissing text.", "Error.", MessageBoxButton.OK, MessageBoxImage.Error);
-                    return false;
-                }
-            }
 
-            //if not in database adding to TagsList
+            // If not in database adding to TagsList.
             if (DataAccess.Actions.AddTag(tagName))
             {
-                //add a new tag to comboBox of tags
+                // Add a new tag to comboBox of tags.
                 TagsListBox.Items.Add(tagName);
-                //show confirmation
-                //MessageBox.Show("Tag added to database", "", MessageBoxButton.OK, MessageBoxImage.Information);
+                ((MainWindow)Application.Current.MainWindow).UpdateTagCloud();
             }
-            
-            //tag selected photo
-            if (DataAccess.Actions.TagPhoto(selectedPhoto.ID, tagName))
+
+            // Tag selected photo.
+            if (Actions.TagPhoto(selectedPhoto.ID, tagName))
             {
-                String messageText = "\"" + tagName + "\" tag added to photo.";
-                MessageBox.Show(messageText, "Successful", MessageBoxButton.OK, MessageBoxImage.Information);
+                // Simulate close button click ;)
+                this.CloseButton_Click(this, null);
+
                 return true;
             }
             else
             {
-                MessageBox.Show("An error occurred", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("An error occurred when we insert tag into database.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return false;
             }
         }
 
+        /// <summary>
+        /// Handles the Click event of the TagPhotoButton control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
         private void TagPhotoButton_Click(object sender, RoutedEventArgs e)
         {
-            //jezeli nie wybrano zdjecia
             if (selectedPhoto == null)
             {
-                MessageBox.Show("Please select a photo first.", "Error", MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBox.Show("Please select a photo first.", "Inforation", MessageBoxButton.OK, MessageBoxImage.Information);
             }
-            //jezeli nie wpisano tekstu nowego taga
-            else if (NewTagTextBox.Text == "")
+            else if (string.IsNullOrWhiteSpace(NewTagTextBox.Text))
             {
-                //sprawdzam czy cos zaznaczono na liscie
+                // Sprawdzam czy cos zaznaczono na liscie.
                 if (TagsListBox.SelectedItems.Count == 0)
-                    MessageBox.Show("Please select a tag or enter name of a new one.", "Error", MessageBoxButton.OK, MessageBoxImage.Warning);
+                {
+                    MessageBox.Show("Please select a tag or enter name of a new one.", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
                 else
-                    if (DataAccess.Actions.TagPhoto(selectedPhoto.ID, TagsListBox.SelectedItems[0].ToString()))
+                {
+                    if (!Actions.TagPhoto(selectedPhoto.ID, TagsListBox.SelectedItems[0].ToString()))
                     {
-                        String messageText = "\"" + TagsListBox.SelectedItems[0] + "\" tag added to photo.";
-                        MessageBox.Show(messageText, "Successful", MessageBoxButton.OK, MessageBoxImage.Information);
+                        MessageBox.Show("An error occurred when we insert try to tag a photo.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                     }
                     else
-                        MessageBox.Show("An error occurred", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    {
+                        // Simulate close button click ;)
+                        this.CloseButton_Click(this, null);
+                    }
+                }
             }
-            //jezeli wybrano zdjecie i wpisano taga recznie
             else
             {
+                // Jezeli wybrano zdjecie i wpisano taga recznie.
                 AddTag(NewTagTextBox.Text);
             }
         }
 
+        /// <summary>
+        /// Handles the Click event of the CloseButton control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
         private void CloseButton_Click(object sender, RoutedEventArgs e)
         {
             selectedPhoto = null;
-            PhotoThumbnail.Source = errorImage.Source;
             close = true;
+
+            ((MainWindow)Application.Current.MainWindow).UpdateTagCloud();
+            PhotoThumbnail.Source = errorImage.Source;
+
             Close();
-            
         }
     }
 }

@@ -18,6 +18,23 @@ namespace WpfKolekcjaZdjec.Business
         private static IPlugin[] registeredPlugins;
 
         /// <summary>
+        /// Gets the plugin.
+        /// </summary>
+        /// <param name="idx">The idx.</param>
+        /// <returns>Registered plugin.</returns>
+        public static IPlugin GetPlugin(int idx)
+        {
+            IPlugin returned = null;
+
+            if (idx >= 0 && idx < registeredPlugins.Length)
+            {
+                returned = registeredPlugins[idx];
+            }
+
+            return returned;
+        }
+
+        /// <summary>
         /// Registers the plugins from directory.
         /// </summary>
         /// <param name="host">The host.</param>
