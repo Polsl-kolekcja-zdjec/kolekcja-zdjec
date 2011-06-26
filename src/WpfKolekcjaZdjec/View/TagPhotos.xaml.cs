@@ -20,11 +20,13 @@ namespace WpfKolekcjaZdjec.View
     {
         Entities.Photo selectedPhoto;
         Image errorImage = new Image();
+        bool close;
 
         public TagPhotos()
         {
             InitializeComponent();
             errorImage.Source = PhotoThumbnail.Source;
+            close = false;
             //wypelnij liste tagow
             List<Entities.Tag> allTags = DataAccess.Actions.GetAllTags();
             foreach (Entities.Tag currentTag in allTags)
@@ -40,6 +42,11 @@ namespace WpfKolekcjaZdjec.View
             {
                 selectedPhoto = value;
             }
+        }
+
+        public bool CloseWindow
+        {
+            get { return close; }
         }
         /// <summary>
         /// Refresh window.
@@ -170,7 +177,9 @@ namespace WpfKolekcjaZdjec.View
         {
             selectedPhoto = null;
             PhotoThumbnail.Source = errorImage.Source;
+            close = true;
             Close();
+            
         }
     }
 }

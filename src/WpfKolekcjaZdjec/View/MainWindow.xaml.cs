@@ -40,7 +40,7 @@ namespace WpfKolekcjaZdjec
         #endregion
         bool selectedPhoto;
         List<Tag> tags;
-       // List<Photo> photos;
+       List<Photo> photos;
         View.TagPhotos tagingWindow;
         /// <summary>
         /// Constructor for MainWindow.
@@ -51,6 +51,7 @@ namespace WpfKolekcjaZdjec
             GrdThumbnails.Visibility = System.Windows.Visibility.Hidden;
             GrdSlideshow.Visibility = System.Windows.Visibility.Hidden;
            selectedPhoto = false;
+
         } 
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -83,12 +84,7 @@ namespace WpfKolekcjaZdjec
         }
 
         private void Personal_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            ///string curItem = PhotoThumbails.SelectedItem.ToString();
-
-           /// int selectID = pobrane ID z zaznaczonego obiektu
-          
-           List<Photo> photos;
+        {           
             actualArea();
            Photo phototemp = tagingWindow.SelectedPhoto;
             if (selectedPhoto)
@@ -181,7 +177,6 @@ namespace WpfKolekcjaZdjec
 
         private void GetAndShowImagesFromDatabase()
         {
-            List<Photo> photos;
             photos = Actions.GetAllPhotos();
             tags = Actions.GetAllTags();
             TagCloud.DataContext = tags;
@@ -217,11 +212,8 @@ namespace WpfKolekcjaZdjec
             
         }
 
-<<<<<<< HEAD
+
         private void actualArea()
-=======
-        private void ImgTag_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
->>>>>>> 0377fc30f0ae0196e09c12d3059ce973275b66b0
         {
             tagingWindow = new View.TagPhotos();
             if (GrdSlideshow.Visibility == System.Windows.Visibility.Visible)
@@ -237,7 +229,7 @@ namespace WpfKolekcjaZdjec
 
             actualArea();
             tagingWindow.Show();
-           // GetAndShowImagesFromDatabase();
+            if(tagingWindow.CloseWindow) GetAndShowImagesFromDatabase();
         }
     }
 }

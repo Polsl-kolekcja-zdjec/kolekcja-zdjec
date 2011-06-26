@@ -286,7 +286,7 @@
                 </DataTemplate>
             </Grid.Resources>
             <Grid.RowDefinitions>
-                <RowDefinition Height="184*" />
+                <RowDefinition Height="Auto" />
                 <RowDefinition Height="240*" />
             </Grid.RowDefinitions>
             <telerik:RadButton Content="Create a structure" Height="32" HorizontalAlignment="Right" Margin="0,104,6,0" Name="BtnCreateStructure" MouseDoubleClick="CreateStructure_MouseDoubleClick" VerticalAlignment="Top" Width="146" Grid.Row="1" />
@@ -295,7 +295,7 @@
         <telerik:RadRadioButton Content="Import photos" Height="23" HorizontalAlignment="Right" Margin="0,3,12,0" Name="RbtnImport" VerticalAlignment="Top" Width="134" Click="Import_Click" Grid.Row="1" />
         <telerik:RadRadioButton Content="Export photos" Height="23" HorizontalAlignment="Right" Margin="0,34,12,0" Name="RbtnExport" VerticalAlignment="Top" Width="134" Click="Export_Click" Grid.Row="1" />
             <telerik:RadComboBox Name="Filtering" Width="146" Height="23" HorizontalAlignment="Right" Margin="0,136,6,25" ClearSelectionButtonVisibility="Visible" ClearSelectionButtonContent="Show all" DisplayMemberPath="NameInModelXML" ItemsSource="filter1" SelectedItem="Model XML"  />
-            <ItemsControl Name="TagCloud" Padding="5" ScrollViewer.HorizontalScrollBarVisibility="Disabled" Margin="0,6,0,54" ItemsSource="{Binding}" ItemTemplate="{StaticResource templateForTags}"  HorizontalAlignment="Center" Width="161">
+            <ItemsControl Name="TagCloud" Padding="5" ScrollViewer.HorizontalScrollBarVisibility="Disabled" Margin="0,5,0,54" ItemsSource="{Binding}" ItemTemplate="{StaticResource templateForTags}"  HorizontalAlignment="Center" Width="161" Height="125">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
                         <WrapPanel />
