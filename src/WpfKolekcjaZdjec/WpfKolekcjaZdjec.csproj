@@ -329,6 +329,7 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <Resource Include="Images\NothingSelected.jpg" />
     <Content Include="Lib\AForge.dll" />
     <Content Include="Lib\AForge.Imaging.dll" />
     <Content Include="Lib\AForge.Imaging.Formats.dll" />
