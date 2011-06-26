@@ -53,7 +53,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
     <DocumentationFile>bin\Release\WpfKolekcjaZdjec.XML</DocumentationFile>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
@@ -245,8 +245,6 @@
     <Compile Include="Entities\Tag.cs">
       <DependentUpon>PhotoCollectionEntities.tt</DependentUpon>
     </Compile>
-    <Compile Include="Plugins\IHostPlugin.cs" />
-    <Compile Include="Plugins\IPlugin.cs" />
     <Compile Include="View\ImageProperties.xaml.cs">
       <DependentUpon>ImageProperties.xaml</DependentUpon>
     </Compile>
@@ -327,7 +325,12 @@
     </None>
     <AppDesigner Include="Properties\" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="Plugins\PluginsBusiness\PluginsBusiness.csproj">
+      <Project>{4E861769-B46E-4692-8344-CEBFCFE3ECEC}</Project>
+      <Name>PluginsBusiness</Name>
+    </ProjectReference>
+  </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\NothingSelected.jpg" />
     <Content Include="Lib\AForge.dll" />
@@ -544,6 +547,9 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Plugins\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -1,13 +1,24 @@
 ﻿using System.Windows;
+using System.Windows.Controls;
 using WpfKolekcjaZdjec.Plugins;
 
 namespace SamplePlugin
 {
     /// <summary>
-    /// Sample plugin implementation.
+    /// Interaction logic for SampleForm.xaml.
     /// </summary>
-    public class PlugIn : IPlugin
+    public partial class SampleForm : Window, IPlugin
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SampleForm"/> class.
+        /// </summary>
+        public SampleForm()
+        {
+            InitializeComponent();
+
+            _name = "SampleFormPlugin";
+        }
+
         /// <summary>
         /// Sample name.
         /// </summary>
@@ -18,14 +29,6 @@ namespace SamplePlugin
         /// </summary>
         private IHostPlugin _host;
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="PlugIn"/> class.
-        /// </summary>
-        public PlugIn()
-        {
-            _name = "SampleNameForPlugin";
-        }
-        
         /// <summary>
         /// Gets or sets the name.
         /// </summary>
@@ -51,7 +54,7 @@ namespace SamplePlugin
         /// </returns>
         public bool Execute()
         {
-            MessageBox.Show("Hello from plugin!");
+            this.Show();
             return true;
         }
 

@@ -1,6 +1,8 @@
 bin/
 obj/
-SamplePlugin/bin/
-SamplePlugin/obj/
+Plugins/Projects/SamplePlugin/bin/
+Plugins/Projects/SamplePlugin/obj/
+Plugins/PluginsBusiness/bin/
+Plugins/PluginsBusiness/obj/
 *.suo
 *.user

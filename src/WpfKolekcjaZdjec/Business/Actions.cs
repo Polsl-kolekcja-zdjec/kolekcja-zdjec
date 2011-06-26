@@ -24,7 +24,6 @@ namespace WpfKolekcjaZdjec.DataAccess
             ThumbnailDirectoryExist();
         }
 
-
         /// <summary>
         /// Gets all photos.
         /// </summary>
@@ -95,7 +94,7 @@ namespace WpfKolekcjaZdjec.DataAccess
             ExifAttribute exifObject = new ExifAttribute();
 
             // TODO: tu przepisujesz dane ze zdjęcia do odpowiednich pól bazy, napisalam ci przyklad na sztywno
-            // TODO: mają się wyswietlac w zaleznosci od zaznaczonego zdjecia (ewentualnie dla ostatnio dodanego jak inaczej nie umiesz)
+            // mają się wyswietlac w zaleznosci od zaznaczonego zdjecia (ewentualnie dla ostatnio dodanego jak inaczej nie umiesz)
             exifObject.WhiteBalance = "Auto";
             exifObject.ISO = 400;
 
@@ -120,32 +119,31 @@ namespace WpfKolekcjaZdjec.DataAccess
                 string fileName = Path.GetFileName(openedImageName);
                 string filePath = openedImageName.Substring(0, openedImageName.Length - fileName.Length);
                 string newFilePath = ChangePath(filePath);
-                
 
                 Bitmap image = AForge.Imaging.Image.FromFile(openedImageName);
 
-                //int[] thumbnailSizes = GetThumbnailSize(image.Width, image.Height);
+                int[] thumbnailSizes = GetThumbnailSize(image.Width, image.Height);
 
-                //int thumbnailWidth = thumbnailSizes[0];
-                //int thumbnailHeight = thumbnailSizes[1];
+                int thumbnailWidth = thumbnailSizes[0];
+                int thumbnailHeight = thumbnailSizes[1];
 
-                //AForge.Imaging.Filters.ResizeBicubic filter = new AForge.Imaging.Filters.ResizeBicubic(thumbnailWidth, thumbnailHeight);
-                //Bitmap thumbnail = filter.Apply(image);
+                AForge.Imaging.Filters.ResizeBicubic filter = new AForge.Imaging.Filters.ResizeBicubic(thumbnailWidth, thumbnailHeight);
+                Bitmap thumbnail = filter.Apply(image);
 
-                //string thumbnailFileName = LookForFreeFilename(thumbnailPath, fileName);
-                //string thumbnailSavedPath = Path.Combine(thumbnailPath, thumbnailFileName);
+                string thumbnailFileName = LookForFreeFilename(thumbnailPath, fileName);
+                string thumbnailSavedPath = Path.Combine(thumbnailPath, thumbnailFileName);
 
-                //thumbnail.Save(thumbnailSavedPath);
+                thumbnail.Save(thumbnailSavedPath);
                 newFilePath = newFilePath + fileName;
 
                 PhotosDataSource db = new PhotosDataSource(connectionString);
                 Photo photoObject = new Photo();
 
                 photoObject.FilePath = newFilePath;
-                photoObject.ThumbnailPath = string.Empty;// thumbnailSavedPath;
+                photoObject.ThumbnailPath = thumbnailSavedPath;
 
                 photoObject.Title = fileName;
-                photoObject.Description = "fuck jeah";//string.Empty;
+                photoObject.Description = string.Empty;
 
                 // TODO: get and add archive ID to photo
                 photoObject.Archive = null;
@@ -154,7 +152,6 @@ namespace WpfKolekcjaZdjec.DataAccess
                 photoObject.Attribute = null;
 
                 db.AddPhoto(photoObject);
-
             }
         }
 
@@ -194,11 +191,11 @@ namespace WpfKolekcjaZdjec.DataAccess
         /// <returns>New path.</returns>
          public static string ChangePath(string path)
         {
-            string sign;  // sign = ' \ '
-            sign = "\\";
-            path =  path.Replace(sign, "\\");
+            string sign = @"\";
+            path =  path.Replace(sign, @"\\");
             return path;
         }
+
         /// <summary>
         /// Looks for free filename.
         /// </summary>
@@ -312,35 +309,30 @@ namespace WpfKolekcjaZdjec.DataAccess
         }
 
         /// <summary>
-        /// Add a tag to database
+        /// Add a tag to database.
         /// </summary>
         /// <param name="tagName">Body of a tag.</param>
         /// <returns>Returns true if successful.</returns>
         public static bool AddTag(string tagName)
         {
-            string connectionString = ConnectionStringHelper.GetActualConnectionString();
-            TagsDataSource db = new TagsDataSource(connectionString);
+            TagsDataSource db = new TagsDataSource(ConnectionStringHelper.GetActualConnectionString());
+
             List<Tag> allTags = db.GetAllTags();
             Tag toAdd = new Tag();
 
-            //if list is empty skip some steps
+            // If list is empty skip some steps.
             if (allTags.Count == 0)
             {
                 toAdd.Name = tagName;
                 toAdd.CreationDate = System.DateTime.Now;
+
                 db.AddTag(toAdd);
 
                 return true;
             }
 
-            //else
-            //if already exists returning false
-            Tag findResult = allTags.Find(
-            delegate(Tag temporary)
-            {
-                return temporary.Name == tagName;
-            }
-            );
+            // If already exists returning false.
+            Tag findResult = allTags.Find((temporary) => temporary.Name == tagName);
             if (findResult != null)
             {
                 return false;
@@ -348,44 +340,35 @@ namespace WpfKolekcjaZdjec.DataAccess
 
             toAdd.Name = tagName;
             toAdd.CreationDate = System.DateTime.Now;
+
             db.AddTag(toAdd);
 
             return true;
         }
 
         /// <summary>
-        /// Adding a tag into tag callection of a photo i database.
+        /// Adding a tag into tag callection of a photo database.
         /// </summary>
-        /// <param name="photoID">Id of a photo that is being tagged</param>
-        /// <param name="tagName">Name od tag</param>
-        /// <returns></returns>
+        /// <param name="photoID">Id of a photo that is being tagged.</param>
+        /// <param name="tagName">Name od tag.</param>
+        /// <returns>Operation's status.</returns>
         public static bool TagPhoto(int photoID, String tagName)
         {
-            string connectionString = ConnectionStringHelper.GetActualConnectionString();
             PhotosDataSource dbPhotos = new PhotosDataSource(ConnectionStringHelper.GetActualConnectionString());
             List<Photo> allPhotos = dbPhotos.GetAllPhotos();
+
             TagsDataSource dbTags = new TagsDataSource(ConnectionStringHelper.GetActualConnectionString());
             List<Tag> allTags = dbTags.GetAllTags();
 
-            //searching photo 
-            Photo photoResult = allPhotos.Find(
-             delegate(Photo temporary)
-             {
-                 return temporary.ID == photoID;
-             }
-             );
+            // Searching photo.
+            Photo photoResult = allPhotos.Find((temporary) => temporary.ID == photoID);
             if (photoResult == null)
             {
                 return false;
             }
 
-            //searching tag
-            Tag tagResult = allTags.Find(
-             delegate(Tag temporary)
-             {
-                 return temporary.Name == tagName;
-             }
-             );
+            // Searching tag.
+            Tag tagResult = allTags.Find((temporary) => temporary.Name == tagName);
             if (tagResult == null)
             {
                 return false;
@@ -394,11 +377,7 @@ namespace WpfKolekcjaZdjec.DataAccess
             photoResult.Tags.Add(tagResult);
             tagResult.Photos.Add(photoResult);
 
-            /*
-             * to do
-             * connectiong to database and saving changes
-             */
-            
+            //TODO: connection to database and saving changes
             return true;
         }
     }

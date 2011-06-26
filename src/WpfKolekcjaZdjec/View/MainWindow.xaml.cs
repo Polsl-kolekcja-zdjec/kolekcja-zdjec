@@ -17,7 +17,7 @@ using WpfKolekcjaZdjec.Plugins;
 using WpfKolekcjaZdjec.Business;
 using WpfKolekcjaZdjec.Entities;
 
-namespace WpfKolekcjaZdjec
+namespace WpfKolekcjaZdjec.View
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml.
@@ -33,39 +33,50 @@ namespace WpfKolekcjaZdjec
         /// <returns>Status of this operation.</returns>
         public bool Register(IPlugin plugin)
         {
-            MessageBox.Show(plugin.Name, "Plugin loaded");
+            MessageBox.Show("Specified plugin is loaded: " + plugin.Name, "Plugin loaded", MessageBoxButton.OK, MessageBoxImage.Information);
             return plugin.Execute();
         }
 
         #endregion
-        bool selectedPhoto;
-        List<Tag> tags;
-       List<Photo> photos;
-        View.TagPhotos tagingWindow;
+
+        /// <summary>
+        /// Is photo selected.
+        /// </summary>
+        private bool selectedPhoto;
+
+        /// <summary>
+        /// Tags list.
+        /// </summary>
+        private List<Tag> tags;
+
+        /// <summary>
+        /// Tagging window.
+        /// </summary>
+        private TagPhotos tagingWindow;
+
         /// <summary>
         /// Constructor for MainWindow.
         /// </summary>
         public MainWindow()
         {
             InitializeComponent();
+
             GrdThumbnails.Visibility = System.Windows.Visibility.Hidden;
             GrdSlideshow.Visibility = System.Windows.Visibility.Hidden;
-           selectedPhoto = false;
 
-        } 
+            selectedPhoto = false;
+        }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             // Business actions.
-       //   Actions.StartupTests();
+            Actions.StartupTests();
 
             // Load all plugins.
-         // PluginsBusiness.RegisterPluginsFromDirectory(this);
-            foreach (var i in Actions.GetAllPhotos())
-            {
-                if(i.ID != null) //jeśli jest coś w bazie :>
-                    GetAndShowImagesFromDatabase();
-            }
+            PluginsBusiness.RegisterPluginsFromDirectory(this);
+
+            // Getting exising photos from database.
+            GetAndShowImagesFromDatabase(Actions.GetAllPhotos());
         }
 
         private void SearchTextBox_ValueChanged(object sender, Telerik.Windows.RadRoutedEventArgs e)
@@ -84,14 +95,14 @@ namespace WpfKolekcjaZdjec
         }
 
         private void Personal_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {           
+        {
             actualArea();
-           Photo phototemp = tagingWindow.SelectedPhoto;
-            if (selectedPhoto)
-           {
 
+            Photo phototemp = tagingWindow.SelectedPhoto;
+            if (selectedPhoto)
+            {
                Actions.DeletePhoto(phototemp);
-           }
+            }
         }
 
         private void ShowExif_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -102,18 +113,19 @@ namespace WpfKolekcjaZdjec
                 
                 foreach (var i in Actions.GetAllExif())
                 {
-                    // musisz tylko dopisać wszystkie parametry do odpowiednich pól w formatce ( to po lewej) z bazy 
+                    // TODO: musisz tylko dopisać wszystkie parametry do odpowiednich pól w formatce ( to po lewej) z bazy 
                     exifDataReadOnly.ISO.Value = i.ISO;
                     exifDataReadOnly.WhiteBalance.Value = i.WhiteBalance;
                 }
+
                 exifDataReadOnly.Show();
             }
+
             selectedPhoto = false;
         }
 
         private void EditExif_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-
             DataAccess.Actions.AddExif();
         }
 
@@ -125,14 +137,14 @@ namespace WpfKolekcjaZdjec
         {
             GrdThumbnails.Visibility = System.Windows.Visibility.Hidden;
             GrdSlideshow.Visibility = System.Windows.Visibility.Visible;
-           GrdDescription.Visibility = System.Windows.Visibility.Hidden;
+            GrdDescription.Visibility = System.Windows.Visibility.Hidden;
         }
 
         private void Thumbails_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             GrdThumbnails.Visibility = System.Windows.Visibility.Visible;
             GrdSlideshow.Visibility = System.Windows.Visibility.Hidden;
-          GrdDescription.Visibility = System.Windows.Visibility.Hidden;
+            GrdDescription.Visibility = System.Windows.Visibility.Hidden;
         }
 
         private void Windows_Init(object sender, EventArgs e)
@@ -146,9 +158,9 @@ namespace WpfKolekcjaZdjec
             GrdDescription.Visibility = System.Windows.Visibility.Visible;
         }
 
-        // <summary>
-        // Shows the not implented dialog.
-        // </summary>
+        /// <summary>
+        /// Shows the not implented dialog.
+        /// </summary>
         private void ShowNotImplentedDialog()
         {
             RadWindow.Alert("Not implemented yet.");
@@ -172,17 +184,21 @@ namespace WpfKolekcjaZdjec
         private void ImgNew_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             DataAccess.Actions.AddPhoto();
-            GetAndShowImagesFromDatabase();            
+            GetAndShowImagesFromDatabase(Actions.GetAllPhotos());
         }
 
-        private void GetAndShowImagesFromDatabase()
+        private void GetAndShowImagesFromDatabase(List<Photo> photos)
         {
-            photos = Actions.GetAllPhotos();
-            tags = Actions.GetAllTags();
-            TagCloud.DataContext = tags;
-            PhotoDescriptions.DataContext = photos;
-            PhotoThumbails.DataContext = photos;
-            CarouselPanel.DataContext = photos;
+            if (photos.Count > 0)
+            {
+                tags = Actions.GetAllTags();
+
+                TagCloud.DataContext = tags;
+
+                PhotoDescriptions.DataContext = photos;
+                PhotoThumbails.DataContext = photos;
+                CarouselPanel.DataContext = photos;
+            }
         }
 
         private void AboutItem_Click(object sender, EventArgs e)
@@ -203,33 +219,44 @@ namespace WpfKolekcjaZdjec
 
         private void ImgRemove_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            Actions.DeletePhotos(photos);
-            GetAndShowImagesFromDatabase();
+            Actions.DeletePhotos(Actions.GetAllPhotos());
+            GetAndShowImagesFromDatabase(Actions.GetAllPhotos());
         }
 
         private void ImgRename_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            
         }
 
 
         private void actualArea()
         {
             tagingWindow = new View.TagPhotos();
+
             if (GrdSlideshow.Visibility == System.Windows.Visibility.Visible)
+            {
                 tagingWindow.Refresh(CarouselPanel.SelectedItem);
+            }
+
             if (GrdThumbnails.Visibility == System.Windows.Visibility.Visible)
+            {
                 tagingWindow.Refresh(PhotoThumbails.SelectedItem);
+            }
+
             if (GrdDescription.Visibility == System.Windows.Visibility.Visible)
+            {
                 tagingWindow.Refresh(PhotoDescriptions.SelectedItem);
+            }
         }
 
         private void ImgTag_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-
             actualArea();
             tagingWindow.Show();
-            if(tagingWindow.CloseWindow) GetAndShowImagesFromDatabase();
+
+            if (tagingWindow.CloseWindow)
+            {
+                GetAndShowImagesFromDatabase(Actions.GetAllPhotos());
+            }
         }
     }
 }

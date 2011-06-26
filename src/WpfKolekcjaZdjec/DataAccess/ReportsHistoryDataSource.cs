@@ -33,7 +33,7 @@ namespace WpfKolekcjaZdjec.DataAccess
         /// <summary>
         /// Adding new historical usage of report into database.
         /// </summary>
-        /// <param name="newReport">New report's history entity.</param>
+        /// <param name="newHistory">New report's history entity.</param>
         /// <returns>ID for created history.</returns>
         public int AddReportHistoricalEntry(ReportsHistory newHistory)
         {
@@ -123,7 +123,7 @@ namespace WpfKolekcjaZdjec.DataAccess
         /// <summary>
         /// Get one report history by saved report ID.
         /// </summary>
-        /// <param name="id">Saved report ID.</param>
+        /// <param name="savedReportId">Saved report ID.</param>
         /// <returns>One report's history.</returns>
         public ReportsHistory GetReportHistoryBySavedReportId(int savedReportId)
         {

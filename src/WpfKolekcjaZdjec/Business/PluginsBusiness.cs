@@ -36,40 +36,40 @@ namespace WpfKolekcjaZdjec.Business
             // Constructing plugins array.
             registeredPlugins = new IPlugin[pluginFiles.Length];
 
-            Type objType = null;
-            string args = string.Empty;
-
             for (int i = 0; i < pluginFiles.Length; i++)
             {
                 // Loading plugins.
                 try
                 {
-                    // TODO: Not working yet - exception :(
-                    args = pluginFiles[i].Substring(pluginFiles[i].LastIndexOf("\\") + 1, pluginFiles[i].ToLowerInvariant().IndexOf(".dll") - pluginFiles[i].LastIndexOf("\\") + 3);
-                    Assembly assembly = Assembly.Load(args);
+                    Assembly assembly = Assembly.LoadFrom(pluginFiles[i]);
 
-                    if (assembly != null)
+                    // Next we'll loop through all the Types found in the assembly.
+                    foreach (Type pluginType in assembly.GetTypes())
                     {
-                        objType = assembly.GetType(args + ".PlugIn");
+                        if (pluginType.IsPublic) // Only look at public types.
+                        {
+                            if (!pluginType.IsAbstract)  // Only look at non-abstract types.
+                            {
+                                // Gets a type object of the interface we need the plugins to match.
+                                Type typeInterface = pluginType.GetInterface("WpfKolekcjaZdjec.Plugins.IPlugin", true);
+
+                                // Make sure the interface we want to use actually exists.
+                                if (typeInterface != null)
+                                {
+                                    registeredPlugins[i] = (IPlugin)Activator.CreateInstance(assembly.GetType(pluginType.ToString()));
+                                    registeredPlugins[i].Host = host;
+                                }
+
+                                typeInterface = null;
+                            }
+                        }
                     }
+
+                    assembly = null;
                 }
                 catch (Exception ex)
                 {
                     MessageBox.Show(ex.Message, "Plugins Subsystem Exception", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-
-                // Registering plugins.
-                try
-                {
-                    if (objType != null)
-                    {
-                        registeredPlugins[i] = (IPlugin)Activator.CreateInstance(objType);
-                        registeredPlugins[i].Host = host;
-                    }
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message, "Plugins Loading Exception", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }
