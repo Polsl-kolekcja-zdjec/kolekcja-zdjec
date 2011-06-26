@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using WpfKolekcjaZdjec.Entities;
+using System;
 
 namespace WpfKolekcjaZdjec.DataAccess
 {
@@ -38,7 +39,7 @@ namespace WpfKolekcjaZdjec.DataAccess
         {
             using (PhotoCollectionDatabaseEntities context = new PhotoCollectionDatabaseEntities(_connectionString))
             {
-                return (from o in context.Photos select o).ToList();
+                return context.Photos.Include("Tags").ToList();
             }
         }
 
@@ -50,7 +51,7 @@ namespace WpfKolekcjaZdjec.DataAccess
         {
             using (PhotoCollectionDatabaseEntities context = new PhotoCollectionDatabaseEntities(_connectionString))
             {
-                IEnumerable<Photo> query = from o in context.Photos orderby o.ID ascending select o;
+                IEnumerable<Photo> query = context.Photos.Include("Tags").OrderByDescending(a => a.ID);
 
                 if (query.Count() == 0)
                 {
@@ -72,7 +73,7 @@ namespace WpfKolekcjaZdjec.DataAccess
         {
             using (PhotoCollectionDatabaseEntities context = new PhotoCollectionDatabaseEntities(_connectionString))
             {
-                return (from o in context.Photos where o.ID == id select o).First();
+                return context.Photos.Include("Tags").Where(a => a.ID == id).First();
             }
         }
 
@@ -86,6 +87,8 @@ namespace WpfKolekcjaZdjec.DataAccess
             using (PhotoCollectionDatabaseEntities context = new PhotoCollectionDatabaseEntities(_connectionString))
             {
                 newPhoto.ID = context.Photos.NextId(p => p.ID);
+                newPhoto.Date = DateTime.Now;
+
                 context.Photos.AddObject(newPhoto);
                 context.SaveChanges();
 

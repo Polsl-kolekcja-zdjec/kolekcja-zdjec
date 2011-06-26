@@ -112,7 +112,7 @@ namespace WpfKolekcjaZdjec.DataAccess
             openImage.Filter = "Pliki obrazów (*.jpg, *.png, *.crt, *.tiff)|*.jpg;*.JPG;*.jpeg;*.JPEG;*.png;*.PNG;*.crt;*.CRT;*.tiff;*.TIFF|Wszystkie pliki (*.*)|*.*";
             openImage.ShowDialog();
 
-            if (openImage.CheckFileExists)
+            if (openImage.CheckFileExists && !string.IsNullOrWhiteSpace(openImage.FileName))
             {
                 string openedImageName = openImage.FileName;
                 string fileName = Path.GetFileName(openedImageName);

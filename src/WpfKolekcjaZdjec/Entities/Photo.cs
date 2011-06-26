@@ -14,7 +14,6 @@ using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Globalization;
 using System.Runtime.Serialization;
-using System.Windows.Media;
 
 namespace WpfKolekcjaZdjec.Entities
 {
@@ -24,27 +23,6 @@ namespace WpfKolekcjaZdjec.Entities
     [KnownType(typeof(Tag))]
     public partial class Photo: IObjectWithChangeTracker, INotifyPropertyChanged
     {
-
-        private ImageSource photoSource;
-
-        public ImageSource PhotoSource
-        {
-            get { return photoSource; }
-            set
-            {
-                photoSource = value;
-                // Call OnPropertyChanged whenever the property is updated
-                OnPropertyChanged("PhotoSource");
-            }
-        }
-
-        public void CreatePhotoSource() 
-        {
-            //this.fullFilePath = this.FilePath + this.Title;
-            ImageSourceConverter photoCon = new ImageSourceConverter();
-            this.photoSource = (ImageSource)photoCon.ConvertFromString(this.FilePath);
-        }
-
         #region Primitive Properties
     
         [DataMember]
@@ -171,6 +149,21 @@ namespace WpfKolekcjaZdjec.Entities
             }
         }
         private Nullable<int> _attributesID;
+    
+        [DataMember]
+        public System.DateTime Date
+        {
+            get { return _date; }
+            set
+            {
+                if (_date != value)
+                {
+                    _date = value;
+                    OnPropertyChanged("Date");
+                }
+            }
+        }
+        private System.DateTime _date;
 
         #endregion
         #region Navigation Properties

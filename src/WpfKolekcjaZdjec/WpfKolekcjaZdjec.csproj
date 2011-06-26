@@ -196,6 +196,7 @@
     <Compile Include="Business\ConnectionStringHelper.cs" />
     <Compile Include="Business\ExtensionMethods.cs" />
     <Compile Include="Business\PluginsBusiness.cs" />
+    <Compile Include="Business\ICollectionConverter.cs" />
     <Compile Include="DataAccess\ArchivesDataSource.cs" />
     <Compile Include="DataAccess\AdditionalAttributesDataSource.cs" />
     <Compile Include="DataAccess\ReportsHistoryDataSource.cs" />
