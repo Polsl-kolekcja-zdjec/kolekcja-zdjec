@@ -310,5 +310,96 @@ namespace WpfKolekcjaZdjec.DataAccess
                 return false;
             }
         }
+
+        /// <summary>
+        /// Add a tag to database
+        /// </summary>
+        /// <param name="tagName">Body of a tag.</param>
+        /// <returns>Returns true if successful.</returns>
+        public static bool AddTag(string tagName)
+        {
+            string connectionString = ConnectionStringHelper.GetActualConnectionString();
+            TagsDataSource db = new TagsDataSource(connectionString);
+            List<Tag> allTags = db.GetAllTags();
+            Tag toAdd = new Tag();
+
+            //if list is empty skip some steps
+            if (allTags.Count == 0)
+            {
+                toAdd.Name = tagName;
+                toAdd.CreationDate = System.DateTime.Now;
+                db.AddTag(toAdd);
+
+                return true;
+            }
+
+            //else
+            //if already exists returning false
+            Tag findResult = allTags.Find(
+            delegate(Tag temporary)
+            {
+                return temporary.Name == tagName;
+            }
+            );
+            if (findResult != null)
+            {
+                return false;
+            }
+
+            toAdd.Name = tagName;
+            toAdd.CreationDate = System.DateTime.Now;
+            db.AddTag(toAdd);
+
+            return true;
+        }
+
+        /// <summary>
+        /// Adding a tag into tag callection of a photo i database.
+        /// </summary>
+        /// <param name="photoID">Id of a photo that is being tagged</param>
+        /// <param name="tagName">Name od tag</param>
+        /// <returns></returns>
+        public static bool TagPhoto(int photoID, String tagName)
+        {
+            string connectionString = ConnectionStringHelper.GetActualConnectionString();
+            PhotosDataSource dbPhotos = new PhotosDataSource(ConnectionStringHelper.GetActualConnectionString());
+            List<Photo> allPhotos = dbPhotos.GetAllPhotos();
+            TagsDataSource dbTags = new TagsDataSource(ConnectionStringHelper.GetActualConnectionString());
+            List<Tag> allTags = dbTags.GetAllTags();
+
+            //searching photo 
+            Photo photoResult = allPhotos.Find(
+             delegate(Photo temporary)
+             {
+                 return temporary.ID == photoID;
+             }
+             );
+            if (photoResult == null)
+            {
+                return false;
+            }
+
+            //searching tag
+            Tag tagResult = allTags.Find(
+             delegate(Tag temporary)
+             {
+                 return temporary.Name == tagName;
+             }
+             );
+            if (tagResult == null)
+            {
+                return false;
+            }
+
+            photoResult.Tags.Add(tagResult);
+            tagResult.Photos.Add(photoResult);
+
+            /*
+             * to do
+             * connectiong to database and saving changes
+             */
+            
+            return true;
+        }
     }
 }

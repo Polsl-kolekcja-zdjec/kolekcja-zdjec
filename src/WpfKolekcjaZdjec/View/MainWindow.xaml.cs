@@ -186,5 +186,18 @@ namespace WpfKolekcjaZdjec
            aboutInfo.Show();
         }
 
+        private void ImgTag_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            View.TagPhotos tagingWindow = new View.TagPhotos();
+            if(GrdSlideshow.Visibility == System.Windows.Visibility.Visible)
+                tagingWindow.Refresh(CarouselPanel.SelectedItem);
+            if(GrdThumbnails.Visibility == System.Windows.Visibility.Visible)
+                tagingWindow.Refresh(PhotoThumbails.SelectedItem);
+            if(GrdDescription.Visibility == System.Windows.Visibility.Visible)
+                tagingWindow.Refresh(PhotoDescriptions.SelectedItem);
+            
+            tagingWindow.Show();
+        }
+
     }
 }

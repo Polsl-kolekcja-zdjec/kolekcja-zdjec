@@ -228,7 +228,7 @@
                 </Image.ToolTip>
             </Image>
 
-            <Image Height="32" HorizontalAlignment="Left" Margin="82,15,0,0" Name="ImgTag" Source="/WpfKolekcjaZdjec;component/Images/PushPin.png" Stretch="Fill" VerticalAlignment="Top" Width="32">
+            <Image Height="32" HorizontalAlignment="Left" Margin="82,15,0,0" Name="ImgTag" Source="/WpfKolekcjaZdjec;component/Images/PushPin.png" Stretch="Fill" VerticalAlignment="Top" Width="32" MouseLeftButtonDown="ImgTag_MouseLeftButtonDown">
                 <Image.ToolTip>
                     <ToolTip>
                         <StackPanel>

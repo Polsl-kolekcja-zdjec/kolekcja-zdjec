@@ -250,6 +250,9 @@
     <Compile Include="View\ImageProperties.xaml.cs">
       <DependentUpon>ImageProperties.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\TagPhotos.xaml.cs">
+      <DependentUpon>TagPhotos.xaml</DependentUpon>
+    </Compile>
     <Page Include="View\About.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -277,6 +280,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="View\ImageProperties.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\TagPhotos.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
