@@ -19,11 +19,12 @@ namespace WpfKolekcjaZdjec.View
     public partial class TagPhotos : Window
     {
         Entities.Photo selectedPhoto;
+        Image errorImage = new Image();
 
         public TagPhotos()
         {
             InitializeComponent();
-            
+            errorImage.Source = PhotoThumbnail.Source;
             //wypelnij liste tagow
             List<Entities.Tag> allTags = DataAccess.Actions.GetAllTags();
             foreach (Entities.Tag currentTag in allTags)
@@ -50,13 +51,13 @@ namespace WpfKolekcjaZdjec.View
             //wyswietlanie miniaturki + info
             if (selectedPhoto == null)
             {
-                BitmapImage thumbnailBitmap = new BitmapImage();
+                /*BitmapImage thumbnailBitmap = new BitmapImage();
                 thumbnailBitmap.BeginInit();
-                thumbnailBitmap.UriSource = new Uri(@"D:\GIT clone\kolekcja-zdjec\src\WpfKolekcjaZdjec\Images\NothingSelected.jpg");
+                thumbnailBitmap.UriSource = new Uri(@"..\..\Images\NothingSelected.jpg");
                 thumbnailBitmap.DecodePixelWidth = 200;
                 thumbnailBitmap.EndInit();
                 PhotoThumbnail.Width = 200;
-                PhotoThumbnail.Source = thumbnailBitmap;
+                PhotoThumbnail.Source = thumbnailBitmap;*/
                 //MessageBox.Show("No photo selected.", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
                 SelectTagTextBlock.Text = "You can not tag a photo now.";
                 PhotoInfoTextBlock.Text = "Please select a photo first.";
@@ -160,6 +161,7 @@ namespace WpfKolekcjaZdjec.View
         private void CloseButton_Click(object sender, RoutedEventArgs e)
         {
             selectedPhoto = null;
+            PhotoThumbnail.Source = errorImage.Source;
             Close();
         }
     }
