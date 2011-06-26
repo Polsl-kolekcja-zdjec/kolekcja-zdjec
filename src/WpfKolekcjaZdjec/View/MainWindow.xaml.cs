@@ -38,7 +38,8 @@ namespace WpfKolekcjaZdjec
         }
 
         #endregion
-
+        bool selectedPhoto;
+        List<Photo> photos;
         /// <summary>
         /// Constructor for MainWindow.
         /// </summary>
@@ -47,7 +48,8 @@ namespace WpfKolekcjaZdjec
             InitializeComponent();
             GrdThumbnails.Visibility = System.Windows.Visibility.Hidden;
             GrdSlideshow.Visibility = System.Windows.Visibility.Hidden;
-        }
+           selectedPhoto = false;
+        } 
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
@@ -80,42 +82,42 @@ namespace WpfKolekcjaZdjec
 
         private void Personal_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            ShowNotImplentedDialog();
-        }
+            ///string curItem = PhotoThumbails.SelectedItem.ToString();
 
-        private void Burn_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            ShowNotImplentedDialog();
+           /// int selectID = pobrane ID z zaznaczonego obiektu
+
+           /// if (selectedPhoto)
+          //  {
+
+           //     Actions.DeletePhoto(photos.ElementAt(selectID));
+          //  }
         }
 
         private void ShowExif_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            View.ImagePropertiesReadOnly exifDataReadOnly = new View.ImagePropertiesReadOnly();
-            foreach (var i in Actions.GetAllExif())
+            if (selectedPhoto)
             {
-               // musisz tylko dopisać wszystkie parametry do odpowiednich pól w formatce ( to po lewej) z bazy 
-                exifDataReadOnly.ISO.Value = i.ISO;
-                exifDataReadOnly.WhiteBalance.Value = i.WhiteBalance;
-           }
-            
-            exifDataReadOnly.Show();
+                View.ImagePropertiesReadOnly exifDataReadOnly = new View.ImagePropertiesReadOnly();
+                
+                foreach (var i in Actions.GetAllExif())
+                {
+                    // musisz tylko dopisać wszystkie parametry do odpowiednich pól w formatce ( to po lewej) z bazy 
+                    exifDataReadOnly.ISO.Value = i.ISO;
+                    exifDataReadOnly.WhiteBalance.Value = i.WhiteBalance;
+                }
+                exifDataReadOnly.Show();
+            }
+            selectedPhoto = false;
         }
 
         private void EditExif_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
+
             DataAccess.Actions.AddExif();
         }
 
         private void Report_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-
-            // wgawronski: Tremporary solution - Getting list of all photos.
-            foreach (var i in Actions.GetAllPhotos())
-            {
-                MessageBox.Show(i.FilePath);
-            }
-
-
         }
 
         private void Slideshow_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -174,7 +176,7 @@ namespace WpfKolekcjaZdjec
 
         private void GetAndShowImagesFromDatabase()
         {
-            List<Photo> photos = Actions.GetAllPhotos();            
+            photos = Actions.GetAllPhotos();
             PhotoDescriptions.DataContext = photos;
             PhotoThumbails.DataContext = photos;
             CarouselPanel.DataContext = photos;
@@ -184,6 +186,27 @@ namespace WpfKolekcjaZdjec
         {
             View.About aboutInfo = new View.About();
            aboutInfo.Show();
+        }
+
+        private void Image_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            selectedPhoto = true;
+        }
+
+        private void Image_MouseLeftButtonDown_1(object sender, MouseButtonEventArgs e)
+        {
+            selectedPhoto = true;
+        }
+
+        private void ImgRemove_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            Actions.DeletePhotos(photos);
+            GetAndShowImagesFromDatabase();
+        }
+
+        private void ImgRename_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            
         }
 
         private void ImgTag_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -198,6 +221,5 @@ namespace WpfKolekcjaZdjec
             
             tagingWindow.Show();
         }
-
     }
 }

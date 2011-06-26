@@ -42,7 +42,7 @@ namespace WpfKolekcjaZdjec.DataAccess
         /// </summary>
         /// <param name="id">Photo ID.</param>
         /// <returns>One photo.</returns>
-        public Photo GetPhoto(int id) { 
+        public static Photo GetPhoto(int id) { 
             PhotosDataSource db = new PhotosDataSource(ConnectionStringHelper.GetActualConnectionString());
             return db.GetPhoto(id);
         }
