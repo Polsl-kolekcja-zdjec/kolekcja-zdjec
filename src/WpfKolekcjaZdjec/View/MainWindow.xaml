@@ -174,7 +174,9 @@
                                 </Border>
                             </Grid>       
                     </DataTemplate>
+                    
                 </Grid.Resources>
+
                 
 
                 <Grid Name="GrdThumbnails" Margin="9,5,9,-2" HorizontalAlignment="Stretch" MinWidth="0" MinHeight="421" MaxWidth="Infinity">
@@ -278,6 +280,11 @@
   
 
         <Grid Name="GrdRightPanel" Margin="841,72,0,65" HorizontalAlignment="Stretch">
+            <Grid.Resources>
+                <DataTemplate x:Key="templateForTags">
+                    <TextBlock Text="{Binding Name}" Foreground="DarkBlue" FontSize="11" Margin="0,0,3,0"/>
+                </DataTemplate>
+            </Grid.Resources>
             <Grid.RowDefinitions>
                 <RowDefinition Height="184*" />
                 <RowDefinition Height="240*" />
@@ -288,7 +295,13 @@
         <telerik:RadRadioButton Content="Import photos" Height="23" HorizontalAlignment="Right" Margin="0,3,12,0" Name="RbtnImport" VerticalAlignment="Top" Width="134" Click="Import_Click" Grid.Row="1" />
         <telerik:RadRadioButton Content="Export photos" Height="23" HorizontalAlignment="Right" Margin="0,34,12,0" Name="RbtnExport" VerticalAlignment="Top" Width="134" Click="Export_Click" Grid.Row="1" />
             <telerik:RadComboBox Name="Filtering" Width="146" Height="23" HorizontalAlignment="Right" Margin="0,136,6,25" ClearSelectionButtonVisibility="Visible" ClearSelectionButtonContent="Show all" DisplayMemberPath="NameInModelXML" ItemsSource="filter1" SelectedItem="Model XML"  />
-
+            <ItemsControl Name="TagCloud" Padding="5" ScrollViewer.HorizontalScrollBarVisibility="Disabled" Margin="0,6,0,54" ItemsSource="{Binding}" ItemTemplate="{StaticResource templateForTags}"  HorizontalAlignment="Center" Width="161">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel />
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+            </ItemsControl>
         </Grid>
         <!-- ikony (wraz z opisami): -->
         <Image Height="32" HorizontalAlignment="Left" Margin="133,0,0,27" Name="ImgRemove" Source="/WpfKolekcjaZdjec;component/Images/DeleteItem.png" Stretch="Fill" VerticalAlignment="Bottom" Width="32" MouseLeftButtonDown="ImgRemove_MouseLeftButtonDown" />

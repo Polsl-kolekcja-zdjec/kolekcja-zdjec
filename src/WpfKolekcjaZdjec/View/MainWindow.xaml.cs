@@ -39,7 +39,9 @@ namespace WpfKolekcjaZdjec
 
         #endregion
         bool selectedPhoto;
+        List<Tag> tags;
         List<Photo> photos;
+        View.TagPhotos tagingWindow;
         /// <summary>
         /// Constructor for MainWindow.
         /// </summary>
@@ -85,12 +87,13 @@ namespace WpfKolekcjaZdjec
             ///string curItem = PhotoThumbails.SelectedItem.ToString();
 
            /// int selectID = pobrane ID z zaznaczonego obiektu
+            actualArea();
+           Photo phototemp = tagingWindow.SelectedPhoto;
+            if (selectedPhoto)
+           {
 
-           /// if (selectedPhoto)
-          //  {
-
-           //     Actions.DeletePhoto(photos.ElementAt(selectID));
-          //  }
+               Actions.DeletePhoto(phototemp);
+           }
         }
 
         private void ShowExif_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -177,6 +180,8 @@ namespace WpfKolekcjaZdjec
         private void GetAndShowImagesFromDatabase()
         {
             photos = Actions.GetAllPhotos();
+            tags = Actions.GetAllTags();
+            TagCloud.DataContext = tags;
             PhotoDescriptions.DataContext = photos;
             PhotoThumbails.DataContext = photos;
             CarouselPanel.DataContext = photos;
@@ -209,17 +214,23 @@ namespace WpfKolekcjaZdjec
             
         }
 
+        private void actualArea()
+        {
+            tagingWindow = new View.TagPhotos();
+            if (GrdSlideshow.Visibility == System.Windows.Visibility.Visible)
+                tagingWindow.Refresh(CarouselPanel.SelectedItem);
+            if (GrdThumbnails.Visibility == System.Windows.Visibility.Visible)
+                tagingWindow.Refresh(PhotoThumbails.SelectedItem);
+            if (GrdDescription.Visibility == System.Windows.Visibility.Visible)
+                tagingWindow.Refresh(PhotoDescriptions.SelectedItem);
+        }
+
         private void ImgTag_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            View.TagPhotos tagingWindow = new View.TagPhotos();
-            if(GrdSlideshow.Visibility == System.Windows.Visibility.Visible)
-                tagingWindow.Refresh(CarouselPanel.SelectedItem);
-            if(GrdThumbnails.Visibility == System.Windows.Visibility.Visible)
-                tagingWindow.Refresh(PhotoThumbails.SelectedItem);
-            if(GrdDescription.Visibility == System.Windows.Visibility.Visible)
-                tagingWindow.Refresh(PhotoDescriptions.SelectedItem);
-            
+
+            actualArea();
             tagingWindow.Show();
+           // GetAndShowImagesFromDatabase();
         }
     }
 }

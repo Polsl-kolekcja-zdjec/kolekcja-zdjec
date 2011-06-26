@@ -32,6 +32,14 @@ namespace WpfKolekcjaZdjec.View
             }
         }
 
+        public Entities.Photo SelectedPhoto
+        {
+            get { return selectedPhoto; }
+            set
+            {
+                selectedPhoto = value;
+            }
+        }
         /// <summary>
         /// Refresh window.
         /// </summary>
