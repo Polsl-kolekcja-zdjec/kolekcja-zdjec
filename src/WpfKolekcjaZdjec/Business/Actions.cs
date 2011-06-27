@@ -358,40 +358,18 @@ namespace WpfKolekcjaZdjec.DataAccess
         /// <returns>Operation's status.</returns>
         public static bool TagPhoto(int photoID, String tagName)
         {
+            // Updates collection.
             string connectionString = ConnectionStringHelper.GetActualConnectionString();
-
-            PhotosDataSource dbPhotos = new PhotosDataSource(connectionString);
-            List<Photo> allPhotos = dbPhotos.GetAllPhotos();
-
-            TagsDataSource dbTags = new TagsDataSource(connectionString);
-            List<Tag> allTags = dbTags.GetAllTags();
-
-            // Searching photo.
-            Photo photoResult = allPhotos.Find((temporary) => temporary.ID == photoID);
-            if (photoResult == null)
-            {
-                return false;
-            }
-
-            // Searching tag.
-            Tag tagResult = allTags.Find((temporary) => temporary.Name == tagName);
-            if (tagResult == null)
-            {
-                return false;
-            }
-
-            // Updates collections.
             using (PhotoCollectionDatabaseEntities context = new PhotoCollectionDatabaseEntities(connectionString))
             {
-                Photo photo = (from o in context.Photos where o.ID == photoID select o).First();
+                Photo resultPhoto = context.Photos.Where(p => p.ID == photoID).First();
+                Tag resultTag = context.Tags.Where(t => t.Name == tagName).First();
 
-                photo.Tags.Add(tagResult);
-                photo.AcceptChanges();
-
-                Tag tag = (from o in context.Tags where o.Name == tagName select o).First();
-
-                tag.Photos.Add(photoResult);
-                tag.AcceptChanges();
+                if (resultPhoto != null && resultTag != null) 
+                {
+                    context.Tags2PhotosSet.AddObject(new Tags2Photos() { PhotoID = resultPhoto.ID, TagID = resultTag.ID});
+                    context.SaveChanges();
+                }
             }
 
             return true;

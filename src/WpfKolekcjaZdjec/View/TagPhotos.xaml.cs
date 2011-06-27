@@ -213,6 +213,10 @@ namespace WpfKolekcjaZdjec.View
             close = true;
 
             ((MainWindow)Application.Current.MainWindow).UpdateTagCloud();
+
+            PhotosDataSource dataSource = new PhotosDataSource(ConnectionStringHelper.GetActualConnectionString());
+            ((MainWindow)Application.Current.MainWindow).GetAndShowImagesFromDatabase(dataSource.GetAllPhotos());
+
             PhotoThumbnail.Source = errorImage.Source;
 
             Close();

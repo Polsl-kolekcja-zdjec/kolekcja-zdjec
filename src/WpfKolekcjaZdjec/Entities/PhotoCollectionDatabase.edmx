@@ -1,0 +1,819 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="2.0" xmlns:edmx="http://schemas.microsoft.com/ado/2008/10/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="PhotoCollectionDatabaseModel.Store" Alias="Self" Provider="System.Data.SqlServerCe.3.5" ProviderManifestToken="3.5" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+        <EntityContainer Name="PhotoCollectionDatabaseModelStoreContainer">
+          <EntitySet Name="AdditionalAttributes" EntityType="PhotoCollectionDatabaseModel.Store.AdditionalAttributes" store:Type="Tables" />
+          <EntitySet Name="Archives" EntityType="PhotoCollectionDatabaseModel.Store.Archives" store:Type="Tables" />
+          <EntitySet Name="Attributes" EntityType="PhotoCollectionDatabaseModel.Store.Attributes" store:Type="Tables" />
+          <EntitySet Name="ExifAttributes" EntityType="PhotoCollectionDatabaseModel.Store.ExifAttributes" store:Type="Tables" />
+          <EntitySet Name="Photos" EntityType="PhotoCollectionDatabaseModel.Store.Photos" store:Type="Tables" />
+          <EntitySet Name="Photos2Locations" EntityType="PhotoCollectionDatabaseModel.Store.Photos2Locations" store:Type="Tables" />
+          <EntitySet Name="ReportsHistories" EntityType="PhotoCollectionDatabaseModel.Store.ReportsHistories" store:Type="Tables" />
+          <EntitySet Name="SavedReports" EntityType="PhotoCollectionDatabaseModel.Store.SavedReports" store:Type="Tables" />
+          <EntitySet Name="Tags" EntityType="PhotoCollectionDatabaseModel.Store.Tags" store:Type="Tables" />
+          <EntitySet Name="Tags2Photos" EntityType="PhotoCollectionDatabaseModel.Store.Tags2Photos" store:Type="Tables" />
+          <AssociationSet Name="FK_AdditionalAttributes" Association="PhotoCollectionDatabaseModel.Store.FK_AdditionalAttributes">
+            <End Role="AdditionalAttributes" EntitySet="AdditionalAttributes" />
+            <End Role="Attributes" EntitySet="Attributes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Attributes" Association="PhotoCollectionDatabaseModel.Store.FK_Attributes">
+            <End Role="Attributes" EntitySet="Attributes" />
+            <End Role="Photos" EntitySet="Photos" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ExifAttributes" Association="PhotoCollectionDatabaseModel.Store.FK_ExifAttributes">
+            <End Role="ExifAttributes" EntitySet="ExifAttributes" />
+            <End Role="Attributes" EntitySet="Attributes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Photos2Locations_Archive" Association="PhotoCollectionDatabaseModel.Store.FK_Photos2Locations_Archive">
+            <End Role="Archives" EntitySet="Archives" />
+            <End Role="Photos2Locations" EntitySet="Photos2Locations" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Photos2Locations_Photo" Association="PhotoCollectionDatabaseModel.Store.FK_Photos2Locations_Photo">
+            <End Role="Photos" EntitySet="Photos" />
+            <End Role="Photos2Locations" EntitySet="Photos2Locations" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SavedReport" Association="PhotoCollectionDatabaseModel.Store.FK_SavedReport">
+            <End Role="SavedReports" EntitySet="SavedReports" />
+            <End Role="ReportsHistories" EntitySet="ReportsHistories" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Source" Association="PhotoCollectionDatabaseModel.Store.FK_Source">
+            <End Role="Archives" EntitySet="Archives" />
+            <End Role="Photos" EntitySet="Photos" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tags2Photos_Photo" Association="PhotoCollectionDatabaseModel.Store.FK_Tags2Photos_Photo">
+            <End Role="Photos" EntitySet="Photos" />
+            <End Role="Tags2Photos" EntitySet="Tags2Photos" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tags2Photos_Tag" Association="PhotoCollectionDatabaseModel.Store.FK_Tags2Photos_Tag">
+            <End Role="Tags" EntitySet="Tags" />
+            <End Role="Tags2Photos" EntitySet="Tags2Photos" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TagsHierarchy" Association="PhotoCollectionDatabaseModel.Store.FK_TagsHierarchy">
+            <End Role="Tags" EntitySet="Tags" />
+            <End Role="Tags1" EntitySet="Tags" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="AdditionalAttributes">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="AdditionalParametersXML" Type="nvarchar" />
+        </EntityType>
+        <EntityType Name="Archives">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="VolumeName" Type="nvarchar" Nullable="false" />
+          <Property Name="Capacity" Type="bigint" />
+          <Property Name="HddLetter" Type="nvarchar" />
+          <Property Name="DeviceID" Type="nvarchar" />
+          <Property Name="IsExternal" Type="bit" />
+          <Property Name="DiscLetter" Type="nvarchar" />
+          <Property Name="DiscType" Type="nvarchar" />
+          <Property Name="ArchiveType" Type="nvarchar" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Attributes">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="Author" Type="nvarchar" Nullable="false" />
+          <Property Name="BitsPerPixel" Type="smallint" Nullable="false" />
+          <Property Name="Hash" Type="nvarchar" Nullable="false" />
+          <Property Name="Height" Type="int" Nullable="false" />
+          <Property Name="Width" Type="int" Nullable="false" />
+          <Property Name="Rate" Type="int" Nullable="false" />
+          <Property Name="AreExifAttributesPossible" Type="bit" Nullable="false" />
+          <Property Name="AdditionalAttributesID" Type="int" />
+          <Property Name="ExifAttributesID" Type="int" />
+        </EntityType>
+        <EntityType Name="ExifAttributes">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="AdditionalParametersXML" Type="nvarchar" />
+          <Property Name="CameraModel" Type="nvarchar" Nullable="false" />
+          <Property Name="CameraName" Type="nvarchar" Nullable="false" />
+          <Property Name="Aperture" Type="float" Nullable="false" />
+          <Property Name="Shutter" Type="float" Nullable="false" />
+          <Property Name="ISO" Type="bigint" Nullable="false" />
+          <Property Name="ExposureBias" Type="bigint" Nullable="false" />
+          <Property Name="FocalLength" Type="bigint" Nullable="false" />
+          <Property Name="MeteringMode" Type="nvarchar" Nullable="false" />
+          <Property Name="SubjectDistance" Type="nvarchar" Nullable="false" />
+          <Property Name="FlashMode" Type="nvarchar" Nullable="false" />
+          <Property Name="FlashEnergy" Type="nvarchar" Nullable="false" />
+          <Property Name="mm35FocalLength" Type="bigint" Nullable="false" />
+          <Property Name="WhiteBalance" Type="nvarchar" Nullable="false" />
+          <Property Name="ExposureProgram" Type="nvarchar" Nullable="false" />
+          <Property Name="LensMarker" Type="nvarchar" Nullable="false" />
+          <Property Name="LensModel" Type="nvarchar" Nullable="false" />
+          <Property Name="FlashMarker" Type="nvarchar" Nullable="false" />
+          <Property Name="FlashModel" Type="nvarchar" Nullable="false" />
+          <Property Name="LightSource" Type="nvarchar" Nullable="false" />
+          <Property Name="CameraSerialNumber" Type="nvarchar" Nullable="false" />
+          <Property Name="Contrast" Type="nvarchar" Nullable="false" />
+          <Property Name="Brightness" Type="nvarchar" Nullable="false" />
+          <Property Name="Saturation" Type="nvarchar" Nullable="false" />
+          <Property Name="Sharpness" Type="nvarchar" Nullable="false" />
+          <Property Name="DigitalZoom" Type="bigint" Nullable="false" />
+          <Property Name="ExifVersion" Type="bigint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Photos">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" Nullable="false" />
+          <Property Name="FilePath" Type="nvarchar" Nullable="false" />
+          <Property Name="Title" Type="nvarchar" Nullable="false" />
+          <Property Name="ThumbnailPath" Type="nvarchar" />
+          <Property Name="SourceID" Type="int" />
+          <Property Name="AttributesID" Type="int" />
+          <Property Name="Date" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Photos2Locations">
+          <Key>
+            <PropertyRef Name="Archives_ID" />
+            <PropertyRef Name="Photos1_ID" />
+          </Key>
+          <Property Name="Archives_ID" Type="int" Nullable="false" />
+          <Property Name="Photos1_ID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ReportsHistories">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="Content" Type="nvarchar" Nullable="false" />
+          <Property Name="LastUseDate" Type="datetime" Nullable="false" />
+          <Property Name="SavedReportID" Type="int" />
+        </EntityType>
+        <EntityType Name="SavedReports">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="CreationDate" Type="datetime" Nullable="false" />
+          <Property Name="Query" Type="nvarchar" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" Nullable="false" />
+          <Property Name="IsUserDefined" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Tags">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="CreationDate" Type="datetime" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="100" />
+          <Property Name="IconPath" Type="nvarchar" />
+          <Property Name="ParentID" Type="int" />
+        </EntityType>
+        <EntityType Name="Tags2Photos">
+          <Key>
+            <PropertyRef Name="Photos_ID" />
+            <PropertyRef Name="Tags_ID" />
+          </Key>
+          <Property Name="Photos_ID" Type="int" Nullable="false" />
+          <Property Name="Tags_ID" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_AdditionalAttributes">
+          <End Role="AdditionalAttributes" Type="PhotoCollectionDatabaseModel.Store.AdditionalAttributes" Multiplicity="0..1" />
+          <End Role="Attributes" Type="PhotoCollectionDatabaseModel.Store.Attributes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AdditionalAttributes">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Attributes">
+              <PropertyRef Name="AdditionalAttributesID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Attributes">
+          <End Role="Attributes" Type="PhotoCollectionDatabaseModel.Store.Attributes" Multiplicity="0..1" />
+          <End Role="Photos" Type="PhotoCollectionDatabaseModel.Store.Photos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Attributes">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Photos">
+              <PropertyRef Name="AttributesID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ExifAttributes">
+          <End Role="ExifAttributes" Type="PhotoCollectionDatabaseModel.Store.ExifAttributes" Multiplicity="0..1" />
+          <End Role="Attributes" Type="PhotoCollectionDatabaseModel.Store.Attributes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ExifAttributes">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Attributes">
+              <PropertyRef Name="ExifAttributesID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Photos2Locations_Archive">
+          <End Role="Archives" Type="PhotoCollectionDatabaseModel.Store.Archives" Multiplicity="1" />
+          <End Role="Photos2Locations" Type="PhotoCollectionDatabaseModel.Store.Photos2Locations" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Archives">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Photos2Locations">
+              <PropertyRef Name="Archives_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Photos2Locations_Photo">
+          <End Role="Photos" Type="PhotoCollectionDatabaseModel.Store.Photos" Multiplicity="1" />
+          <End Role="Photos2Locations" Type="PhotoCollectionDatabaseModel.Store.Photos2Locations" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Photos">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Photos2Locations">
+              <PropertyRef Name="Photos1_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SavedReport">
+          <End Role="SavedReports" Type="PhotoCollectionDatabaseModel.Store.SavedReports" Multiplicity="0..1" />
+          <End Role="ReportsHistories" Type="PhotoCollectionDatabaseModel.Store.ReportsHistories" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SavedReports">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ReportsHistories">
+              <PropertyRef Name="SavedReportID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Source">
+          <End Role="Archives" Type="PhotoCollectionDatabaseModel.Store.Archives" Multiplicity="0..1" />
+          <End Role="Photos" Type="PhotoCollectionDatabaseModel.Store.Photos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Archives">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Photos">
+              <PropertyRef Name="SourceID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tags2Photos_Photo">
+          <End Role="Photos" Type="PhotoCollectionDatabaseModel.Store.Photos" Multiplicity="1" />
+          <End Role="Tags2Photos" Type="PhotoCollectionDatabaseModel.Store.Tags2Photos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Photos">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Tags2Photos">
+              <PropertyRef Name="Photos_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tags2Photos_Tag">
+          <End Role="Tags" Type="PhotoCollectionDatabaseModel.Store.Tags" Multiplicity="1" />
+          <End Role="Tags2Photos" Type="PhotoCollectionDatabaseModel.Store.Tags2Photos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tags">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Tags2Photos">
+              <PropertyRef Name="Tags_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TagsHierarchy">
+          <End Role="Tags" Type="PhotoCollectionDatabaseModel.Store.Tags" Multiplicity="1" />
+          <End Role="Tags1" Type="PhotoCollectionDatabaseModel.Store.Tags" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Tags">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Tags1">
+              <PropertyRef Name="ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="PhotoCollectionDatabaseModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+        <EntityContainer Name="PhotoCollectionDatabaseEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="AdditionalAttributes" EntityType="PhotoCollectionDatabaseModel.AdditionalAttribute" />
+          <EntitySet Name="Archives" EntityType="PhotoCollectionDatabaseModel.Archive" />
+          <EntitySet Name="Attributes" EntityType="PhotoCollectionDatabaseModel.Attribute" />
+          <EntitySet Name="ExifAttributes" EntityType="PhotoCollectionDatabaseModel.ExifAttribute" />
+          <EntitySet Name="Photos" EntityType="PhotoCollectionDatabaseModel.Photo" />
+          <EntitySet Name="ReportsHistories" EntityType="PhotoCollectionDatabaseModel.ReportsHistory" />
+          <EntitySet Name="SavedReports" EntityType="PhotoCollectionDatabaseModel.SavedReport" />
+          <EntitySet Name="Tags" EntityType="PhotoCollectionDatabaseModel.Tag" />
+          <AssociationSet Name="FK_AdditionalAttributes" Association="PhotoCollectionDatabaseModel.FK_AdditionalAttributes">
+            <End Role="AdditionalAttributes" EntitySet="AdditionalAttributes" />
+            <End Role="Attributes" EntitySet="Attributes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Source" Association="PhotoCollectionDatabaseModel.FK_Source">
+            <End Role="Archives" EntitySet="Archives" />
+            <End Role="Photos" EntitySet="Photos" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Attributes" Association="PhotoCollectionDatabaseModel.FK_Attributes">
+            <End Role="Attributes" EntitySet="Attributes" />
+            <End Role="Photos" EntitySet="Photos" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ExifAttributes" Association="PhotoCollectionDatabaseModel.FK_ExifAttributes">
+            <End Role="ExifAttributes" EntitySet="ExifAttributes" />
+            <End Role="Attributes" EntitySet="Attributes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SavedReport" Association="PhotoCollectionDatabaseModel.FK_SavedReport">
+            <End Role="SavedReports" EntitySet="SavedReports" />
+            <End Role="ReportsHistories" EntitySet="ReportsHistories" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TagsHierarchy" Association="PhotoCollectionDatabaseModel.FK_TagsHierarchy">
+            <End Role="Tags" EntitySet="Tags" />
+            <End Role="Tags1" EntitySet="Tags" />
+          </AssociationSet>
+          <EntitySet Name="Tags2PhotosSet" EntityType="PhotoCollectionDatabaseModel.Tags2Photos" />
+          <AssociationSet Name="TagTags2Photos" Association="PhotoCollectionDatabaseModel.TagTags2Photos">
+            <End Role="Tag" EntitySet="Tags" />
+            <End Role="Tags2Photos" EntitySet="Tags2PhotosSet" />
+          </AssociationSet>
+          <AssociationSet Name="PhotoTags2Photos" Association="PhotoCollectionDatabaseModel.PhotoTags2Photos">
+            <End Role="Photo" EntitySet="Photos" />
+            <End Role="Tags2Photos" EntitySet="Tags2PhotosSet" />
+          </AssociationSet>
+          <EntitySet Name="Photos2LocationsSet" EntityType="PhotoCollectionDatabaseModel.Photos2Locations" />
+          <AssociationSet Name="PhotoPhotos2Locations" Association="PhotoCollectionDatabaseModel.PhotoPhotos2Locations">
+            <End Role="Photo" EntitySet="Photos" />
+            <End Role="Photos2Locations" EntitySet="Photos2LocationsSet" />
+          </AssociationSet>
+          <AssociationSet Name="ArchivePhotos2Locations" Association="PhotoCollectionDatabaseModel.ArchivePhotos2Locations">
+            <End Role="Archive" EntitySet="Archives" />
+            <End Role="Photos2Locations" EntitySet="Photos2LocationsSet" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="AdditionalAttribute">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="AdditionalParametersXML" Type="String" MaxLength="4000" Unicode="true" FixedLength="false" />
+          <NavigationProperty Name="Attributes" Relationship="PhotoCollectionDatabaseModel.FK_AdditionalAttributes" FromRole="AdditionalAttributes" ToRole="Attributes" />
+        </EntityType>
+        <EntityType Name="Archive">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="VolumeName" Type="String" Nullable="false" MaxLength="4000" Unicode="true" FixedLength="false" />
+          <Property Name="Capacity" Type="Int64" />
+          <Property Name="HddLetter" Type="String" MaxLength="4000" Unicode="true" FixedLength="false" />
+          <Property Name="DeviceID" Type="String" MaxLength="4000" Unicode="true" FixedLength="false" />
+          <Property Name="IsExternal" Type="Boolean" />
+          <Property Name="DiscLetter" Type="String" MaxLength="4000" Unicode="true" FixedLength="false" />
+          <Property Name="DiscType" Type="String" MaxLength="4000" Unicode="true" FixedLength="false" />
+          <Property Name="ArchiveType" Type="String" Nullable="false" MaxLength="4000" Unicode="true" FixedLength="false" />
+          <NavigationProperty Name="Photos" Relationship="PhotoCollectionDatabaseModel.FK_Source" FromRole="Archives" ToRole="Photos" />
+          <NavigationProperty Name="Photos2Locations" Relationship="PhotoCollectionDatabaseModel.ArchivePhotos2Locations" FromRole="Archive" ToRole="Photos2Locations" />
+        </EntityType>
+        <EntityType Name="Attribute">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="Author" Type="String" Nullable="false" MaxLength="4000" Unicode="true" FixedLength="false" />
+          <Property Name="BitsPerPixel" Type="Int16" Nullable="false" />
+          <Property Name="Hash" Type="String" Nullable="false" MaxLength="4000" Unicode="true" FixedLength="false" />
+          <Property Name="Height" Type="Int32" Nullable="false" />
+          <Property Name="Width" Type="Int32" Nullable="false" />
+          <Property Name="Rate" Type="Int32" Nullable="false" />
+          <Property Name="AreExifAttributesPossible" Type="Boolean" Nullable="false" />
+          <Property Name="AdditionalAttributesID" Type="Int32" />
+          <Property Name="ExifAttributesID" Type="Int32" />
+          <NavigationProperty Name="AdditionalAttribute" Relationship="PhotoCollectionDatabaseModel.FK_AdditionalAttributes" FromRole="Attributes" ToRole="AdditionalAttributes" />
+          <NavigationProperty Name="Photos" Relationship="PhotoCollectionDatabaseModel.FK_Attributes" FromRole="Attributes" ToRole="Photos" />
+          <NavigationProperty Name="ExifAttribute" Relationship="PhotoCollectionDatabaseModel.FK_ExifAttributes" FromRole="Attributes" ToRole="ExifAttributes" />
+        </EntityType>
+        <EntityType Name="ExifAttribute">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="AdditionalParametersXML" Type="String" MaxLength="4000" Unicode="true" FixedLength="false" />
+          <Property Name="CameraModel" Type="String" Nullable="false" MaxLength="4000" Unicode="true" FixedLength="false" />
+          <Property Name="CameraName" Type="String" Nullable="false" MaxLength="4000" Unicode="true" FixedLength="false" />
+          <Property Name="Aperture" Type="Double" Nullable="false" />
+          <Property Name="Shutter" Type="Double" Nullable="false" />
+          <Property Name="ISO" Type="Int64" Nullable="false" />
+          <Property Name="ExposureBias" Type="Int64" Nullable="false" />
+          <Property Name="FocalLength" Type="Int64" Nullable="false" />
+          <Property Name="MeteringMode" Type="String" Nullable="false" MaxLength="4000" Unicode="true" FixedLength="false" />
+          <Property Name="SubjectDistance" Type="String" Nullable="false" MaxLength="4000" Unicode="true" FixedLength="false" />
+          <Property Name="FlashMode" Type="String" Nullable="false" MaxLength="4000" Unicode="true" FixedLength="false" />
+          <Property Name="FlashEnergy" Type="String" Nullable="false" MaxLength="4000" Unicode="true" FixedLength="false" />
+          <Property Name="mm35FocalLength" Type="Int64" Nullable="false" />
+          <Property Name="WhiteBalance" Type="String" Nullable="false" MaxLength="4000" Unicode="true" FixedLength="false" />
+          <Property Name="ExposureProgram" Type="String" Nullable="false" MaxLength="4000" Unicode="true" FixedLength="false" />
+          <Property Name="LensMarker" Type="String" Nullable="false" MaxLength="4000" Unicode="true" FixedLength="false" />
+          <Property Name="LensModel" Type="String" Nullable="false" MaxLength="4000" Unicode="true" FixedLength="false" />
+          <Property Name="FlashMarker" Type="String" Nullable="false" MaxLength="4000" Unicode="true" FixedLength="false" />
+          <Property Name="FlashModel" Type="String" Nullable="false" MaxLength="4000" Unicode="true" FixedLength="false" />
+          <Property Name="LightSource" Type="String" Nullable="false" MaxLength="4000" Unicode="true" FixedLength="false" />
+          <Property Name="CameraSerialNumber" Type="String" Nullable="false" MaxLength="4000" Unicode="true" FixedLength="false" />
+          <Property Name="Contrast" Type="String" Nullable="false" MaxLength="4000" Unicode="true" FixedLength="false" />
+          <Property Name="Brightness" Type="String" Nullable="false" MaxLength="4000" Unicode="true" FixedLength="false" />
+          <Property Name="Saturation" Type="String" Nullable="false" MaxLength="4000" Unicode="true" FixedLength="false" />
+          <Property Name="Sharpness" Type="String" Nullable="false" MaxLength="4000" Unicode="true" FixedLength="false" />
+          <Property Name="DigitalZoom" Type="Int64" Nullable="false" />
+          <Property Name="ExifVersion" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="Attributes" Relationship="PhotoCollectionDatabaseModel.FK_ExifAttributes" FromRole="ExifAttributes" ToRole="Attributes" />
+        </EntityType>
+        <EntityType Name="Photo">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="Description" Type="String" Nullable="false" MaxLength="4000" Unicode="true" FixedLength="false" />
+          <Property Name="FilePath" Type="String" Nullable="false" MaxLength="4000" Unicode="true" FixedLength="false" />
+          <Property Name="Title" Type="String" Nullable="false" MaxLength="4000" Unicode="true" FixedLength="false" />
+          <Property Name="ThumbnailPath" Type="String" MaxLength="4000" Unicode="true" FixedLength="false" />
+          <Property Name="SourceID" Type="Int32" />
+          <Property Name="AttributesID" Type="Int32" />
+          <Property Name="Date" Type="DateTime" Nullable="false" />
+          <NavigationProperty Name="Archive" Relationship="PhotoCollectionDatabaseModel.FK_Source" FromRole="Photos" ToRole="Archives" />
+          <NavigationProperty Name="Attribute" Relationship="PhotoCollectionDatabaseModel.FK_Attributes" FromRole="Photos" ToRole="Attributes" />
+          <NavigationProperty Name="Tags2Photos" Relationship="PhotoCollectionDatabaseModel.PhotoTags2Photos" FromRole="Photo" ToRole="Tags2Photos" />
+          <NavigationProperty Name="Photos2Locations" Relationship="PhotoCollectionDatabaseModel.PhotoPhotos2Locations" FromRole="Photo" ToRole="Photos2Locations" />
+        </EntityType>
+        <EntityType Name="ReportsHistory">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="Content" Type="String" Nullable="false" MaxLength="4000" Unicode="true" FixedLength="false" />
+          <Property Name="LastUseDate" Type="DateTime" Nullable="false" />
+          <Property Name="SavedReportID" Type="Int32" />
+          <NavigationProperty Name="SavedReport" Relationship="PhotoCollectionDatabaseModel.FK_SavedReport" FromRole="ReportsHistories" ToRole="SavedReports" />
+        </EntityType>
+        <EntityType Name="SavedReport">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="CreationDate" Type="DateTime" Nullable="false" />
+          <Property Name="Query" Type="String" Nullable="false" MaxLength="4000" Unicode="true" FixedLength="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="4000" Unicode="true" FixedLength="false" />
+          <Property Name="IsUserDefined" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="ReportsHistories" Relationship="PhotoCollectionDatabaseModel.FK_SavedReport" FromRole="SavedReports" ToRole="ReportsHistories" />
+        </EntityType>
+        <EntityType Name="Tag">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="CreationDate" Type="DateTime" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="100" Unicode="true" FixedLength="false" />
+          <Property Name="IconPath" Type="String" MaxLength="4000" Unicode="true" FixedLength="false" />
+          <Property Name="ParentID" Type="Int32" />
+          <NavigationProperty Name="Tags1" Relationship="PhotoCollectionDatabaseModel.FK_TagsHierarchy" FromRole="Tags" ToRole="Tags1" />
+          <NavigationProperty Name="Tag1" Relationship="PhotoCollectionDatabaseModel.FK_TagsHierarchy" FromRole="Tags1" ToRole="Tags" />
+          <NavigationProperty Name="Tags2Photos" Relationship="PhotoCollectionDatabaseModel.TagTags2Photos" FromRole="Tag" ToRole="Tags2Photos" />
+        </EntityType>
+        <Association Name="FK_AdditionalAttributes">
+          <End Role="AdditionalAttributes" Type="PhotoCollectionDatabaseModel.AdditionalAttribute" Multiplicity="0..1" />
+          <End Role="Attributes" Type="PhotoCollectionDatabaseModel.Attribute" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AdditionalAttributes">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Attributes">
+              <PropertyRef Name="AdditionalAttributesID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Source">
+          <End Role="Archives" Type="PhotoCollectionDatabaseModel.Archive" Multiplicity="0..1" />
+          <End Role="Photos" Type="PhotoCollectionDatabaseModel.Photo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Archives">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Photos">
+              <PropertyRef Name="SourceID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Attributes">
+          <End Role="Attributes" Type="PhotoCollectionDatabaseModel.Attribute" Multiplicity="0..1" />
+          <End Role="Photos" Type="PhotoCollectionDatabaseModel.Photo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Attributes">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Photos">
+              <PropertyRef Name="AttributesID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ExifAttributes">
+          <End Role="ExifAttributes" Type="PhotoCollectionDatabaseModel.ExifAttribute" Multiplicity="0..1" />
+          <End Role="Attributes" Type="PhotoCollectionDatabaseModel.Attribute" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ExifAttributes">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Attributes">
+              <PropertyRef Name="ExifAttributesID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SavedReport">
+          <End Role="SavedReports" Type="PhotoCollectionDatabaseModel.SavedReport" Multiplicity="0..1" />
+          <End Role="ReportsHistories" Type="PhotoCollectionDatabaseModel.ReportsHistory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SavedReports">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ReportsHistories">
+              <PropertyRef Name="SavedReportID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TagsHierarchy">
+          <End Role="Tags" Type="PhotoCollectionDatabaseModel.Tag" Multiplicity="1" />
+          <End Role="Tags1" Type="PhotoCollectionDatabaseModel.Tag" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Tags">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Tags1">
+              <PropertyRef Name="ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Tags2Photos">
+          <Key>
+            <PropertyRef Name="PhotoID" />
+            <PropertyRef Name="TagID" />
+          </Key>
+          <Property Type="Int32" Name="PhotoID" Nullable="false" annotation:StoreGeneratedPattern="None" />
+          <Property Type="Int32" Name="TagID" Nullable="false" />
+          <NavigationProperty Name="Tag" Relationship="PhotoCollectionDatabaseModel.TagTags2Photos" FromRole="Tags2Photos" ToRole="Tag" />
+          <NavigationProperty Name="Photo" Relationship="PhotoCollectionDatabaseModel.PhotoTags2Photos" FromRole="Tags2Photos" ToRole="Photo" />
+        </EntityType>
+        <Association Name="TagTags2Photos">
+          <End Type="PhotoCollectionDatabaseModel.Tag" Role="Tag" Multiplicity="1" />
+          <End Type="PhotoCollectionDatabaseModel.Tags2Photos" Role="Tags2Photos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tag">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Tags2Photos">
+              <PropertyRef Name="TagID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="PhotoTags2Photos">
+          <End Type="PhotoCollectionDatabaseModel.Photo" Role="Photo" Multiplicity="1" />
+          <End Type="PhotoCollectionDatabaseModel.Tags2Photos" Role="Tags2Photos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Photo">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Tags2Photos">
+              <PropertyRef Name="PhotoID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Photos2Locations">
+          <Key>
+            <PropertyRef Name="PhotoID" />
+            <PropertyRef Name="LocationID" />
+          </Key>
+          <Property Type="Int32" Name="PhotoID" Nullable="false" annotation:StoreGeneratedPattern="None" />
+          <Property Type="Int32" Name="LocationID" Nullable="false" />
+          <NavigationProperty Name="Photo" Relationship="PhotoCollectionDatabaseModel.PhotoPhotos2Locations" FromRole="Photos2Locations" ToRole="Photo" />
+          <NavigationProperty Name="Archive" Relationship="PhotoCollectionDatabaseModel.ArchivePhotos2Locations" FromRole="Photos2Locations" ToRole="Archive" />
+        </EntityType>
+        <Association Name="PhotoPhotos2Locations">
+          <End Type="PhotoCollectionDatabaseModel.Photo" Role="Photo" Multiplicity="1" />
+          <End Type="PhotoCollectionDatabaseModel.Photos2Locations" Role="Photos2Locations" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Photo">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Photos2Locations">
+              <PropertyRef Name="PhotoID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ArchivePhotos2Locations">
+          <End Type="PhotoCollectionDatabaseModel.Archive" Role="Archive" Multiplicity="1" />
+          <End Type="PhotoCollectionDatabaseModel.Photos2Locations" Role="Photos2Locations" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Archive">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Photos2Locations">
+              <PropertyRef Name="LocationID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="PhotoCollectionDatabaseModelStoreContainer" CdmEntityContainer="PhotoCollectionDatabaseEntities">
+          <EntitySetMapping Name="AdditionalAttributes"><EntityTypeMapping TypeName="PhotoCollectionDatabaseModel.AdditionalAttribute"><MappingFragment StoreEntitySet="AdditionalAttributes">
+            <ScalarProperty Name="ID" ColumnName="ID" />
+            <ScalarProperty Name="AdditionalParametersXML" ColumnName="AdditionalParametersXML" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="Archives"><EntityTypeMapping TypeName="PhotoCollectionDatabaseModel.Archive"><MappingFragment StoreEntitySet="Archives">
+            <ScalarProperty Name="ID" ColumnName="ID" />
+            <ScalarProperty Name="VolumeName" ColumnName="VolumeName" />
+            <ScalarProperty Name="Capacity" ColumnName="Capacity" />
+            <ScalarProperty Name="HddLetter" ColumnName="HddLetter" />
+            <ScalarProperty Name="DeviceID" ColumnName="DeviceID" />
+            <ScalarProperty Name="IsExternal" ColumnName="IsExternal" />
+            <ScalarProperty Name="DiscLetter" ColumnName="DiscLetter" />
+            <ScalarProperty Name="DiscType" ColumnName="DiscType" />
+            <ScalarProperty Name="ArchiveType" ColumnName="ArchiveType" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="Attributes"><EntityTypeMapping TypeName="PhotoCollectionDatabaseModel.Attribute"><MappingFragment StoreEntitySet="Attributes">
+            <ScalarProperty Name="ID" ColumnName="ID" />
+            <ScalarProperty Name="Author" ColumnName="Author" />
+            <ScalarProperty Name="BitsPerPixel" ColumnName="BitsPerPixel" />
+            <ScalarProperty Name="Hash" ColumnName="Hash" />
+            <ScalarProperty Name="Height" ColumnName="Height" />
+            <ScalarProperty Name="Width" ColumnName="Width" />
+            <ScalarProperty Name="Rate" ColumnName="Rate" />
+            <ScalarProperty Name="AreExifAttributesPossible" ColumnName="AreExifAttributesPossible" />
+            <ScalarProperty Name="AdditionalAttributesID" ColumnName="AdditionalAttributesID" />
+            <ScalarProperty Name="ExifAttributesID" ColumnName="ExifAttributesID" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="ExifAttributes"><EntityTypeMapping TypeName="PhotoCollectionDatabaseModel.ExifAttribute"><MappingFragment StoreEntitySet="ExifAttributes">
+            <ScalarProperty Name="ID" ColumnName="ID" />
+            <ScalarProperty Name="AdditionalParametersXML" ColumnName="AdditionalParametersXML" />
+            <ScalarProperty Name="CameraModel" ColumnName="CameraModel" />
+            <ScalarProperty Name="CameraName" ColumnName="CameraName" />
+            <ScalarProperty Name="Aperture" ColumnName="Aperture" />
+            <ScalarProperty Name="Shutter" ColumnName="Shutter" />
+            <ScalarProperty Name="ISO" ColumnName="ISO" />
+            <ScalarProperty Name="ExposureBias" ColumnName="ExposureBias" />
+            <ScalarProperty Name="FocalLength" ColumnName="FocalLength" />
+            <ScalarProperty Name="MeteringMode" ColumnName="MeteringMode" />
+            <ScalarProperty Name="SubjectDistance" ColumnName="SubjectDistance" />
+            <ScalarProperty Name="FlashMode" ColumnName="FlashMode" />
+            <ScalarProperty Name="FlashEnergy" ColumnName="FlashEnergy" />
+            <ScalarProperty Name="mm35FocalLength" ColumnName="mm35FocalLength" />
+            <ScalarProperty Name="WhiteBalance" ColumnName="WhiteBalance" />
+            <ScalarProperty Name="ExposureProgram" ColumnName="ExposureProgram" />
+            <ScalarProperty Name="LensMarker" ColumnName="LensMarker" />
+            <ScalarProperty Name="LensModel" ColumnName="LensModel" />
+            <ScalarProperty Name="FlashMarker" ColumnName="FlashMarker" />
+            <ScalarProperty Name="FlashModel" ColumnName="FlashModel" />
+            <ScalarProperty Name="LightSource" ColumnName="LightSource" />
+            <ScalarProperty Name="CameraSerialNumber" ColumnName="CameraSerialNumber" />
+            <ScalarProperty Name="Contrast" ColumnName="Contrast" />
+            <ScalarProperty Name="Brightness" ColumnName="Brightness" />
+            <ScalarProperty Name="Saturation" ColumnName="Saturation" />
+            <ScalarProperty Name="Sharpness" ColumnName="Sharpness" />
+            <ScalarProperty Name="DigitalZoom" ColumnName="DigitalZoom" />
+            <ScalarProperty Name="ExifVersion" ColumnName="ExifVersion" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="Photos"><EntityTypeMapping TypeName="PhotoCollectionDatabaseModel.Photo"><MappingFragment StoreEntitySet="Photos">
+            <ScalarProperty Name="ID" ColumnName="ID" />
+            <ScalarProperty Name="Description" ColumnName="Description" />
+            <ScalarProperty Name="FilePath" ColumnName="FilePath" />
+            <ScalarProperty Name="Title" ColumnName="Title" />
+            <ScalarProperty Name="ThumbnailPath" ColumnName="ThumbnailPath" />
+            <ScalarProperty Name="SourceID" ColumnName="SourceID" />
+            <ScalarProperty Name="AttributesID" ColumnName="AttributesID" />
+            <ScalarProperty Name="Date" ColumnName="Date" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="ReportsHistories"><EntityTypeMapping TypeName="PhotoCollectionDatabaseModel.ReportsHistory"><MappingFragment StoreEntitySet="ReportsHistories">
+            <ScalarProperty Name="ID" ColumnName="ID" />
+            <ScalarProperty Name="Content" ColumnName="Content" />
+            <ScalarProperty Name="LastUseDate" ColumnName="LastUseDate" />
+            <ScalarProperty Name="SavedReportID" ColumnName="SavedReportID" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="SavedReports"><EntityTypeMapping TypeName="PhotoCollectionDatabaseModel.SavedReport"><MappingFragment StoreEntitySet="SavedReports">
+            <ScalarProperty Name="ID" ColumnName="ID" />
+            <ScalarProperty Name="CreationDate" ColumnName="CreationDate" />
+            <ScalarProperty Name="Query" ColumnName="Query" />
+            <ScalarProperty Name="Name" ColumnName="Name" />
+            <ScalarProperty Name="IsUserDefined" ColumnName="IsUserDefined" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="Tags"><EntityTypeMapping TypeName="PhotoCollectionDatabaseModel.Tag"><MappingFragment StoreEntitySet="Tags">
+            <ScalarProperty Name="ID" ColumnName="ID" />
+            <ScalarProperty Name="CreationDate" ColumnName="CreationDate" />
+            <ScalarProperty Name="Name" ColumnName="Name" />
+            <ScalarProperty Name="IconPath" ColumnName="IconPath" />
+            <ScalarProperty Name="ParentID" ColumnName="ParentID" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="Photos2LocationsSet">
+            <EntityTypeMapping TypeName="IsTypeOf(PhotoCollectionDatabaseModel.Photos2Locations)">
+              <MappingFragment StoreEntitySet="Photos2Locations" >
+                <ScalarProperty Name="PhotoID" ColumnName="Photos1_ID" />
+                <ScalarProperty Name="LocationID" ColumnName="Archives_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tags2PhotosSet">
+            <EntityTypeMapping TypeName="IsTypeOf(PhotoCollectionDatabaseModel.Tags2Photos)">
+              <MappingFragment StoreEntitySet="Tags2Photos">
+                <ScalarProperty Name="TagID" ColumnName="Tags_ID" />
+                <ScalarProperty Name="PhotoID" ColumnName="Photos_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2008/10/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="False" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams>
+      <Diagram Name="PhotoCollectionDatabase">
+        <EntityTypeShape EntityType="PhotoCollectionDatabaseModel.AdditionalAttribute" Width="1.5" PointX="1.5" PointY="6.875" Height="1.5956835937500005" IsExpanded="true" />
+        <EntityTypeShape EntityType="PhotoCollectionDatabaseModel.Archive" Width="1.5" PointX="0.5" PointY="0.75" Height="3.1340950520833331" IsExpanded="true" />
+        <EntityTypeShape EntityType="PhotoCollectionDatabaseModel.Attribute" Width="1.5" PointX="0.75" PointY="9.625" Height="3.5186979166666674" IsExpanded="true" />
+        <EntityTypeShape EntityType="PhotoCollectionDatabaseModel.ExifAttribute" Width="1.5" PointX="1.5" PointY="14.25" Height="6.5955208333333317" IsExpanded="true" />
+        <EntityTypeShape EntityType="PhotoCollectionDatabaseModel.Photo" Width="1.5" PointX="4.625" PointY="1" Height="3.3263964843749996" IsExpanded="true" />
+        <EntityTypeShape EntityType="PhotoCollectionDatabaseModel.ReportsHistory" Width="1.5" PointX="6" PointY="6" Height="1.9802864583333317" IsExpanded="true" />
+        <EntityTypeShape EntityType="PhotoCollectionDatabaseModel.SavedReport" Width="1.5" PointX="3.75" PointY="5.875" Height="2.1725878906249996" IsExpanded="true" />
+        <EntityTypeShape EntityType="PhotoCollectionDatabaseModel.Tag" Width="1.5" PointX="10.625" PointY="1" Height="2.5571907552083331" IsExpanded="true" />
+        <AssociationConnector Association="PhotoCollectionDatabaseModel.FK_AdditionalAttributes" ManuallyRouted="false">
+          <ConnectorPoint PointX="1.875" PointY="8.47068359375" />
+          <ConnectorPoint PointX="1.875" PointY="9.625" />
+        </AssociationConnector>
+        <AssociationConnector Association="PhotoCollectionDatabaseModel.FK_Source" ManuallyRouted="false">
+          <ConnectorPoint PointX="2" PointY="3.4009407552083335" />
+          <ConnectorPoint PointX="4.625" PointY="3.4009407552083335" />
+        </AssociationConnector>
+        <AssociationConnector Association="PhotoCollectionDatabaseModel.FK_Attributes" ManuallyRouted="false">
+          <ConnectorPoint PointX="2.25" PointY="11.384348958333334" />
+          <ConnectorPoint PointX="5.625" PointY="11.384348958333334" />
+          <ConnectorPoint PointX="5.625" PointY="4.7109993489583326" />
+        </AssociationConnector>
+        <AssociationConnector Association="PhotoCollectionDatabaseModel.FK_ExifAttributes" ManuallyRouted="false">
+          <ConnectorPoint PointX="1.875" PointY="14.25" />
+          <ConnectorPoint PointX="1.875" PointY="13.143697916666667" />
+        </AssociationConnector>
+        <AssociationConnector Association="PhotoCollectionDatabaseModel.FK_SavedReport" ManuallyRouted="false">
+          <ConnectorPoint PointX="5.25" PointY="6.9901432291666659" />
+          <ConnectorPoint PointX="5.541666666666667" PointY="6.990143229166665" />
+          <ConnectorPoint PointX="5.708333333333333" PointY="6.9901432291666659" />
+          <ConnectorPoint PointX="6" PointY="6.9901432291666659" />
+        </AssociationConnector>
+        <AssociationConnector Association="PhotoCollectionDatabaseModel.FK_TagsHierarchy" ManuallyRouted="false">
+          <ConnectorPoint PointX="11.156923076923077" PointY="3.7494921875" />
+          <ConnectorPoint PointX="11.156923076923077" PointY="3.9994921874999996" />
+          <ConnectorPoint PointX="11.603461538461538" PointY="3.9994921874999996" />
+          <ConnectorPoint PointX="11.603461538461538" PointY="3.7494921875" />
+        </AssociationConnector>
+        <EntityTypeShape EntityType="PhotoCollectionDatabaseModel.Tags2Photos" Width="1.5" PointX="7.25" PointY="1" Height="1.7879850260416661" />
+        <AssociationConnector Association="PhotoCollectionDatabaseModel.TagTags2Photos">
+          <ConnectorPoint PointX="10.625" PointY="1.8939925130208328" />
+          <ConnectorPoint PointX="8.75" PointY="1.8939925130208328" />
+        </AssociationConnector>
+        <AssociationConnector Association="PhotoCollectionDatabaseModel.PhotoTags2Photos" ManuallyRouted="true">
+          <ConnectorPoint PointX="6.125" PointY="1.8939925130208328" />
+          <ConnectorPoint PointX="7.25" PointY="1.8939925130208328" />
+        </AssociationConnector>
+        <EntityTypeShape EntityType="PhotoCollectionDatabaseModel.Photos2Locations" Width="1.625" PointX="2.5" PointY="0.875" Height="1.7879850260416665" />
+        <AssociationConnector Association="PhotoCollectionDatabaseModel.PhotoPhotos2Locations">
+          <ConnectorPoint PointX="4.625" PointY="1.8314925130208337" />
+          <ConnectorPoint PointX="4.125" PointY="1.8314925130208337" />
+        </AssociationConnector>
+        <AssociationConnector Association="PhotoCollectionDatabaseModel.ArchivePhotos2Locations">
+          <ConnectorPoint PointX="2" PointY="1.7689925130208333" />
+          <ConnectorPoint PointX="2.5" PointY="1.7689925130208333" />
+        </AssociationConnector>
+      </Diagram>
+    </Diagrams>
+  </Designer>
+</edmx:Edmx>

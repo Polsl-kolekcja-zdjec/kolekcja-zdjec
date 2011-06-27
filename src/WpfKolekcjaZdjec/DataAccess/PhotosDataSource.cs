@@ -39,7 +39,14 @@ namespace WpfKolekcjaZdjec.DataAccess
         {
             using (PhotoCollectionDatabaseEntities context = new PhotoCollectionDatabaseEntities(_connectionString))
             {
-                return context.Photos.Include("Tags").ToList();
+                List<Photo> returned = (from o in context.Photos select o).ToList();
+                foreach (var p in returned)
+                {
+                    p.Tags.Clear();
+                    p.Tags = FillTags(context, p.ID);
+                }
+
+                return returned;
             }
         }
 
@@ -51,7 +58,7 @@ namespace WpfKolekcjaZdjec.DataAccess
         {
             using (PhotoCollectionDatabaseEntities context = new PhotoCollectionDatabaseEntities(_connectionString))
             {
-                IEnumerable<Photo> query = context.Photos.Include("Tags").OrderByDescending(a => a.ID);
+                IEnumerable<Photo> query = (from o in context.Photos select o);
 
                 if (query.Count() == 0)
                 {
@@ -59,9 +66,21 @@ namespace WpfKolekcjaZdjec.DataAccess
                 }
                 else
                 {
-                    return query.Last();
+                    Photo p = query.Last();
+                    p.Tags = FillTags(context, p.ID);
+                    return p;
                 }
             }
+        }
+
+        /// <summary>
+        /// Fills the tags.
+        /// </summary>
+        /// <param name="context">The Context.</param>
+        /// <param name="id">Photo ID.</param>
+        private List<Tag> FillTags(PhotoCollectionDatabaseEntities context, int id)
+        {
+            return (from o in context.Tags join t2p in context.Tags2PhotosSet on id equals t2p.PhotoID select o).ToList();
         }
 
         /// <summary>
@@ -73,7 +92,9 @@ namespace WpfKolekcjaZdjec.DataAccess
         {
             using (PhotoCollectionDatabaseEntities context = new PhotoCollectionDatabaseEntities(_connectionString))
             {
-                return context.Photos.Include("Tags").Where(a => a.ID == id).First();
+                Photo p = context.Photos.Include("Tags").Where(a => a.ID == id).First();
+                p.Tags = FillTags(context, id);
+                return p;
             }
         }
 

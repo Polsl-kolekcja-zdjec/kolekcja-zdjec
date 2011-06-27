@@ -122,6 +122,11 @@ namespace WpfKolekcjaZdjec.View
             }
         }
 
+        // TODO: Instalator.
+        // TODO: Exif i atrybuty - wypełnianie.
+        // TODO: Usuwanie tagów.
+        // TODO: błąd z pokazywaniem tagów (??).
+
         /// <summary>
         /// Handles the MouseLeftButtonDown event of the ShowExif control.
         /// </summary>
@@ -270,7 +275,7 @@ namespace WpfKolekcjaZdjec.View
         /// Gets the and show images from database.
         /// </summary>
         /// <param name="photos">The photos.</param>
-        private void GetAndShowImagesFromDatabase(List<Photo> photos)
+        public void GetAndShowImagesFromDatabase(List<Photo> photos)
         {
             if (photos.Count > 0)
             {

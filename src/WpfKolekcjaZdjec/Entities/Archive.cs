@@ -19,6 +19,7 @@ namespace WpfKolekcjaZdjec.Entities
 {
     [DataContract(IsReference = true)]
     [KnownType(typeof(Photo))]
+    [KnownType(typeof(Photos2Locations))]
     public partial class Archive: IObjectWithChangeTracker, INotifyPropertyChanged
     {
         #region Primitive Properties
@@ -201,39 +202,51 @@ namespace WpfKolekcjaZdjec.Entities
         private TrackableCollection<Photo> _photos;
     
         [DataMember]
-        public TrackableCollection<Photo> Photos1
+        public TrackableCollection<Photos2Locations> Photos2Locations
         {
             get
             {
-                if (_photos1 == null)
+                if (_photos2Locations == null)
                 {
-                    _photos1 = new TrackableCollection<Photo>();
-                    _photos1.CollectionChanged += FixupPhotos1;
+                    _photos2Locations = new TrackableCollection<Photos2Locations>();
+                    _photos2Locations.CollectionChanged += FixupPhotos2Locations;
                 }
-                return _photos1;
+                return _photos2Locations;
             }
             set
             {
-                if (!ReferenceEquals(_photos1, value))
+                if (!ReferenceEquals(_photos2Locations, value))
                 {
                     if (ChangeTracker.ChangeTrackingEnabled)
                     {
                         throw new InvalidOperationException("Cannot set the FixupChangeTrackingCollection when ChangeTracking is enabled");
                     }
-                    if (_photos1 != null)
+                    if (_photos2Locations != null)
                     {
-                        _photos1.CollectionChanged -= FixupPhotos1;
+                        _photos2Locations.CollectionChanged -= FixupPhotos2Locations;
+                        // This is the principal end in an association that performs cascade deletes.
+                        // Remove the cascade delete event handler for any entities in the current collection.
+                        foreach (Photos2Locations item in _photos2Locations)
+                        {
+                            ChangeTracker.ObjectStateChanging -= item.HandleCascadeDelete;
+                        }
                     }
-                    _photos1 = value;
-                    if (_photos1 != null)
+                    _photos2Locations = value;
+                    if (_photos2Locations != null)
                     {
-                        _photos1.CollectionChanged += FixupPhotos1;
+                        _photos2Locations.CollectionChanged += FixupPhotos2Locations;
+                        // This is the principal end in an association that performs cascade deletes.
+                        // Add the cascade delete event handler for any entities that are already in the new collection.
+                        foreach (Photos2Locations item in _photos2Locations)
+                        {
+                            ChangeTracker.ObjectStateChanging += item.HandleCascadeDelete;
+                        }
                     }
-                    OnNavigationPropertyChanged("Photos1");
+                    OnNavigationPropertyChanged("Photos2Locations");
                 }
             }
         }
-        private TrackableCollection<Photo> _photos1;
+        private TrackableCollection<Photos2Locations> _photos2Locations;
 
         #endregion
         #region ChangeTracking
@@ -314,7 +327,7 @@ namespace WpfKolekcjaZdjec.Entities
         protected virtual void ClearNavigationProperties()
         {
             Photos.Clear();
-            Photos1.Clear();
+            Photos2Locations.Clear();
         }
 
         #endregion
@@ -359,7 +372,7 @@ namespace WpfKolekcjaZdjec.Entities
             }
         }
     
-        private void FixupPhotos1(object sender, NotifyCollectionChangedEventArgs e)
+        private void FixupPhotos2Locations(object sender, NotifyCollectionChangedEventArgs e)
         {
             if (IsDeserializing)
             {
@@ -368,35 +381,44 @@ namespace WpfKolekcjaZdjec.Entities
     
             if (e.NewItems != null)
             {
-                foreach (Photo item in e.NewItems)
+                foreach (Photos2Locations item in e.NewItems)
                 {
-                    if (!item.Archives.Contains(this))
-                    {
-                        item.Archives.Add(this);
-                    }
+                    item.Archive = this;
                     if (ChangeTracker.ChangeTrackingEnabled)
                     {
                         if (!item.ChangeTracker.ChangeTrackingEnabled)
                         {
                             item.StartTracking();
                         }
-                        ChangeTracker.RecordAdditionToCollectionProperties("Photos1", item);
+                        ChangeTracker.RecordAdditionToCollectionProperties("Photos2Locations", item);
                     }
+                    // This is the principal end in an association that performs cascade deletes.
+                    // Update the event listener to refer to the new dependent.
+                    ChangeTracker.ObjectStateChanging += item.HandleCascadeDelete;
                 }
             }
     
             if (e.OldItems != null)
             {
-                foreach (Photo item in e.OldItems)
+                foreach (Photos2Locations item in e.OldItems)
                 {
-                    if (item.Archives.Contains(this))
+                    if (ReferenceEquals(item.Archive, this))
                     {
-                        item.Archives.Remove(this);
+                        item.Archive = null;
                     }
                     if (ChangeTracker.ChangeTrackingEnabled)
                     {
-                        ChangeTracker.RecordRemovalFromCollectionProperties("Photos1", item);
+                        ChangeTracker.RecordRemovalFromCollectionProperties("Photos2Locations", item);
+                        // Delete the dependent end of this identifying association. If the current state is Added,
+                        // allow the relationship to be changed without causing the dependent to be deleted.
+                        if (item.ChangeTracker.State != ObjectState.Added)
+                        {
+                            item.MarkAsDeleted();
+                        }
                     }
+                    // This is the principal end in an association that performs cascade deletes.
+                    // Remove the previous dependent from the event listener.
+                    ChangeTracker.ObjectStateChanging -= item.HandleCascadeDelete;
                 }
             }
         }

@@ -77,6 +77,7 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>Lib\AForge.Imaging.Formats.dll</HintPath>
     </Reference>
+    <Reference Include="EntityFramework, Version=4.1.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Data" />
@@ -205,46 +206,53 @@
     <Compile Include="DataAccess\PhotosDataSource.cs" />
     <Compile Include="DataAccess\TagsDataSource.cs" />
     <Compile Include="Entities\AdditionalAttribute.cs">
-      <DependentUpon>PhotoCollectionEntities.tt</DependentUpon>
+      <DependentUpon>PhotoCollectionDatabaseEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Entities\Archive.cs">
-      <DependentUpon>PhotoCollectionEntities.tt</DependentUpon>
+      <DependentUpon>PhotoCollectionDatabaseEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Entities\Attribute.cs">
-      <DependentUpon>PhotoCollectionEntities.tt</DependentUpon>
+      <DependentUpon>PhotoCollectionDatabaseEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Entities\ExifAttribute.cs">
-      <DependentUpon>PhotoCollectionEntities.tt</DependentUpon>
+      <DependentUpon>PhotoCollectionDatabaseEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="Entities\OwnEntities.cs" />
     <Compile Include="Entities\Photo.cs">
-      <DependentUpon>PhotoCollectionEntities.tt</DependentUpon>
+      <DependentUpon>PhotoCollectionDatabaseEntities.tt</DependentUpon>
     </Compile>
-    <Compile Include="Entities\PhotoCollectionEntities.Context.cs">
+    <Compile Include="Entities\PhotoCollectionDatabase.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>PhotoCollectionEntities.Context.tt</DependentUpon>
+      <DependentUpon>PhotoCollectionDatabase.edmx</DependentUpon>
     </Compile>
-    <Compile Include="Entities\PhotoCollectionEntities.Context.Extensions.cs">
-      <DependentUpon>PhotoCollectionEntities.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Entities\PhotoCollectionEntities.cs">
+    <Compile Include="Entities\PhotoCollectionDatabaseEntities.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>PhotoCollectionEntities.tt</DependentUpon>
+      <DependentUpon>PhotoCollectionDatabaseEntities.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="Entities\PhotoCollectionModel.Designer.cs">
+    <Compile Include="Entities\PhotoCollectionDatabaseEntities.Context.Extensions.cs">
+      <DependentUpon>PhotoCollectionDatabaseEntities.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\PhotoCollectionDatabaseEntities.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>PhotoCollectionModel.edmx</DependentUpon>
+      <DependentUpon>PhotoCollectionDatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\Photos2Locations.cs">
+      <DependentUpon>PhotoCollectionDatabaseEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Entities\ReportsHistory.cs">
-      <DependentUpon>PhotoCollectionEntities.tt</DependentUpon>
+      <DependentUpon>PhotoCollectionDatabaseEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Entities\SavedReport.cs">
-      <DependentUpon>PhotoCollectionEntities.tt</DependentUpon>
+      <DependentUpon>PhotoCollectionDatabaseEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Entities\Tag.cs">
-      <DependentUpon>PhotoCollectionEntities.tt</DependentUpon>
+      <DependentUpon>PhotoCollectionDatabaseEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\Tags2Photos.cs">
+      <DependentUpon>PhotoCollectionDatabaseEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="View\ImageProperties.xaml.cs">
       <DependentUpon>ImageProperties.xaml</DependentUpon>
@@ -307,19 +315,18 @@
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <None Include="App.config" />
-    <EntityDeploy Include="Entities\PhotoCollectionModel.edmx">
+    <EntityDeploy Include="Entities\PhotoCollectionDatabase.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>PhotoCollectionModel.Designer.cs</LastGenOutput>
+      <LastGenOutput>PhotoCollectionDatabase.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <None Include="Entities\PhotoCollectionEntities.Context.tt">
+    <None Include="Entities\PhotoCollectionDatabaseEntities.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>PhotoCollectionEntities.Context.cs</LastGenOutput>
+      <LastGenOutput>PhotoCollectionDatabaseEntities.Context.cs</LastGenOutput>
     </None>
-    <None Include="Entities\PhotoCollectionEntities.tt">
+    <None Include="Entities\PhotoCollectionDatabaseEntities.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>PhotoCollectionEntities.cs</LastGenOutput>
+      <LastGenOutput>PhotoCollectionDatabaseEntities.cs</LastGenOutput>
     </None>
-    <None Include="Entities\PhotoCollectionModel.edmx.sqlce" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

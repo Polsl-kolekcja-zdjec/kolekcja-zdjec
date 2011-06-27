@@ -20,11 +20,12 @@ namespace WpfKolekcjaZdjec.Entities
     [DataContract(IsReference = true)]
     [KnownType(typeof(Archive))]
     [KnownType(typeof(Attribute))]
-    [KnownType(typeof(Tag))]
+    [KnownType(typeof(Tags2Photos))]
+    [KnownType(typeof(Photos2Locations))]
     public partial class Photo: IObjectWithChangeTracker, INotifyPropertyChanged
     {
         #region Primitive Properties
-    
+
         [DataMember]
         public int ID
         {
@@ -203,74 +204,98 @@ namespace WpfKolekcjaZdjec.Entities
         private Attribute _attribute;
     
         [DataMember]
-        public TrackableCollection<Archive> Archives
+        public TrackableCollection<Tags2Photos> Tags2Photos
         {
             get
             {
-                if (_archives == null)
+                if (_tags2Photos == null)
                 {
-                    _archives = new TrackableCollection<Archive>();
-                    _archives.CollectionChanged += FixupArchives;
+                    _tags2Photos = new TrackableCollection<Tags2Photos>();
+                    _tags2Photos.CollectionChanged += FixupTags2Photos;
                 }
-                return _archives;
+                return _tags2Photos;
             }
             set
             {
-                if (!ReferenceEquals(_archives, value))
+                if (!ReferenceEquals(_tags2Photos, value))
                 {
                     if (ChangeTracker.ChangeTrackingEnabled)
                     {
                         throw new InvalidOperationException("Cannot set the FixupChangeTrackingCollection when ChangeTracking is enabled");
                     }
-                    if (_archives != null)
+                    if (_tags2Photos != null)
                     {
-                        _archives.CollectionChanged -= FixupArchives;
+                        _tags2Photos.CollectionChanged -= FixupTags2Photos;
+                        // This is the principal end in an association that performs cascade deletes.
+                        // Remove the cascade delete event handler for any entities in the current collection.
+                        foreach (Tags2Photos item in _tags2Photos)
+                        {
+                            ChangeTracker.ObjectStateChanging -= item.HandleCascadeDelete;
+                        }
                     }
-                    _archives = value;
-                    if (_archives != null)
+                    _tags2Photos = value;
+                    if (_tags2Photos != null)
                     {
-                        _archives.CollectionChanged += FixupArchives;
+                        _tags2Photos.CollectionChanged += FixupTags2Photos;
+                        // This is the principal end in an association that performs cascade deletes.
+                        // Add the cascade delete event handler for any entities that are already in the new collection.
+                        foreach (Tags2Photos item in _tags2Photos)
+                        {
+                            ChangeTracker.ObjectStateChanging += item.HandleCascadeDelete;
+                        }
                     }
-                    OnNavigationPropertyChanged("Archives");
+                    OnNavigationPropertyChanged("Tags2Photos");
                 }
             }
         }
-        private TrackableCollection<Archive> _archives;
+        private TrackableCollection<Tags2Photos> _tags2Photos;
     
         [DataMember]
-        public TrackableCollection<Tag> Tags
+        public TrackableCollection<Photos2Locations> Photos2Locations
         {
             get
             {
-                if (_tags == null)
+                if (_photos2Locations == null)
                 {
-                    _tags = new TrackableCollection<Tag>();
-                    _tags.CollectionChanged += FixupTags;
+                    _photos2Locations = new TrackableCollection<Photos2Locations>();
+                    _photos2Locations.CollectionChanged += FixupPhotos2Locations;
                 }
-                return _tags;
+                return _photos2Locations;
             }
             set
             {
-                if (!ReferenceEquals(_tags, value))
+                if (!ReferenceEquals(_photos2Locations, value))
                 {
                     if (ChangeTracker.ChangeTrackingEnabled)
                     {
                         throw new InvalidOperationException("Cannot set the FixupChangeTrackingCollection when ChangeTracking is enabled");
                     }
-                    if (_tags != null)
+                    if (_photos2Locations != null)
                     {
-                        _tags.CollectionChanged -= FixupTags;
+                        _photos2Locations.CollectionChanged -= FixupPhotos2Locations;
+                        // This is the principal end in an association that performs cascade deletes.
+                        // Remove the cascade delete event handler for any entities in the current collection.
+                        foreach (Photos2Locations item in _photos2Locations)
+                        {
+                            ChangeTracker.ObjectStateChanging -= item.HandleCascadeDelete;
+                        }
                     }
-                    _tags = value;
-                    if (_tags != null)
+                    _photos2Locations = value;
+                    if (_photos2Locations != null)
                     {
-                        _tags.CollectionChanged += FixupTags;
+                        _photos2Locations.CollectionChanged += FixupPhotos2Locations;
+                        // This is the principal end in an association that performs cascade deletes.
+                        // Add the cascade delete event handler for any entities that are already in the new collection.
+                        foreach (Photos2Locations item in _photos2Locations)
+                        {
+                            ChangeTracker.ObjectStateChanging += item.HandleCascadeDelete;
+                        }
                     }
-                    OnNavigationPropertyChanged("Tags");
+                    OnNavigationPropertyChanged("Photos2Locations");
                 }
             }
         }
-        private TrackableCollection<Tag> _tags;
+        private TrackableCollection<Photos2Locations> _photos2Locations;
 
         #endregion
         #region ChangeTracking
@@ -352,8 +377,8 @@ namespace WpfKolekcjaZdjec.Entities
         {
             Archive = null;
             Attribute = null;
-            Archives.Clear();
-            Tags.Clear();
+            Tags2Photos.Clear();
+            Photos2Locations.Clear();
         }
 
         #endregion
@@ -447,7 +472,7 @@ namespace WpfKolekcjaZdjec.Entities
             }
         }
     
-        private void FixupArchives(object sender, NotifyCollectionChangedEventArgs e)
+        private void FixupTags2Photos(object sender, NotifyCollectionChangedEventArgs e)
         {
             if (IsDeserializing)
             {
@@ -456,40 +481,49 @@ namespace WpfKolekcjaZdjec.Entities
     
             if (e.NewItems != null)
             {
-                foreach (Archive item in e.NewItems)
+                foreach (Tags2Photos item in e.NewItems)
                 {
-                    if (!item.Photos1.Contains(this))
-                    {
-                        item.Photos1.Add(this);
-                    }
+                    item.Photo = this;
                     if (ChangeTracker.ChangeTrackingEnabled)
                     {
                         if (!item.ChangeTracker.ChangeTrackingEnabled)
                         {
                             item.StartTracking();
                         }
-                        ChangeTracker.RecordAdditionToCollectionProperties("Archives", item);
+                        ChangeTracker.RecordAdditionToCollectionProperties("Tags2Photos", item);
                     }
+                    // This is the principal end in an association that performs cascade deletes.
+                    // Update the event listener to refer to the new dependent.
+                    ChangeTracker.ObjectStateChanging += item.HandleCascadeDelete;
                 }
             }
     
             if (e.OldItems != null)
             {
-                foreach (Archive item in e.OldItems)
+                foreach (Tags2Photos item in e.OldItems)
                 {
-                    if (item.Photos1.Contains(this))
+                    if (ReferenceEquals(item.Photo, this))
                     {
-                        item.Photos1.Remove(this);
+                        item.Photo = null;
                     }
                     if (ChangeTracker.ChangeTrackingEnabled)
                     {
-                        ChangeTracker.RecordRemovalFromCollectionProperties("Archives", item);
+                        ChangeTracker.RecordRemovalFromCollectionProperties("Tags2Photos", item);
+                        // Delete the dependent end of this identifying association. If the current state is Added,
+                        // allow the relationship to be changed without causing the dependent to be deleted.
+                        if (item.ChangeTracker.State != ObjectState.Added)
+                        {
+                            item.MarkAsDeleted();
+                        }
                     }
+                    // This is the principal end in an association that performs cascade deletes.
+                    // Remove the previous dependent from the event listener.
+                    ChangeTracker.ObjectStateChanging -= item.HandleCascadeDelete;
                 }
             }
         }
     
-        private void FixupTags(object sender, NotifyCollectionChangedEventArgs e)
+        private void FixupPhotos2Locations(object sender, NotifyCollectionChangedEventArgs e)
         {
             if (IsDeserializing)
             {
@@ -498,35 +532,44 @@ namespace WpfKolekcjaZdjec.Entities
     
             if (e.NewItems != null)
             {
-                foreach (Tag item in e.NewItems)
+                foreach (Photos2Locations item in e.NewItems)
                 {
-                    if (!item.Photos.Contains(this))
-                    {
-                        item.Photos.Add(this);
-                    }
+                    item.Photo = this;
                     if (ChangeTracker.ChangeTrackingEnabled)
                     {
                         if (!item.ChangeTracker.ChangeTrackingEnabled)
                         {
                             item.StartTracking();
                         }
-                        ChangeTracker.RecordAdditionToCollectionProperties("Tags", item);
+                        ChangeTracker.RecordAdditionToCollectionProperties("Photos2Locations", item);
                     }
+                    // This is the principal end in an association that performs cascade deletes.
+                    // Update the event listener to refer to the new dependent.
+                    ChangeTracker.ObjectStateChanging += item.HandleCascadeDelete;
                 }
             }
     
             if (e.OldItems != null)
             {
-                foreach (Tag item in e.OldItems)
+                foreach (Photos2Locations item in e.OldItems)
                 {
-                    if (item.Photos.Contains(this))
+                    if (ReferenceEquals(item.Photo, this))
                     {
-                        item.Photos.Remove(this);
+                        item.Photo = null;
                     }
                     if (ChangeTracker.ChangeTrackingEnabled)
                     {
-                        ChangeTracker.RecordRemovalFromCollectionProperties("Tags", item);
+                        ChangeTracker.RecordRemovalFromCollectionProperties("Photos2Locations", item);
+                        // Delete the dependent end of this identifying association. If the current state is Added,
+                        // allow the relationship to be changed without causing the dependent to be deleted.
+                        if (item.ChangeTracker.State != ObjectState.Added)
+                        {
+                            item.MarkAsDeleted();
+                        }
                     }
+                    // This is the principal end in an association that performs cascade deletes.
+                    // Remove the previous dependent from the event listener.
+                    ChangeTracker.ObjectStateChanging -= item.HandleCascadeDelete;
                 }
             }
         }
