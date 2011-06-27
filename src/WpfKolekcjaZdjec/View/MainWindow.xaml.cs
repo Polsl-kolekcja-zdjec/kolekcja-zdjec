@@ -125,7 +125,6 @@ namespace WpfKolekcjaZdjec.View
         // TODO: Instalator.
         // TODO: Exif i atrybuty - wypełnianie.
         // TODO: Usuwanie tagów.
-        // TODO: błąd z pokazywaniem tagów (??).
 
         /// <summary>
         /// Handles the MouseLeftButtonDown event of the ShowExif control.

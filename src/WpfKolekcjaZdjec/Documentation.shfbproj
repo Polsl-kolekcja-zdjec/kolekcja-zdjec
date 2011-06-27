@@ -17,14 +17,15 @@
     <OutputPath>.\Help\</OutputPath>
     <HtmlHelpName>WpfKolekcjaZdjecDocumentation</HtmlHelpName>
     <Language>en-US</Language>
-    <HelpFileFormat>HtmlHelp1, Website</HelpFileFormat>
+    <HelpFileFormat>HtmlHelp1</HelpFileFormat>
     <FrameworkVersion>4.0.30319</FrameworkVersion>
     <CppCommentsFixup>True</CppCommentsFixup>
     <DocumentationSources>
       <DocumentationSource sourceFile="bin\Debug\WpfKolekcjaZdjec.exe" xmlns="" />
-<DocumentationSource sourceFile="bin\Debug\WpfKolekcjaZdjec.XML" xmlns="" /></DocumentationSources>
+      <DocumentationSource sourceFile="bin\Debug\WpfKolekcjaZdjec.XML" xmlns="" />
+    </DocumentationSources>
     <HelpTitle>WpfKolekcjaZdjec - [BD2] [PP] 2o11%40polsl</HelpTitle>
-    <PresentationStyle>hana</PresentationStyle>
+    <PresentationStyle>vs2005</PresentationStyle>
     <SdkLinkTarget>Blank</SdkLinkTarget>
   </PropertyGroup>
   <!-- There are no properties for these groups.  AnyCPU needs to appear in
