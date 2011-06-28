@@ -80,7 +80,10 @@ namespace WpfKolekcjaZdjec.DataAccess
         /// <param name="id">Photo ID.</param>
         private List<Tag> FillTags(PhotoCollectionDatabaseEntities context, int id)
         {
-            return (from o in context.Tags join t2p in context.Tags2PhotosSet on id equals t2p.PhotoID select o).ToList();
+            return (from o in context.Tags
+                    join t2p in context.Tags2PhotosSet on o.ID equals t2p.TagID
+                    where t2p.PhotoID == id
+                    select o).Distinct().ToList();
         }
 
         /// <summary>
