@@ -374,5 +374,45 @@ namespace WpfKolekcjaZdjec.DataAccess
 
             return true;
         }
+
+        /// <summary>
+        /// Gets all tags for photo.
+        /// </summary>
+        /// <param name="photoID">Photo id.</param>
+        /// <returns>Tag list.</returns>
+        public static List<Tag> GetPhotosTags(int photoID)
+        {
+            // Getting tag list.
+            using (PhotoCollectionDatabaseEntities context = new PhotoCollectionDatabaseEntities(ConnectionStringHelper.GetActualConnectionString()))
+            {
+                Photo photo = (from o in context.Photos where o.ID == photoID select o).First();
+
+                return photo.Tags.ToList();
+            }
+        }
+
+        /// <summary>
+        /// Untaging photo.
+        /// </summary>
+        /// <param name="photoID">Photo ID.</param>
+        /// <param name="tagName">Tag name.</param>
+        /// <returns></returns>
+        public static bool UntagPhoto(int photoID, String tagName)
+        {
+            string connectionString = ConnectionStringHelper.GetActualConnectionString();
+            // Updates collections.
+            using (PhotoCollectionDatabaseEntities context = new PhotoCollectionDatabaseEntities(connectionString))
+            {
+                Photo resultPhoto = context.Photos.Where(p => p.ID == photoID).First();
+                Tag resultTag = context.Tags.Where(t => t.Name == tagName).First();
+
+                if (resultPhoto != null && resultTag != null)
+                {
+                    //todo
+                }
+            }
+
+            return true;
+        }
     }
 }

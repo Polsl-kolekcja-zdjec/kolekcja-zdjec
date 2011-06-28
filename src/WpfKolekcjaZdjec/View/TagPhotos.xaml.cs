@@ -90,6 +90,7 @@ namespace WpfKolekcjaZdjec.View
         {
             selectedPhoto = (Entities.Photo)parameter;
             ViewThumbnail();
+            ViewPhotoTags();
         }
 
         /// <summary>
@@ -101,6 +102,7 @@ namespace WpfKolekcjaZdjec.View
             if (selectedPhoto == null)
             {
                 SelectTagTextBlock.Text = "You can not tag a photo now.";
+                UntagTextBlock.Text = "You can not untag a photo now.";
                 PhotoInfoTextBlock.Text = "Please select a photo first.";
             }
             else
@@ -114,15 +116,18 @@ namespace WpfKolekcjaZdjec.View
                 try
                 {
                     PhotoThumbnail.Width = int.Parse(ConfigurationManager.AppSettings["ThumbnailMaxWidth"].ToString());
+                    PhotoThumbnail2.Width = int.Parse(ConfigurationManager.AppSettings["ThumbnailMaxWidth"].ToString());
                 }
-                catch(Exception)
+                catch (Exception)
                 {
                     PhotoThumbnail.Width = 300;
+                    PhotoThumbnail2.Width = 300;
                 }
 
                 PhotoThumbnail.Source = thumbnailBitmap;
+                PhotoThumbnail2.Source = thumbnailBitmap;
 
-                SelectTagTextBlock.Text = "Please select a tag:";
+                SelectTagTextBlock.Text = UntagTextBlock.Text = "Please select a tag:";
                 PhotoInfoTextBlock.Text = "Selected photo: " + selectedPhoto.Title;
             }
         }
@@ -220,6 +225,53 @@ namespace WpfKolekcjaZdjec.View
             PhotoThumbnail.Source = errorImage.Source;
 
             Close();
+        }
+
+        /// <summary>
+        /// Filling ListBox of selected photo tags.
+        /// </summary>
+        private void ViewPhotoTags()
+        {
+            //fill photo tags list
+            if (selectedPhoto != null)
+            {
+                List<Tag> allPhotoTags = DataAccess.Actions.GetPhotosTags(selectedPhoto.ID);
+
+                foreach (Tag current in allPhotoTags)
+                {
+                    PhotoTagsListBox.Items.Add(current.Name);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Handles the Click event of the UntagPhoto button.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
+        private void UntagButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (selectedPhoto == null)
+            {
+                MessageBox.Show("Please select a photo first.", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+            else if (PhotoTagsListBox.SelectedItem == null)
+            {
+                MessageBox.Show("Please select a tag.", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
+
+            }
+            else
+            {
+                if (Actions.UntagPhoto(selectedPhoto.ID, PhotoTagsListBox.SelectedItem.ToString()))
+                {
+                    // Simulate close button click ;)
+                    this.CloseButton_Click(this, null);
+                }
+                else
+                {
+                    MessageBox.Show("An error occurred.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
         }
     }
 }
