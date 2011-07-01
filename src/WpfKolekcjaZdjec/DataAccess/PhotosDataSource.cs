@@ -166,6 +166,11 @@ namespace WpfKolekcjaZdjec.DataAccess
             {
                 foreach (int id in ids)
                 {
+                    foreach(var tag2photo in (from o in context.Tags2PhotosSet where o.PhotoID == id select o))
+                    {
+                        context.Tags2PhotosSet.DeleteObject(tag2photo);
+                    }
+
                     context.Photos.DeleteObject((from o in context.Photos where o.ID == id select o).First());
                 }
 

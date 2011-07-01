@@ -1,21 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using Telerik.Windows.Controls;
-using WpfKolekcjaZdjec.DataAccess;
-using WpfKolekcjaZdjec.Plugins;
 using WpfKolekcjaZdjec.Business;
+using WpfKolekcjaZdjec.DataAccess;
 using WpfKolekcjaZdjec.Entities;
+using WpfKolekcjaZdjec.Plugins;
 
 namespace WpfKolekcjaZdjec.View
 {
@@ -122,7 +113,6 @@ namespace WpfKolekcjaZdjec.View
             }
         }
 
-        // TODO: Instalator.
         // TODO: Exif i atrybuty - wypełnianie.
         // TODO: Lokalizacje i źródła.
 
@@ -275,14 +265,11 @@ namespace WpfKolekcjaZdjec.View
         /// <param name="photos">The photos.</param>
         public void GetAndShowImagesFromDatabase(List<Photo> photos)
         {
-            if (photos.Count > 0)
-            {
-                UpdateTagCloud();
+            UpdateTagCloud();
 
-                PhotoDescriptions.DataContext = photos;
-                PhotoThumbails.DataContext = photos;
-                CarouselPanel.DataContext = photos;
-            }
+            PhotoDescriptions.DataContext = photos;
+            PhotoThumbails.DataContext = photos;
+            CarouselPanel.DataContext = photos;
         }
 
         /// <summary>
