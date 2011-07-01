@@ -95,7 +95,7 @@ namespace WpfKolekcjaZdjec.DataAccess
         {
             using (PhotoCollectionDatabaseEntities context = new PhotoCollectionDatabaseEntities(_connectionString))
             {
-                Photo p = context.Photos.Include("Tags").Where(a => a.ID == id).First();
+                Photo p = context.Photos.Where(a => a.ID == id).First();
                 p.Tags = FillTags(context, id);
                 return p;
             }

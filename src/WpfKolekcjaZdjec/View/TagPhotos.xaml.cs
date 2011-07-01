@@ -232,7 +232,7 @@ namespace WpfKolekcjaZdjec.View
         /// </summary>
         private void ViewPhotoTags()
         {
-            //fill photo tags list
+            // Fill photo tags list
             if (selectedPhoto != null)
             {
                 List<Tag> allPhotoTags = DataAccess.Actions.GetPhotosTags(selectedPhoto.ID);
@@ -258,7 +258,6 @@ namespace WpfKolekcjaZdjec.View
             else if (PhotoTagsListBox.SelectedItem == null)
             {
                 MessageBox.Show("Please select a tag.", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
-
             }
             else
             {

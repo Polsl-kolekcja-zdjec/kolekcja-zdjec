@@ -124,7 +124,7 @@ namespace WpfKolekcjaZdjec.View
 
         // TODO: Instalator.
         // TODO: Exif i atrybuty - wypełnianie.
-        // TODO: Usuwanie tagów.
+        // TODO: Lokalizacje i źródła.
 
         /// <summary>
         /// Handles the MouseLeftButtonDown event of the ShowExif control.
@@ -141,7 +141,6 @@ namespace WpfKolekcjaZdjec.View
 
                 foreach (var i in Actions.GetAllExif())
                 {
-                    // TODO: musisz tylko dopisać wszystkie parametry do odpowiednich pól w formatce ( to po lewej) z bazy 
                     exifDataReadOnly.ISO.Value = i.ISO;
                     exifDataReadOnly.WhiteBalance.Value = i.WhiteBalance;
                 }

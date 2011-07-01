@@ -42,6 +42,7 @@ namespace WpfKolekcjaZdjec.DataAccess
         public static Photo GetPhoto(int id)
         {
             PhotosDataSource db = new PhotosDataSource(ConnectionStringHelper.GetActualConnectionString());
+
             return db.GetPhoto(id);
         }
 
@@ -92,11 +93,6 @@ namespace WpfKolekcjaZdjec.DataAccess
             ExifAttributesDataSource db = new ExifAttributesDataSource(connectionString);
             ExifAttribute exifObject = new ExifAttribute();
 
-            // TODO: tu przepisujesz dane ze zdjęcia do odpowiednich pól bazy, napisalam ci przyklad na sztywno
-            // mają się wyswietlac w zaleznosci od zaznaczonego zdjecia (ewentualnie dla ostatnio dodanego jak inaczej nie umiesz)
-            exifObject.WhiteBalance = "Auto";
-            exifObject.ISO = 400;
-
             db.AddExif(exifObject);
         }
 
@@ -144,10 +140,7 @@ namespace WpfKolekcjaZdjec.DataAccess
                 photoObject.Title = fileName;
                 photoObject.Description = string.Empty;
 
-                // TODO: get and add archive ID to photo
                 photoObject.Archive = null;
-
-                // TODO: get and add attribute ID to photo
                 photoObject.Attribute = null;
 
                 db.AddPhoto(photoObject);
@@ -382,13 +375,9 @@ namespace WpfKolekcjaZdjec.DataAccess
         /// <returns>Tag list.</returns>
         public static List<Tag> GetPhotosTags(int photoID)
         {
-            // Getting tag list.
-            using (PhotoCollectionDatabaseEntities context = new PhotoCollectionDatabaseEntities(ConnectionStringHelper.GetActualConnectionString()))
-            {
-                Photo photo = (from o in context.Photos where o.ID == photoID select o).First();
+            PhotosDataSource photos = new PhotosDataSource(ConnectionStringHelper.GetActualConnectionString());
 
-                return photo.Tags.ToList();
-            }
+            return photos.GetPhoto(photoID).Tags;
         }
 
         /// <summary>
@@ -400,6 +389,7 @@ namespace WpfKolekcjaZdjec.DataAccess
         public static bool UntagPhoto(int photoID, String tagName)
         {
             string connectionString = ConnectionStringHelper.GetActualConnectionString();
+
             // Updates collections.
             using (PhotoCollectionDatabaseEntities context = new PhotoCollectionDatabaseEntities(connectionString))
             {
@@ -408,7 +398,10 @@ namespace WpfKolekcjaZdjec.DataAccess
 
                 if (resultPhoto != null && resultTag != null)
                 {
-                    //todo
+                    context.Tags2PhotosSet.DeleteObject((from o in context.Tags2PhotosSet
+                                                         where o.PhotoID == resultPhoto.ID && o.TagID == resultTag.ID
+                                                         select o).First());
+                    context.SaveChanges();
                 }
             }
 
