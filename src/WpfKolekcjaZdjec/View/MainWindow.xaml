@@ -5,6 +5,8 @@
         Title="PhotoManager" WindowStartupLocation="CenterScreen" Height="600" Width="1024" MinHeight="600" MinWidth="1024" xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
         Loaded="Window_Loaded"
         Icon="/WpfKolekcjaZdjec;component/Images/MainIcon.ico"
+        xmlns:h="clr-namespace:WpfKolekcjaZdjec.Business"
+        h:HelpProvider.HelpString='This main form for this application'
         Initialized="Windows_Init">
         <Window.Resources>
             <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"

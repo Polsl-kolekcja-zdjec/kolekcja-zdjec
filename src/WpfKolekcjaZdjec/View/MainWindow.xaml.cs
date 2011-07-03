@@ -41,6 +41,24 @@ namespace WpfKolekcjaZdjec.View
         }
 
         /// <summary>
+        /// Handles the Executed event of the Window_Help control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.Windows.Input.ExecutedRoutedEventArgs"/> instance containing the event data.</param>
+        private void Window_Help_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            FrameworkElement source = e.Source as FrameworkElement;
+            if (source != null)
+            {
+                string helpString = HelpProvider.GetHelpString(source);
+                if (helpString != null)
+                {
+                    System.Windows.MessageBox.Show("Help: " + helpString);
+                }
+            }
+        }
+
+        /// <summary>
         /// Handles the Loaded event of the Window control.
         /// </summary>
         /// <param name="sender">The source of the event.</param>
